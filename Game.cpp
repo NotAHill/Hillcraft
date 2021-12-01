@@ -20,6 +20,9 @@ void Game::run()
 
 		update(deltaTime);
 
+		if (stack.isEmpty())
+			window.close();
+
 		render();
 
 		handleEvents();

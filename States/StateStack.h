@@ -22,9 +22,16 @@ public:
 	void pushState(Args&&... args)
 	{ stack.push_back(std::make_unique<State>(std::forward<Args>(args)...)); }
 
+	//void pushState(std::unique_ptr<BaseState> state)
+	//{
+	//	stack.push_back(state); // std::move() ???
+	//}
+
 	void popState();
 	void clearStates();
 	BaseState& getCurrentState() const;
+
+	const bool& isEmpty() const;
 
 	void update(sf::Time deltaTime);
 	void fixedUpdate(sf::Time deltaTime);

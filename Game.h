@@ -3,6 +3,9 @@
 #define GAME_H
 
 #include "States/StateStack.h"
+#include "States/BaseState.h"
+#include "States/TitleState.h"
+#include "States/GameState.h"
 
 #include <SFML/Graphics.hpp>
 

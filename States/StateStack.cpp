@@ -21,6 +21,11 @@ BaseState& StateStack::getCurrentState() const
 	return *stack.back();
 }
 
+const bool& StateStack::isEmpty() const
+{
+	return stack.empty();
+}
+
 void StateStack::update(sf::Time deltaTime)
 {
 	// Iterate front-to-back in the state stack

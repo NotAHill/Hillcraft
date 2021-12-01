@@ -30,8 +30,10 @@ bool TitleState::handleEvent(sf::Event& event)
 	// If any key is pressed move to the next screen
 	if (event.type == sf::Event::KeyReleased)
 	{
-		gamePtr->getStack().popState();
-		gamePtr->getStack().pushState<GameState>(*gamePtr);
+		//auto& stack = gamePtr->getStack();	// Vector empty before pop
+		gamePtr->getStack().popState();	
+		gamePtr->getStack().pushState<GameState>(*gamePtr);		// Read access violation
+		return false;
 	}
 
 	return true;
