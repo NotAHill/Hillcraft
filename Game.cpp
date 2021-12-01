@@ -26,6 +26,11 @@ void Game::run()
 		render();
 
 		handleEvents();
+		/*if (stack.isPopState)
+		{
+			stack.isPopState = false;
+			stack.stack.pop_back();
+		}*/
 	}
 }
 

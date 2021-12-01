@@ -17,16 +17,11 @@ class StateStack : private sf::NonCopyable
 public:
 	StateStack();
 
-	// State is pushed into stack
 	template<typename State, typename... Args>
 	void pushState(Args&&... args)
-	{ stack.push_back(std::make_unique<State>(std::forward<Args>(args)...)); }
+	{ pushState(std::make_unique<State>(std::forward<Args>(args)...)); }
 
-	//void pushState(std::unique_ptr<BaseState> state)
-	//{
-	//	stack.push_back(state); // std::move() ???
-	//}
-
+	void pushState(std::unique_ptr<BaseState> state);
 	void popState();
 	void clearStates();
 	BaseState& getCurrentState() const;
@@ -38,8 +33,29 @@ public:
 	void render(sf::RenderTarget& target);
 	void handleEvent(sf::Event& event);
 	
-private:
+
+private:								// KEEP PRIVATE, PUBLIC ONLY FOR TESTING PURPOSES
+	//struct PendingChange
+	//{
+	//	PendingChange(Action _action,  std::unique_ptr<BaseState> _pendingState = nullptr) :
+	//		action(_action),
+	//		pendingState(_pendingState) {}
+	//	Action action;
+	//	std::unique_ptr<BaseState> pendingState;
+	//};
+	
+	enum Action
+	{
+		Push,
+		Pop,
+		Change,
+		Clear
+	};
+
 	std::vector<std::unique_ptr<BaseState>> stack;
+	std::vector<std::pair<Action, std::unique_ptr<BaseState>>> pendingQueue;
+
+	void applyPendingChanges();
 };
 
 
