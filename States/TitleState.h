@@ -4,6 +4,9 @@
 
 #include "BaseState.h"
 
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Text.hpp>
+
 class Game;
 
 class TitleState : public BaseState
@@ -15,6 +18,10 @@ public:
 	void render(sf::RenderTarget& target);
 	bool fixedUpdate(sf::Time deltaTime);
 	bool handleEvent(sf::Event& event);
+
+private:
+	sf::Sprite backgroundSprite;
+	sf::Text text;
 };
 
 

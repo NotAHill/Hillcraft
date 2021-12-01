@@ -34,16 +34,7 @@ public:
 	void handleEvent(sf::Event& event);
 	
 
-private:								// KEEP PRIVATE, PUBLIC ONLY FOR TESTING PURPOSES
-	//struct PendingChange
-	//{
-	//	PendingChange(Action _action,  std::unique_ptr<BaseState> _pendingState = nullptr) :
-	//		action(_action),
-	//		pendingState(_pendingState) {}
-	//	Action action;
-	//	std::unique_ptr<BaseState> pendingState;
-	//};
-	
+private:	
 	enum Action
 	{
 		Push,

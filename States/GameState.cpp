@@ -10,7 +10,7 @@ GameState::GameState(Game& game) :
 
 bool GameState::update(sf::Time deltaTime)
 {
-	std::cout << "game state" << std::endl;
+	std::cout << "Currently in GAME state" << std::endl;
 	return true;
 }
 

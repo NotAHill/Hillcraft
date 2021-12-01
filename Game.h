@@ -7,6 +7,8 @@
 #include "States/TitleState.h"
 #include "States/GameState.h"
 
+#include "ResourceHolder.h"
+
 #include <SFML/Graphics.hpp>
 
 class Game
@@ -18,11 +20,18 @@ public:
 	void run();
 
 	StateStack& getStack();
+	ResourceHolder<sf::Font>& getFonts();
+	ResourceHolder<sf::Texture>& getTextures();
+
 	const sf::RenderWindow& getWindow() const;
+	sf::RenderWindow& getWindow();
 
 private:
 	sf::RenderWindow window;
 	StateStack stack;
+	
+	ResourceHolder<sf::Font> fonts;
+	ResourceHolder<sf::Texture> textures;
 
 	const sf::Time tickSpeed;
 

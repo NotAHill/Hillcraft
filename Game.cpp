@@ -5,8 +5,15 @@
 Game::Game(sf::VideoMode size, sf::String title, bool fullscreen) :
 	window(size, title, sf::Style::Close | sf::Style::Titlebar | (sf::Style::Fullscreen * fullscreen)),
 	stack(),
-	tickSpeed(sf::seconds(1.0f/60.0f))
+	tickSpeed(sf::seconds(1.0f/60.0f)),
+	fonts("res/fonts/"),
+	textures("res/textures/")
 {
+	fonts.load("Fixedsys.ttf");
+	fonts.load("Sansation.ttf");
+
+	textures.load("vector.jpg");
+
 	stack.pushState<TitleState>(*this);
 }
 
@@ -23,14 +30,9 @@ void Game::run()
 		if (stack.isEmpty())
 			window.close();
 
-		render();
-
 		handleEvents();
-		/*if (stack.isPopState)
-		{
-			stack.isPopState = false;
-			stack.stack.pop_back();
-		}*/
+
+		render();
 	}
 }
 
@@ -39,7 +41,22 @@ StateStack& Game::getStack()
 	return stack;
 }
 
+ResourceHolder<sf::Font>& Game::getFonts()
+{
+	return fonts;
+}
+
+ResourceHolder<sf::Texture>& Game::getTextures()
+{
+	return textures;
+}
+
 const sf::RenderWindow& Game::getWindow() const
+{
+	return window;
+}
+
+sf::RenderWindow& Game::getWindow()
 {
 	return window;
 }
