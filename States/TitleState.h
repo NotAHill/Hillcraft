@@ -22,6 +22,9 @@ public:
 private:
 	sf::Sprite backgroundSprite;
 	sf::Text text;
+
+	sf::Time timer;
+	bool showText;
 };
 
 

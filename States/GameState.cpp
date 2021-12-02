@@ -6,11 +6,11 @@
 GameState::GameState(Game& game) :
 	BaseState(game)
 {
+	std::cout << "Currently in GAME state" << std::endl;
 }
 
 bool GameState::update(sf::Time deltaTime)
 {
-	std::cout << "Currently in GAME state" << std::endl;
 	return true;
 }
 

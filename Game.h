@@ -24,7 +24,7 @@ public:
 	ResourceHolder<sf::Texture>& getTextures();
 
 	const sf::RenderWindow& getWindow() const;
-	sf::RenderWindow& getWindow();
+	//sf::RenderWindow& getWindow();
 
 private:
 	sf::RenderWindow window;

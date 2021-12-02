@@ -2,7 +2,7 @@
 
 int main()
 {
-	Game game({ 1280, 640 }, "Project");
+	Game game({ 1280, 640 }, "Project", 1);
 	game.run();
 	return 0;
 }
