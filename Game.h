@@ -22,6 +22,7 @@ public:
 	StateStack& getStack();
 	ResourceHolder<sf::Font>& getFonts();
 	ResourceHolder<sf::Texture>& getTextures();
+	ResourceHolder<sf::Shader>& getShaders();
 
 	const sf::RenderWindow& getWindow() const;
 	//sf::RenderWindow& getWindow();
@@ -32,6 +33,7 @@ private:
 	
 	ResourceHolder<sf::Font> fonts;
 	ResourceHolder<sf::Texture> textures;
+	ResourceHolder<sf::Shader> shaders;
 
 	const sf::Time tickSpeed;
 

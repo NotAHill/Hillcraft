@@ -77,6 +77,11 @@ ResourceHolder<sf::Texture>& Game::getTextures()
 	return textures;
 }
 
+ResourceHolder<sf::Shader>& Game::getShaders()
+{
+	return shaders;
+}
+
 const sf::RenderWindow& Game::getWindow() const
 {
 	return window;
