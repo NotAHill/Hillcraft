@@ -8,11 +8,16 @@ TitleState::TitleState(Game& game) :
 	BaseState(game),
 	text()
 {
-	backgroundSprite.setTexture(gamePtr->getTextures().get("background"));
+	backgroundSprite.setTexture(gamePtr->getTextures().get("vector1"));
 
 	text.setFont(gamePtr->getFonts().get("Fixedsys"));
 	text.setString("Press any key to start");
+	text.setFillColor(sf::Color::Black);
+	text.setCharacterSize(40u);
+
+	text.setOrigin(text.getLocalBounds().width / 2, text.getLocalBounds().height / 2);
 	text.setPosition(sf::Vector2f(gamePtr->getWindow().getSize() / 2u));
+	
 }
 
 bool TitleState::update(sf::Time deltaTime)

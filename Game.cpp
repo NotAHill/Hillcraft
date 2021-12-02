@@ -12,7 +12,7 @@ Game::Game(sf::VideoMode size, sf::String title, bool fullscreen) :
 	fonts.load("Fixedsys.ttf");
 	fonts.load("Sansation.ttf");
 
-	textures.load("vector.jpg");
+	textures.load("vector.jpg", "background");
 
 	stack.pushState<TitleState>(*this);
 }
