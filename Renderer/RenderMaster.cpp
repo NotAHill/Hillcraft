@@ -1,10 +1,5 @@
 #include "RenderMaster.h"
 
-RenderMaster::RenderMaster(Game& game) :
-	quadRenderer(game)
-{
-}
-
 void RenderMaster::drawQuad(const Vector3& pos)
 {
 	quadRenderer.add(pos);

@@ -10,8 +10,6 @@ class Game;
 class RenderMaster
 {
 public:
-	RenderMaster(Game& game);
-
 	void drawQuad(const Vector3& pos);
 	void drawSFML(const sf::Drawable& drawable);
 	void finishRender(sf::RenderWindow& window);

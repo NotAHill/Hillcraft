@@ -15,7 +15,7 @@ bool Shader::loadFromFile(const std::string& vertexFile, const std::string& frag
 {
 	try
 	{
-		id = loadFromFile(vertexFile, fragmentFile);
+		id = load(vertexFile, fragmentFile);
 		return true;
 	}
 	catch (const std::exception& e)

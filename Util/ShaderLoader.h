@@ -43,7 +43,7 @@ namespace
 	}
 }
 
-inline unsigned int loadFromFile(const std::string& vertShader, const std::string& fragShader)
+inline unsigned int load(const std::string& vertShader, const std::string& fragShader)
 {
 	auto vertexSource = getFileContents(vertShader);
 	auto fragmentSource = getFileContents(fragShader);

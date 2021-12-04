@@ -1,8 +1,7 @@
 #include "QuadRenderer.h"
-#include "../Game.h"
+#include "../Util/ResourceManager.h"
 
-QuadRenderer::QuadRenderer(Game& game) :
-	gamePtr(&game)
+QuadRenderer::QuadRenderer()
 {
 	quadModel.addData(
 		{
@@ -30,7 +29,7 @@ void QuadRenderer::add(const Vector3& position)
 
 void QuadRenderer::render()
 {
-	gamePtr->getShaders().get("basic_shader").useProgram();
+	ResourceManager::get().shaders.get("basic_shader").useProgram();
 	quadModel.bindVAO();
 
 	for (auto& quad : quads)

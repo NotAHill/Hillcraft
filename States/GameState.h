@@ -15,6 +15,9 @@ public:
 	void render(RenderMaster& renderer);
 	bool fixedUpdate(sf::Time deltaTime);
 	bool handleEvent(sf::Event& event);
+
+private:
+	bool showWireframe;
 };
 
 #endif // !GAMESTATE_H

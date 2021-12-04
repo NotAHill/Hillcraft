@@ -10,14 +10,14 @@ TitleState::TitleState(Game& game) :
 	timer(sf::Time::Zero),
 	showText(true)
 {
-	backgroundSprite.setTexture(gamePtr->getTextures().get("background"));
+	backgroundSprite.setTexture(ResourceManager::get().textures.get("background"));
 
 	// Set the sprite to screen size
 	backgroundSprite.setScale(
 		gamePtr->getWindow().getSize().x / backgroundSprite.getLocalBounds().width,
 		gamePtr->getWindow().getSize().y / backgroundSprite.getLocalBounds().height);
 
-	text.setFont(gamePtr->getFonts().get("Fixedsys"));
+	text.setFont(ResourceManager::get().fonts.get("Fixedsys"));
 	text.setString("Press any key to start");
 	text.setFillColor(sf::Color::White);
 	text.setOutlineColor(sf::Color::Black);

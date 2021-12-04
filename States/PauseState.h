@@ -1,19 +1,19 @@
 #pragma once
-#ifndef TITLESTATE_H
-#define TITLESTATE_H
+#ifndef PAUSESTATE_H
+#define PAUSESTATE_H
 
 #include "BaseState.h"
 
-#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Text.hpp>
 
 class Game;
 class RenderMaster;
 
-class TitleState : public BaseState
+class PauseState : public BaseState
 {
 public:
-	TitleState(Game& game);
+	PauseState(Game& game);
 
 	bool update(sf::Time deltaTime);
 	void render(RenderMaster& renderer);
@@ -21,12 +21,14 @@ public:
 	bool handleEvent(sf::Event& event);
 
 private:
-	sf::Sprite backgroundSprite;
+	sf::RectangleShape backgroundShape;
 	sf::Text text;
+
 	sf::Time timer;
-	bool showText;
+	sf::Text timerText;
+
 };
 
 
 
-#endif // !TITLESTATE_H
+#endif // !PAUSESTATE_H

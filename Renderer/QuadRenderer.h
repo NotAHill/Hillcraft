@@ -13,16 +13,13 @@ class Model;
 class QuadRenderer
 {
 public:
-	QuadRenderer(Game& game);
-
+	QuadRenderer();
 	void add(const Vector3& position);
 	void render();
 
 private:
 	std::vector<Vector3> quads;
-
 	Model quadModel;
-	Game* gamePtr;
 };
 
 
