@@ -11,6 +11,7 @@
 #include <memory>
 
 class BaseState;
+class RenderMaster;
 
 class StateStack : private sf::NonCopyable
 {
@@ -30,7 +31,7 @@ public:
 
 	void update(sf::Time deltaTime);
 	void fixedUpdate(sf::Time deltaTime);
-	void render(sf::RenderTarget& target);
+	void render(RenderMaster& renderer);
 	void handleEvent(sf::Event& event);
 	
 

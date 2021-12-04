@@ -1,5 +1,6 @@
 #include "StateStack.h"
 #include "BaseState.h"
+#include "../Renderer/RenderMaster.h"
 
 StateStack::StateStack() :
 	stack(),
@@ -52,11 +53,11 @@ void StateStack::fixedUpdate(sf::Time deltaTime)
 	applyPendingChanges();
 }
 
-void StateStack::render(sf::RenderTarget& target)
+void StateStack::render(RenderMaster& renderer)
 {
 	// Iterate back to front in the state stack
 	for (auto& state : stack)
-		state->render(target);
+		state->render(renderer);
 }
 
 void StateStack::handleEvent(sf::Event& event)

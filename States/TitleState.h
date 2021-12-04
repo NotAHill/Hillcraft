@@ -8,6 +8,7 @@
 #include <SFML/Graphics/Text.hpp>
 
 class Game;
+class RenderMaster;
 
 class TitleState : public BaseState
 {
@@ -15,7 +16,7 @@ public:
 	TitleState(Game& game);
 
 	bool update(sf::Time deltaTime);
-	void render(sf::RenderTarget& target);
+	void render(RenderMaster& renderer);
 	bool fixedUpdate(sf::Time deltaTime);
 	bool handleEvent(sf::Event& event);
 

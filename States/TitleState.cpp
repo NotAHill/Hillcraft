@@ -42,12 +42,12 @@ bool TitleState::update(sf::Time deltaTime)
 	return true;
 }
 
-void TitleState::render(sf::RenderTarget& target)
+void TitleState::render(RenderMaster& renderer)
 {
-	target.draw(backgroundSprite);
+	renderer.drawSFML(backgroundSprite);
 
 	if (showText)
-		target.draw(text);
+		renderer.drawSFML(text);
 }
 
 bool TitleState::fixedUpdate(sf::Time deltaTime)

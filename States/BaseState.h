@@ -8,6 +8,7 @@
 #include <SFML/Window/Event.hpp>
 
 class Game;
+class RenderMaster;
 
 class BaseState : public sf::NonCopyable
 {
@@ -16,7 +17,7 @@ public:
 
 	virtual bool update(sf::Time deltaTime) = 0;
 	virtual bool fixedUpdate(sf::Time deltaTime) = 0;
-	virtual void render(sf::RenderTarget& target) = 0;
+	virtual void render(RenderMaster& renderer) = 0;
 	virtual bool handleEvent(sf::Event& event) = 0;
 
 protected:

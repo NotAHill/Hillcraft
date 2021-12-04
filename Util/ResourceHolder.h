@@ -35,11 +35,32 @@ public:
 			std::cerr << e.what() << "\n";
 		}
 	}
+
+	void loadShader(const std::string& filename1, const std::string& filename2, std::string name = "")
+	{
+		try
+		{
+			auto resource = std::make_unique<Resource>();
+			if (!resource->loadFromFile(location + filename1, location + filename2))
+				throw std::runtime_error("Error: Filename not found, failed to load " 
+					+ location + filename1 + " and/or " + location + filename2);
+
+			if (name == "") name = filename1.substr(0, filename1.find("."));
+
+			resources.insert(std::make_pair(name, std::move(resource)));
+		}
+		catch (const std::exception& e)
+		{
+			std::cerr << e.what() << "\n";
+		}
+	}
+
 	const bool& exists(const std::string& name) 
 	{
 		return resources.find(name) != resources.end();
 	}
-	const Resource& get(const std::string& name) 
+	
+	Resource& get(const std::string& name) 
 	{
 		try
 		{

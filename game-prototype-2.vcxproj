@@ -149,20 +149,35 @@
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Model.cpp" />
-    <ClCompile Include="ResourceHolder.cpp" />
+    <ClCompile Include="Renderer\QuadRenderer.cpp" />
+    <ClCompile Include="Renderer\RenderMaster.cpp" />
+    <ClCompile Include="Renderer\SFMLRenderer.cpp" />
     <ClCompile Include="States\BaseState.cpp" />
     <ClCompile Include="States\GameState.cpp" />
     <ClCompile Include="States\StateStack.cpp" />
     <ClCompile Include="States\TitleState.cpp" />
+    <ClCompile Include="Util\ResourceHolder.cpp" />
+    <ClCompile Include="Util\Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Maths\glm.h" />
     <ClInclude Include="Model.h" />
-    <ClInclude Include="ResourceHolder.h" />
+    <ClInclude Include="Renderer\QuadRenderer.h" />
+    <ClInclude Include="Renderer\RenderMaster.h" />
+    <ClInclude Include="Renderer\SFMLRenderer.h" />
     <ClInclude Include="States\BaseState.h" />
     <ClInclude Include="States\GameState.h" />
     <ClInclude Include="States\StateStack.h" />
     <ClInclude Include="States\TitleState.h" />
+    <ClInclude Include="Util\FileLoader.h" />
+    <ClInclude Include="Util\ResourceHolder.h" />
+    <ClInclude Include="Util\Shader.h" />
+    <ClInclude Include="Util\ShaderLoader.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\shaders\basic_fragment.glsl" />
+    <None Include="res\shaders\basic_vertex.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

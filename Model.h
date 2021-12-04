@@ -11,7 +11,7 @@
 class Model : private sf::NonCopyable
 {
 public:
-	Model() {};
+	Model() : VAO(0), EBO(0), indicesCount(0) {};
 	Model(const std::vector<float>& vertexPositions,
 		  const std::vector<float>& colourValues,
 		  const std::vector<unsigned int>& indices);
@@ -31,9 +31,9 @@ public:
 private:
 	void addEBO(const std::vector<unsigned int> indices);
 	
-	int indicesCount = 0;
-	unsigned int VAO = 0;
-	unsigned int EBO = 0;
+	int indicesCount;
+	unsigned int VAO;
+	unsigned int EBO;
 	std::vector<unsigned int> VBO_list;
 };
 

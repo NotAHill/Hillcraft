@@ -14,9 +14,9 @@ bool GameState::update(sf::Time deltaTime)
 	return true;
 }
 
-void GameState::render(sf::RenderTarget& target)
+void GameState::render(RenderMaster& renderer)
 {
-	// Pass for now...
+	renderer.drawQuad({ 0, 0, 0 });
 }
 
 bool GameState::fixedUpdate(sf::Time deltaTime)

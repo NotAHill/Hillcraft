@@ -12,6 +12,9 @@ Model::~Model()
 
 void Model::addData(const std::vector<float>& vertexPositions, const std::vector<float>& colourValues, const std::vector<unsigned int>& indices)
 {
+	if (VAO != 0)
+		deleteData();
+
 	indicesCount = indices.size();
 
 	// Generate the VAO and bind it

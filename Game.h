@@ -2,12 +2,16 @@
 #ifndef GAME_H
 #define GAME_H
 
+
+#include "Renderer/RenderMaster.h"
+
 #include "States/StateStack.h"
 #include "States/BaseState.h"
 #include "States/TitleState.h"
 #include "States/GameState.h"
 
-#include "ResourceHolder.h"
+#include "Util/ResourceHolder.h"
+#include "Util/Shader.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -22,18 +26,20 @@ public:
 	StateStack& getStack();
 	ResourceHolder<sf::Font>& getFonts();
 	ResourceHolder<sf::Texture>& getTextures();
-	ResourceHolder<sf::Shader>& getShaders();
+	ResourceHolder<Shader>& getShaders();
 
 	const sf::RenderWindow& getWindow() const;
 	//sf::RenderWindow& getWindow();
 
 private:
 	sf::RenderWindow window;
+
+	RenderMaster masterRenderer;
 	StateStack stack;
-	
+
 	ResourceHolder<sf::Font> fonts;
 	ResourceHolder<sf::Texture> textures;
-	ResourceHolder<sf::Shader> shaders;
+	ResourceHolder<Shader> shaders;
 
 	const sf::Time tickSpeed;
 

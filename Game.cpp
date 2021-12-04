@@ -8,7 +8,9 @@ Game::Game(sf::VideoMode size, sf::String title, bool fullscreen) :
 	stack(),
 	tickSpeed(sf::seconds(1.0f/60.0f)),
 	fonts("res/fonts/"),
-	textures("res/textures/")
+	textures("res/textures/"),
+	shaders("res/shaders/"),
+	masterRenderer(*this)
 {
 	// Configure OpenGL context settings
 	sf::ContextSettings settings;
@@ -39,6 +41,8 @@ Game::Game(sf::VideoMode size, sf::String title, bool fullscreen) :
 	fonts.load("Sansation.ttf");
 
 	textures.load("vector.jpg", "background");
+
+	shaders.loadShader("basic_vertex.glsl", "basic_fragment.glsl", "basic_shader");
 
 	stack.pushState<TitleState>(*this);
 }
@@ -77,7 +81,7 @@ ResourceHolder<sf::Texture>& Game::getTextures()
 	return textures;
 }
 
-ResourceHolder<sf::Shader>& Game::getShaders()
+ResourceHolder<Shader>& Game::getShaders()
 {
 	return shaders;
 }
@@ -99,9 +103,8 @@ void Game::update(sf::Time deltaTime)
 
 void Game::render()
 {
-	window.clear();
-	stack.render(window);
-	window.display();
+	stack.render(masterRenderer);
+	masterRenderer.finishRender(window);
 }
 
 void Game::handleEvents()
