@@ -29,13 +29,15 @@ void QuadRenderer::add(const Vector3& position)
 
 void QuadRenderer::render()
 {
-	ResourceManager::get().shaders.get("basic_shader").useProgram();
+	//ResourceManager::get().shaders.get("basic_shader").useProgram();
+	sf::Shader::bind(&ResourceManager::get().shaders.get("basic_shader"));
 	quadModel.bindVAO();
 
 	for (auto& quad : quads)
 		glDrawElements(GL_TRIANGLES, quadModel.getIndicesCount(), GL_UNSIGNED_INT, nullptr);
 
 	quads.clear();
+	//sf::Shader::bind(NULL);
 }
 
 

@@ -7,6 +7,7 @@
 
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/Shader.hpp>
 
 class ResourceManager : private sf::NonCopyable
 {
@@ -19,7 +20,8 @@ public:
 
 	ResourceHolder<sf::Font> fonts;
 	ResourceHolder<sf::Texture> textures;
-	ResourceHolder<Shader> shaders;
+	//ResourceHolder<Shader> shaders;
+	ResourceHolder<sf::Shader> shaders;
 
 private:
 	ResourceManager() :
