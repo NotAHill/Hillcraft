@@ -7,17 +7,17 @@
 TitleState::TitleState(Game& game) :
 	BaseState(game),
 	text(),
-	timer(sf::Time::Zero),
+	timer(0.0f),
 	showText(true)
 {
-	backgroundSprite.setTexture(ResourceManager::get().textures.get("background"));
+	backgroundSprite.setTexture(Resources().textures.get("background"));
 
 	// Set the sprite to screen size
 	backgroundSprite.setScale(
 		gamePtr->getWindow().getSize().x / backgroundSprite.getLocalBounds().width,
 		gamePtr->getWindow().getSize().y / backgroundSprite.getLocalBounds().height);
 
-	text.setFont(ResourceManager::get().fonts.get("Fixedsys"));
+	text.setFont(Resources().fonts.get("Fixedsys"));
 	text.setString("Press any key to start");
 	text.setFillColor(sf::Color::White);
 	text.setOutlineColor(sf::Color::Black);
@@ -30,14 +30,14 @@ TitleState::TitleState(Game& game) :
 	std::cout << "Currently in TITLE state" << std::endl;
 }
 
-bool TitleState::update(sf::Time deltaTime)
+bool TitleState::update(float deltaTime)
 {
 	timer += deltaTime;
 
-	if (timer >= sf::seconds(0.5f))
+	if (timer >= 0.5f)
 	{
 		showText = !showText;
-		timer = sf::Time::Zero;
+		timer = 0.0f;
 	}
 	return true;
 }
@@ -50,7 +50,7 @@ void TitleState::render(RenderMaster& renderer)
 		renderer.drawSFML(text);
 }
 
-bool TitleState::fixedUpdate(sf::Time deltaTime)
+bool TitleState::fixedUpdate(float deltaTime)
 {
 	return false;
 }

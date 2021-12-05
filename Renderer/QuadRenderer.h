@@ -3,23 +3,27 @@
 #define QUADRENDERER_H
 
 #include "../Model.h"
-#include "../Util/Shader.h"
+#include "../Maths/glm.h"
+#include "../BasicShader.h"
 
 #include <vector>
 
-class Game;
-class Model;
+class Camera;
 
 class QuadRenderer
 {
 public:
 	QuadRenderer();
 	void add(const Vector3& position);
-	void render();
+	void render(const Camera& camera);
 
 private:
 	std::vector<Vector3> quads;
 	Model quadModel;
+	
+	BasicShader shader;
+	//int locationProjectionView;
+	//int locationModel;
 };
 
 

@@ -9,9 +9,13 @@ layout (location = 1) in vec3 inColour;
 // Output the colour to the fragment shader
 out vec3 passColour;
 
+// Variables for matrix calculations
+uniform mat4 projViewMatrix;
+uniform mat4 modelMatrix;
+
 void main()
 {
-	gl_Position = vec4(inVertexPosition, 1.0);
+	gl_Position = projViewMatrix * modelMatrix * vec4(inVertexPosition, 1.0);
 
 	passColour = inColour;
 }

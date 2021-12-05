@@ -15,8 +15,8 @@ class BaseState : public sf::NonCopyable
 public:
 	BaseState(Game& game);
 
-	virtual bool update(sf::Time deltaTime) = 0;
-	virtual bool fixedUpdate(sf::Time deltaTime) = 0;
+	virtual bool update(float deltaTime) = 0;
+	virtual bool fixedUpdate(float deltaTime) = 0;
 	virtual void render(RenderMaster& renderer) = 0;
 	virtual bool handleEvent(sf::Event& event) = 0;
 

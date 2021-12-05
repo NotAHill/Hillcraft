@@ -11,7 +11,7 @@
 class Model : private sf::NonCopyable
 {
 public:
-	Model() : VAO(0), EBO(0), indicesCount(0) {};
+	Model() = default;
 	Model(const std::vector<float>& vertexPositions,
 		  const std::vector<float>& colourValues,
 		  const std::vector<unsigned int>& indices);

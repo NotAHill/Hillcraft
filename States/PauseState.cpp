@@ -8,10 +8,10 @@ PauseState::PauseState(Game& game) :
 	BaseState(game),
 	text(),
 	timerText(),
-	timer(sf::Time::Zero),
+	timer(0.0f),
 	backgroundShape()
 {
-	text.setFont(ResourceManager::get().fonts.get("Fixedsys"));
+	text.setFont(Resources().fonts.get("Fixedsys"));
 	text.setString("Game Paused");
 	text.setFillColor(sf::Color::Red);
 	text.setOutlineColor(sf::Color::Black);
@@ -20,12 +20,11 @@ PauseState::PauseState(Game& game) :
 	text.setOrigin(text.getLocalBounds().width / 2, text.getLocalBounds().height / 2);
 	text.setPosition(sf::Vector2f(gamePtr->getWindow().getSize() / 2u));
 
-	timerText.setFont(ResourceManager::get().fonts.get("Sansation"));
+	timerText.setFont(Resources().fonts.get("Sansation"));
 	timerText.setFillColor(sf::Color::Blue);
 	timerText.setOutlineColor(sf::Color::Black);
 	timerText.setOutlineThickness(3.0f);
 	timerText.setCharacterSize(48u);
-	//timerText.setPosition(sf::Vector2f(gamePtr->getWindow().getSize() / 2u));
 
 	backgroundShape.setFillColor({ 0, 0, 0, 150 });
 	backgroundShape.setSize(sf::Vector2f(gamePtr->getWindow().getSize()));
@@ -34,8 +33,11 @@ PauseState::PauseState(Game& game) :
 	std::cout << "Currently in PAUSE state" << std::endl;
 }
 
-bool PauseState::update(sf::Time deltaTime)
+bool PauseState::update(float deltaTime)
 {
+	timer += deltaTime;
+	timerText.setString(std::to_string((int)timer));
+
 	// Return false so that all the states below it on the stack are not updated
 	return false;
 }
@@ -47,7 +49,7 @@ void PauseState::render(RenderMaster& renderer)
 	renderer.drawSFML(timerText);
 }
 
-bool PauseState::fixedUpdate(sf::Time deltaTime)
+bool PauseState::fixedUpdate(float deltaTime)
 {
 	return false;
 }

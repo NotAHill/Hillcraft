@@ -15,15 +15,15 @@ class TitleState : public BaseState
 public:
 	TitleState(Game& game);
 
-	bool update(sf::Time deltaTime);
+	bool update(float deltaTime);
 	void render(RenderMaster& renderer);
-	bool fixedUpdate(sf::Time deltaTime);
+	bool fixedUpdate(float deltaTime);
 	bool handleEvent(sf::Event& event);
 
 private:
 	sf::Sprite backgroundSprite;
 	sf::Text text;
-	sf::Time timer;
+	float timer;
 	bool showText;
 };
 

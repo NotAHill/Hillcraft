@@ -3,8 +3,14 @@
 
 #include <iostream>
 
-Shader::Shader()
-{ }
+//Shader::Shader()
+//{ }
+
+Shader::Shader(const std::string& vertexFile, const std::string& fragmentFile)
+	: id(load(vertexFile, fragmentFile))
+{
+	useProgram();
+}
 
 Shader::~Shader()
 {
@@ -16,6 +22,7 @@ bool Shader::loadFromFile(const std::string& vertexFile, const std::string& frag
 	try
 	{
 		id = load(vertexFile, fragmentFile);
+		useProgram();
 		return true;
 	}
 	catch (const std::exception& e)

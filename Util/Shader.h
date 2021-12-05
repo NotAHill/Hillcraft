@@ -12,7 +12,7 @@
 class Shader //: private sf::NonCopyable
 {
 public:
-	Shader();
+	Shader(const std::string& vertexFile, const std::string& fragmentFile);
 	~Shader();
 
 	bool loadFromFile(const std::string& vertexFile, const std::string& fragmentFile);
@@ -30,7 +30,7 @@ public:
 	unsigned int getID();
 
 protected:
-	//virtual void getUniforms() = 0;
+	virtual void getUniforms() = 0;
 	unsigned int id;
 };
 

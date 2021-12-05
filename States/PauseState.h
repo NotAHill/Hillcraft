@@ -15,18 +15,17 @@ class PauseState : public BaseState
 public:
 	PauseState(Game& game);
 
-	bool update(sf::Time deltaTime);
+	bool update(float deltaTime);
 	void render(RenderMaster& renderer);
-	bool fixedUpdate(sf::Time deltaTime);
+	bool fixedUpdate(float deltaTime);
 	bool handleEvent(sf::Event& event);
 
 private:
 	sf::RectangleShape backgroundShape;
 	sf::Text text;
 
-	sf::Time timer;
+	float timer;
 	sf::Text timerText;
-
 };
 
 

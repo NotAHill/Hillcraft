@@ -3,16 +3,12 @@
 #include "Game.h"
 
 #include "States/TitleState.h"
+#include "States/GameState.h"
 
 Game::Game(sf::VideoMode size, sf::String title, bool fullscreen) :
 	context(size, title, fullscreen)
 {
-	ResourceManager::get().fonts.load("Fixedsys.ttf");
-	ResourceManager::get().fonts.load("Sansation.ttf");
-	ResourceManager::get().textures.load("vector.jpg", "background");
-	ResourceManager::get().shaders.loadShader("basic_vertex.glsl", "basic_fragment.glsl", "basic_shader");
-
-	stack.pushState<TitleState>(*this);
+	stack.pushState<GameState>(*this);
 }
 
 void Game::run()
@@ -23,7 +19,7 @@ void Game::run()
 	{
 		sf::Time deltaTime = timer.restart();
 
-		update(deltaTime);
+		update(deltaTime.asSeconds());
 
 		if (stack.isEmpty())
 			context.window.close();
@@ -39,20 +35,26 @@ StateStack& Game::getStack()
 	return stack;
 }
 
+Camera& Game::getCamera()
+{
+	return camera;
+}
+
 const sf::RenderWindow& Game::getWindow() const
 {
 	return context.window;
 }
 
-void Game::update(sf::Time deltaTime)
+void Game::update(float deltaTime)
 {
 	stack.update(deltaTime);
+	camera.update();
 }
 
 void Game::render()
 {
 	stack.render(masterRenderer);
-	masterRenderer.finishRender(context.window);
+	masterRenderer.finishRender(context.window, camera);
 }
 
 void Game::handleEvents()

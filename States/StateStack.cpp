@@ -33,7 +33,7 @@ const bool& StateStack::isEmpty() const
 	return stack.empty();
 }
 
-void StateStack::update(sf::Time deltaTime)
+void StateStack::update(float deltaTime)
 {
 	// Iterate front-to-back in the state stack
 	// When update() return false the loop stops
@@ -43,7 +43,7 @@ void StateStack::update(sf::Time deltaTime)
 	applyPendingChanges();
 }
 
-void StateStack::fixedUpdate(sf::Time deltaTime)
+void StateStack::fixedUpdate(float deltaTime)
 {
 	// Iterate front-to-back in the state stack
 	// When fixedUpdate() return false the loop stops

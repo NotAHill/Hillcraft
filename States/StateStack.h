@@ -29,8 +29,8 @@ public:
 
 	const bool& isEmpty() const;
 
-	void update(sf::Time deltaTime);
-	void fixedUpdate(sf::Time deltaTime);
+	void update(float deltaTime);
+	void fixedUpdate(float deltaTime);
 	void render(RenderMaster& renderer);
 	void handleEvent(sf::Event& event);
 	

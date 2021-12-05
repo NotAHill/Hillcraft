@@ -14,6 +14,8 @@
 
 #include "Util/ResourceManager.h"
 
+#include "Camera.h"
+
 #include <SFML/Graphics.hpp>
 
 class Game
@@ -25,14 +27,16 @@ public:
 	void run();
 
 	StateStack& getStack();
+	Camera& getCamera();
 	const sf::RenderWindow& getWindow() const;
 
 private:
 	Context context;
 	RenderMaster masterRenderer;
 	StateStack stack;
+	Camera camera;
 
-	void update(sf::Time deltaTime);
+	void update(float deltaTime);
 	void render();
 	void handleEvents();
 };
