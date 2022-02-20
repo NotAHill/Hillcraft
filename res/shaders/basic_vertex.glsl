@@ -9,9 +9,15 @@ layout (location = 1) in vec3 inColour;
 // Output the colour to the fragment shader
 out vec3 passColour;
 
+// Matrices
+uniform mat4 projection;
+uniform mat4 view;
+uniform mat4 model;
+
 void main()
 {
-	gl_Position = vec4(inVertexPosition, 1.0);
+	// Multiply in reverse (as matrix multiplication is back to front)
+	gl_Position = projection * view * model * vec4(inVertexPosition, 1.0);
 
 	passColour = inColour;
 }
