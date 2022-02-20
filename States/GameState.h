@@ -3,6 +3,7 @@
 #define GAMESTATE_H
 
 #include "BaseState.h"
+#include "../Player.h"
 
 class Game;
 
@@ -18,6 +19,7 @@ public:
 
 private:
 	bool showWireframe;
+	Player player;
 };
 
 #endif // !GAMESTATE_H

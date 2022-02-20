@@ -6,13 +6,20 @@
 
 GameState::GameState(Game& game) :
 	BaseState(game),
-	showWireframe(false)
+	showWireframe(true)
 {
 	std::cout << "Currently in GAME state" << std::endl;
+	gamePtr->getCamera().hookEntity(player);
 }
 
 bool GameState::update(sf::Time deltaTime)
 {
+	if (gamePtr->getWindow().hasFocus())
+	{
+		gamePtr->setCursor(false);
+		player.handleInput(gamePtr->getWindow());
+		player.update(deltaTime.asSeconds());
+	}
 	return true;
 }
 
@@ -37,7 +44,10 @@ bool GameState::handleEvent(sf::Event& event)
 	if (event.type == sf::Event::KeyPressed)
 	{
 		if (event.key.code == sf::Keyboard::Backspace)
+		{
+			gamePtr->setCursor(true);
 			gamePtr->getStack().pushState<PauseState>(*gamePtr);
+		}
 		if (event.key.code == sf::Keyboard::P)
 			showWireframe = !showWireframe;
 

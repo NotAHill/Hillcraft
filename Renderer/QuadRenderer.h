@@ -4,6 +4,7 @@
 
 #include "../Model.h"
 #include "../Util/Shader.h"
+#include "../Camera.h"
 
 #include <vector>
 
@@ -15,7 +16,7 @@ class QuadRenderer
 public:
 	QuadRenderer();
 	void add(const Vector3& position);
-	void render();
+	void render(const Camera& camera);
 
 private:
 	std::vector<Vector3> quads;

@@ -1,25 +1,37 @@
 #include "Camera.h"
 
+#include "Matrix.h"
+
+/*
+rotation x = pitch
+rotation y = yaw
+rotation z = roll
+*/
+
 Camera::Camera()
 {
-	projectionMatrix = glm::perspective(glm::radians(45.0f), (float)1280 / (float)640, 0.1f, 100.0f);
+	projectionMatrix = makeProjectionMatrix(45.0f);
 	position = { 0, 0, -3.5f };
+	rotation = { 0, 0, 0 };
 }
 
 void Camera::update()
 {
-	position = entity->position;
-	rotation = entity->rotation;
+	if (entity != nullptr)
+	{
+		position = entity->position;
+		rotation = entity->rotation;
+	}
 
 	//might not work
 	//viewMatrix = glm::lookAt(position, position + glm::vec3(0, 0, -1), glm::vec3(0, 1, 0));
-	glm::mat4 matrix;
+	//glm::mat4 matrix = glm::mat4(1.0f);
 
-	matrix = glm::rotate(matrix, glm::radians(rotation.x), { 1, 0, 0 });
-	matrix = glm::rotate(matrix, glm::radians(rotation.y), { 0, 1, 0 });
-	matrix = glm::rotate(matrix, glm::radians(rotation.z), { 0, 0, 1 });
+	//matrix = glm::rotate(matrix, glm::radians(rotation.x), { 1, 0, 0 });
+	//matrix = glm::rotate(matrix, glm::radians(rotation.y), { 0, 1, 0 });
+	//matrix = glm::rotate(matrix, glm::radians(rotation.z), { 0, 0, 1 });
 
-	viewMatrix = glm::translate(matrix, position);
+	viewMatrix = makeViewMatrix(*this);
 }
 
 void Camera::hookEntity(const Entity& _entity)

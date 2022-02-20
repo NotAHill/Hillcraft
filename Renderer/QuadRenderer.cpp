@@ -1,8 +1,7 @@
 #include "QuadRenderer.h"
 #include "../Util/ResourceManager.h"
 
-#include <glm/glm.hpp>
-#include <glm/gtc/type_ptr.hpp>
+#include "../Matrix.h"
 
 QuadRenderer::QuadRenderer()
 {
@@ -30,36 +29,27 @@ void QuadRenderer::add(const Vector3& position)
 	quads.push_back(position);
 }
 
-void QuadRenderer::render()
+void QuadRenderer::render(const Camera& camera)
 {
 	auto& shader = ResourceManager::get().shaders.get("basic_shader");
 
-	//ResourceManager::get().shaders.get("basic_shader").useProgram();
 	sf::Shader::bind(&shader);
 	quadModel.bindVAO();
 
-	glm::mat4 model = glm::mat4(1.0f);
-	glm::mat4 view = glm::mat4(1.0f);
-	glm::mat4 projection = glm::mat4(1.0f);
-
-	// For now rotate the square in space to check whether matrix transforms work
-	model = glm::rotate(model, glm::radians(-60.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-
 	// TODO: fix aspect ratio
-	shader.setUniform("model", sf::Glsl::Mat4(glm::value_ptr(model)));
-	shader.setUniform("view", sf::Glsl::Mat4(glm::value_ptr(view)));
-	shader.setUniform("projection", sf::Glsl::Mat4(glm::value_ptr(projection)));
+	shader.setUniform("view", sf::Glsl::Mat4(glm::value_ptr(camera.getViewMatrix())));
+	shader.setUniform("projection", sf::Glsl::Mat4(glm::value_ptr(camera.getProjectionMatrix())));
 
 
 	for (auto& quad : quads)
 	{
 		//quadModel.bindVAO();
+		shader.setUniform("model", sf::Glsl::Mat4(glm::value_ptr(makeModelMatrix({ quad, {0, 0, 0} }))));
 		glDrawElements(GL_TRIANGLES, quadModel.getIndicesCount(), GL_UNSIGNED_INT, nullptr);
 	}
 
 	quads.clear();
-	//sf::Shader::bind(NULL);
+	sf::Shader::bind(NULL);
 }
 
 

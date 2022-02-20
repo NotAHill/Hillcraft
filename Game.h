@@ -14,6 +14,8 @@
 
 #include "Util/ResourceManager.h"
 
+#include "Camera.h"
+
 #include <SFML/Graphics.hpp>
 
 class Game
@@ -24,13 +26,16 @@ public:
 		 bool fullscreen = false);
 	void run();
 
+	Camera& getCamera();
 	StateStack& getStack();
 	const sf::RenderWindow& getWindow() const;
+	void setCursor(bool state);
 
 private:
 	Context context;
 	RenderMaster masterRenderer;
 	StateStack stack;
+	Camera camera;
 
 	void update(sf::Time deltaTime);
 	void render();

@@ -151,6 +151,7 @@
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Model.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Renderer\QuadRenderer.cpp" />
     <ClCompile Include="Renderer\RenderMaster.cpp" />
     <ClCompile Include="Renderer\SFMLRenderer.cpp" />
@@ -169,7 +170,9 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Maths\glm.h" />
+    <ClInclude Include="Matrix.h" />
     <ClInclude Include="Model.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Renderer\QuadRenderer.h" />
     <ClInclude Include="Renderer\RenderMaster.h" />
     <ClInclude Include="Renderer\SFMLRenderer.h" />
