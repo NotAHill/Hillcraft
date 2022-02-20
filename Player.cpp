@@ -29,11 +29,15 @@ void Player::keyboardInput()
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{		
 		change.x = glm::cos(glm::radians(rotation.y + 90)) * speed;
+		// Comment out for xz rotation only
+		change.y = glm::sin(glm::radians(rotation.x)) * speed;
 		change.z = glm::sin(glm::radians(rotation.y + 90)) * speed;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{
 		change.x = -glm::cos(glm::radians(rotation.y + 90)) * speed;
+		// Comment out for xz rotation only
+		change.y = -glm::sin(glm::radians(rotation.x)) * speed;
 		change.z = -glm::sin(glm::radians(rotation.y + 90)) * speed;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
