@@ -12,6 +12,7 @@ public:
 
 	void handleInput(const sf::RenderWindow& window);
 	void update(float deltaTime);
+	const glm::vec3& getVelocity();
 
 private:
 	void keyboardInput();

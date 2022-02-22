@@ -5,7 +5,7 @@
 
 Player::Player()
 {
-	position = { 0, 0, -5 };
+	position = { 0, 0, -5.0f };
 }
 
 void Player::handleInput(const sf::RenderWindow& window)
@@ -19,6 +19,11 @@ void Player::update(float deltaTime)
 	position += velocity * deltaTime;
 	// Deceleration
 	velocity *= 0.95f;
+}
+
+const glm::vec3& Player::getVelocity()
+{
+	return velocity;
 }
 
 void Player::keyboardInput()
@@ -58,10 +63,15 @@ void Player::mouseInput(const sf::RenderWindow& window)
 {
 	static auto const MAX_ANGLE = 80;
 	static auto lastMousePosition = sf::Mouse::getPosition(window);
+	static auto lastDeltaPos = sf::Vector2i{ 0, 0 };
+
 	auto deltaPos = sf::Mouse::getPosition() - lastMousePosition;
 
-	rotation.y += deltaPos.x * 0.05f;
-	rotation.x += deltaPos.y * 0.05f;
+	if (lastDeltaPos != sf::Vector2i(0, 0))
+	{
+		rotation.y += deltaPos.x * 0.05f;
+		rotation.x += deltaPos.y * 0.05f;
+	}
 
 	// Rotation along x-axis (yz plane)
 	if (rotation.x > MAX_ANGLE)			rotation.x = MAX_ANGLE;
@@ -77,4 +87,5 @@ void Player::mouseInput(const sf::RenderWindow& window)
 	sf::Mouse::setPosition({ centerX, centerY }, window);
 
 	lastMousePosition = sf::Mouse::getPosition();
+	lastDeltaPos = deltaPos;
 }

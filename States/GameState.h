@@ -20,6 +20,7 @@ public:
 private:
 	bool showWireframe;
 	Player player;
+	sf::Text infoText;
 };
 
 #endif // !GAMESTATE_H

@@ -43,5 +43,18 @@
 		"xstring": "cpp",
 		"xtr1common": "cpp",
 		"xutility": "cpp"
-	}
+	},
+	"files.exclude": {
+		"**/.git": false,
+		"**/.svn": false,
+		"**/.hg": false,
+		"**/CVS": false,
+		"**/.DS_Store": false,
+		"**/Thumbs.db": false,
+		"**/.sln": true,
+		"**/.vcxproj": true
+	},
+	"explorerExclude.backup": n
+	
+	ull
 }

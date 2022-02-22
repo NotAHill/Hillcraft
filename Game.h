@@ -16,7 +16,7 @@
 
 #include "Camera.h"
 
-#include <SFML/Graphics.hpp>
+#include "Statistics.h"
 
 class Game
 {
@@ -36,6 +36,7 @@ private:
 	RenderMaster masterRenderer;
 	StateStack stack;
 	Camera camera;
+	Statistics fpsCounter;
 
 	void update(sf::Time deltaTime);
 	void render();

@@ -160,6 +160,7 @@
     <ClCompile Include="States\PauseState.cpp" />
     <ClCompile Include="States\StateStack.cpp" />
     <ClCompile Include="States\TitleState.cpp" />
+    <ClCompile Include="Statistics.cpp" />
     <ClCompile Include="Util\ResourceHolder.cpp" />
     <ClCompile Include="Util\ResourceManager.cpp" />
     <ClCompile Include="Util\Shader.cpp" />
@@ -181,6 +182,7 @@
     <ClInclude Include="States\PauseState.h" />
     <ClInclude Include="States\StateStack.h" />
     <ClInclude Include="States\TitleState.h" />
+    <ClInclude Include="Statistics.h" />
     <ClInclude Include="Util\FileLoader.h" />
     <ClInclude Include="Util\ResourceManager.h" />
     <ClInclude Include="Util\ResourceHolder.h" />

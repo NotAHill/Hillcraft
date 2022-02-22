@@ -3,6 +3,7 @@
 #include "../Game.h"
 
 #include <iostream>
+#include <glm/gtx/string_cast.hpp>
 
 GameState::GameState(Game& game) :
 	BaseState(game),
@@ -10,6 +11,13 @@ GameState::GameState(Game& game) :
 {
 	std::cout << "Currently in GAME state" << std::endl;
 	gamePtr->getCamera().hookEntity(player);
+
+	infoText.setFont(ResourceManager::get().fonts.get("Fixedsys"));
+	infoText.setFillColor(sf::Color::White);
+	infoText.setOutlineColor(sf::Color::Black);
+	infoText.setOutlineThickness(1.0f);
+	infoText.setCharacterSize(16u);
+	infoText.setPosition(0.f, 50.f);
 }
 
 bool GameState::update(sf::Time deltaTime)
@@ -20,6 +28,11 @@ bool GameState::update(sf::Time deltaTime)
 		player.handleInput(gamePtr->getWindow());
 		player.update(deltaTime.asSeconds());
 	}
+
+	infoText.setString("Position: " + glm::to_string(player.position) + "\n" +
+					   "Rotation: " + glm::to_string(player.rotation)); 
+		//+ "\n" + "Velocity: " + glm::to_string(player.getVelocity()));
+
 	return true;
 }
 
@@ -30,7 +43,13 @@ void GameState::render(RenderMaster& renderer)
 	else
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
+	//for (int i = 0; i < 99; i++)
+	//	for (int k = 0; k < 99; k++)
+	//		renderer.drawQuad({ i, 0, k });
+
 	renderer.drawQuad({ 0, 0, 0 });
+	renderer.drawQuad({ 1, 0, 0 });
+	renderer.drawSFML(infoText);
 }
 
 bool GameState::fixedUpdate(sf::Time deltaTime)
