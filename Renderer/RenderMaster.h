@@ -4,6 +4,8 @@
 
 #include "QuadRenderer.h"
 #include "SFMLRenderer.h"
+#include "TerrainRenderer.h"
+
 #include "../Camera.h"
 
 class Game;
@@ -12,12 +14,14 @@ class RenderMaster
 {
 public:
 	void drawQuad(const Vector3& pos);
+	void drawTerrain(const Vector3& pos);
 	void drawSFML(const sf::Drawable& drawable);
 	void finishRender(sf::RenderWindow& window, const Camera& camera);
 
 private:
 	QuadRenderer quadRenderer;
 	SFMLRenderer sfmlRenderer;
+	TerrainRenderer terrainRenderer;
 };
 
 

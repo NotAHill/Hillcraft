@@ -43,12 +43,8 @@ void GameState::render(RenderMaster& renderer)
 	else
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-	//for (int i = 0; i < 99; i++)
-	//	for (int k = 0; k < 99; k++)
-	//		renderer.drawQuad({ i, 0, k });
-
 	renderer.drawQuad({ 0, 0, 0 });
-	renderer.drawQuad({ 1, 0, 0 });
+	renderer.drawTerrain({ 0, 0, 0 });
 	renderer.drawSFML(infoText);
 }
 
