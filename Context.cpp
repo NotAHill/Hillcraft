@@ -1,4 +1,6 @@
 #include "Context.h"
+#include "Util/ResourceManager.h"
+
 #include <iostream>
 
 Context::Context(sf::VideoMode size, sf::String title, bool fullscreen)
@@ -28,4 +30,11 @@ Context::Context(sf::VideoMode size, sf::String title, bool fullscreen)
 	// Create the OpenGL viewport
 	glViewport(0, 0, window.getSize().x, window.getSize().y);
 	window.setFramerateLimit(60);
+
+	ResourceManager::get().fonts.load("Fixedsys.ttf");
+	ResourceManager::get().fonts.load("Sansation.ttf");
+	ResourceManager::get().textures.load("vector.jpg", "background");
+	ResourceManager::get().textures.load("heightmap.png");
+	ResourceManager::get().shaders.loadShader("basic_vertex.glsl", "basic_fragment.glsl", "basic_shader");
+
 }

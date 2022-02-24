@@ -16,7 +16,7 @@ GameState::GameState(Game& game) :
 	infoText.setFillColor(sf::Color::White);
 	infoText.setOutlineColor(sf::Color::Black);
 	infoText.setOutlineThickness(1.0f);
-	infoText.setCharacterSize(16u);
+	infoText.setCharacterSize(26u);
 	infoText.setPosition(0.f, 50.f);
 }
 
@@ -43,7 +43,7 @@ void GameState::render(RenderMaster& renderer)
 	else
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-	renderer.drawQuad({ 0, 0, 0 });
+	renderer.drawQuad({ 5, 2, 5 });
 	renderer.drawTerrain({ 0, 0, 0 });
 	renderer.drawSFML(infoText);
 }

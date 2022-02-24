@@ -33,5 +33,4 @@ private:
 	
 };
 
-
 #endif // !RESOURCEMANAGER_H

@@ -31,6 +31,8 @@ void Player::keyboardInput()
 	glm::vec3 change(0,0,0);
 	float speed = 0.5f;
 
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
+		speed *= 10;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{		
 		change.x = glm::cos(glm::radians(rotation.y + 90)) * speed;
@@ -55,6 +57,10 @@ void Player::keyboardInput()
 		change.x = -glm::cos(glm::radians(rotation.y)) * speed;
 		change.z = -glm::sin(glm::radians(rotation.y)) * speed;
 	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+		change.y = -speed;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+		change.y = speed;
 
 	velocity += change;
 }

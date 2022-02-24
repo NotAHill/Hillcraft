@@ -7,10 +7,11 @@ Statistics::Statistics() :
 	timer(sf::Time::Zero),
 	frameCount(0)
 {
+	text.setFont(ResourceManager::get().fonts.get("Fixedsys"));
 	text.setFillColor(sf::Color::White);
 	text.setOutlineColor(sf::Color::Black);
 	text.setOutlineThickness(1.0f);
-	text.setCharacterSize(16u);
+	text.setCharacterSize(26u);
 }
 
 void Statistics::update(sf::Time deltaTime)
@@ -35,10 +36,4 @@ void Statistics::render(RenderMaster& renderer)
 void Statistics::toggle(bool state)
 {
 	// TODO
-}
-
-void Statistics::initFont()
-{
-	// Workaround solution
-	text.setFont(ResourceManager::get().fonts.get("Fixedsys"));
 }

@@ -8,12 +8,6 @@
 Game::Game(sf::VideoMode size, sf::String title, bool fullscreen) :
 	context(size, title, fullscreen)
 {
-	ResourceManager::get().fonts.load("Fixedsys.ttf");
-	ResourceManager::get().fonts.load("Sansation.ttf");
-	ResourceManager::get().textures.load("vector.jpg", "background");
-	ResourceManager::get().shaders.loadShader("basic_vertex.glsl", "basic_fragment.glsl", "basic_shader");
-
-	fpsCounter.initFont();
 	stack.pushState<GameState>(*this);
 }
 

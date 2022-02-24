@@ -4,11 +4,15 @@
 #include "../Matrix.h"
 
 TerrainRenderer::TerrainRenderer() :
-	size(1.0f),
-	vertexCount(100)
+	size(100.0f),
+	maxHeight(5.0f)
 {
+	sf::Image image = ResourceManager::get().textures.get("heightmap").copyToImage();
+	
+	int vertexCount = image.getSize().x;
 	int count = vertexCount * vertexCount;
-	size *= vertexCount;
+	//size *= vertexCount;
+
 	std::vector<float> vertices(count * 3);
 	std::vector<float> colours(count * 3);
 	std::vector<unsigned int> indices(6 * (vertexCount - 1) * (vertexCount - 1));
@@ -19,12 +23,12 @@ TerrainRenderer::TerrainRenderer() :
 		for (int j = 0; j < vertexCount; j++) 
 		{
 			vertices[vertexPointer * 3] = (float)j / ((float)vertexCount - 1) * size;
-			vertices[vertexPointer * 3 + 1] = 0;
+			vertices[vertexPointer * 3 + 1] = getHeight(j, i, image) * maxHeight;
 			vertices[vertexPointer * 3 + 2] = (float)i / ((float)vertexCount - 1) * size;
 
-			colours[vertexPointer * 3] = 1.0f;//(float)(i % 3 == 0);
-			colours[vertexPointer * 3 + 1] = 1.0f;//(float)(i % 3 == 1);
-			colours[vertexPointer * 3 + 2] = 1.0f;//(float)(i % 3 == 2);
+			colours[vertexPointer * 3] = 1.0f;
+			colours[vertexPointer * 3 + 1] = 1.0f;
+			colours[vertexPointer * 3 + 2] = 1.0f;
 
 			vertexPointer++;
 		}
@@ -79,6 +83,20 @@ void TerrainRenderer::render(const Camera& camera)
 
 	terrainList.clear();
 	sf::Shader::bind(NULL);
+}
+
+float TerrainRenderer::getHeight(const unsigned int& u, const unsigned int& v, const sf::Image& image)
+{
+	// Check bounds
+	if (u < 0 || u >= image.getSize().x || v < 0 || v >= image.getSize().y)
+		return 0;
+
+	// Get the value of the red channel of greyscale image
+	float height = (float)image.getPixel(u, v).b;
+	// Normalise height value
+	height /= 255.0f;
+	// Height is between -1 and 1
+	return 2.0f * height - 1.0f;
 }
 
 

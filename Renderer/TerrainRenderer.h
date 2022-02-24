@@ -8,6 +8,7 @@
 #include "../Camera.h"
 
 #include <vector>
+#include <SFML/Graphics/Image.hpp>
 
 class Game;
 class Model;
@@ -20,10 +21,13 @@ public:
 	void render(const Camera& camera);
 
 private:
+	float getHeight(const unsigned int& u, const unsigned int& v, const sf::Image& image);
+
 	std::vector<Vector3> terrainList;
 	Model terrainModel;
+	
 	float size;
-	int vertexCount;
+	float maxHeight;
 };
 
 
