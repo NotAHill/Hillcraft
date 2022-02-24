@@ -39,6 +39,11 @@ void Camera::hookEntity(const Entity& _entity)
 	entity = &_entity;
 }
 
+const glm::vec3& Camera::getPosition() const
+{
+	return position;
+}
+
 const glm::mat4 Camera::getViewMatrix() const
 {
 	return viewMatrix;

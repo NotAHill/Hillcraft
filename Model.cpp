@@ -1,8 +1,8 @@
 #include "Model.h"
 
-Model::Model(const std::vector<float>& vertexPositions, const std::vector<float>& colourValues, const std::vector<unsigned int>& indices)
+Model::Model(const std::vector<float>& vertexPositions, const std::vector<float>& colourValues, const std::vector<float>& normalPositions, const std::vector<unsigned int>& indices)
 {
-	addData(vertexPositions, colourValues, indices);
+	addData(vertexPositions, colourValues, normalPositions, indices);
 }
 
 Model::~Model()
@@ -10,7 +10,7 @@ Model::~Model()
 	deleteData();
 }
 
-void Model::addData(const std::vector<float>& vertexPositions, const std::vector<float>& colourValues, const std::vector<unsigned int>& indices)
+void Model::addData(const std::vector<float>& vertexPositions, const std::vector<float>& colourValues, const std::vector<float>& normalDirections, const std::vector<unsigned int>& indices)
 {
 	if (VAO != 0)
 		deleteData();
@@ -24,6 +24,7 @@ void Model::addData(const std::vector<float>& vertexPositions, const std::vector
 	// Create the VBOs and the EBO
 	addVBO(3, vertexPositions);
 	addVBO(3, colourValues);
+	addVBO(3, normalDirections);
 	addEBO(indices);
 }
 

@@ -22,6 +22,7 @@ public:
 
 private:
 	float getHeight(const unsigned int& u, const unsigned int& v, const sf::Image& image);
+	glm::vec3 calculateNormal(const unsigned int& x, const unsigned int& z, const sf::Image& image);
 
 	std::vector<Vector3> terrainList;
 	Model terrainModel;

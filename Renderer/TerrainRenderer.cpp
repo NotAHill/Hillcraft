@@ -5,7 +5,7 @@
 
 TerrainRenderer::TerrainRenderer() :
 	size(100.0f),
-	maxHeight(5.0f)
+	maxHeight(10.0f)
 {
 	sf::Image image = ResourceManager::get().textures.get("heightmap").copyToImage();
 	
@@ -15,6 +15,8 @@ TerrainRenderer::TerrainRenderer() :
 
 	std::vector<float> vertices(count * 3);
 	std::vector<float> colours(count * 3);
+	std::vector<float> normals(count * 3);
+
 	std::vector<unsigned int> indices(6 * (vertexCount - 1) * (vertexCount - 1));
 
 	int vertexPointer = 0;
@@ -29,6 +31,12 @@ TerrainRenderer::TerrainRenderer() :
 			colours[vertexPointer * 3] = 1.0f;
 			colours[vertexPointer * 3 + 1] = 1.0f;
 			colours[vertexPointer * 3 + 2] = 1.0f;
+
+			auto normal = calculateNormal(j, i, image);
+
+			normals[vertexPointer * 3] = normal.x;
+			normals[vertexPointer * 3 + 1] = normal.y;
+			normals[vertexPointer * 3 + 2] = normal.z;
 
 			vertexPointer++;
 		}
@@ -97,6 +105,16 @@ float TerrainRenderer::getHeight(const unsigned int& u, const unsigned int& v, c
 	height /= 255.0f;
 	// Height is between -1 and 1
 	return 2.0f * height - 1.0f;
+}
+
+glm::vec3 TerrainRenderer::calculateNormal(const unsigned int& x, const unsigned int& z, const sf::Image& image)
+{
+	float heightL = getHeight(x - 1, z, image);
+	float heightR = getHeight(x + 1, z, image);
+	float heightD = getHeight(x, z - 1, image);
+	float heightU = getHeight(x, z + 1, image);
+	glm::vec3 normal{ heightL - heightR, 2.0f, heightD - heightU };
+	return glm::normalize(normal);
 }
 
 

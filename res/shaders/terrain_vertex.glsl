@@ -1,24 +1,22 @@
 #version 330 core
 
-// Receive Vertex Coords at location 0
 layout (location = 0) in vec3 inVertexPosition;
-
-// Receive Colour Values at location 1
 layout (location = 1) in vec3 inColour;
-
 layout (location = 2) in vec3 inNormal;
 
-// Output the colour to the fragment shader
 out vec3 passColour;
+out vec3 passNormal;
+out vec3 fragPos;
 
-// Matrices
 uniform mat4 projection;
 uniform mat4 view;
 uniform mat4 model;
 
 void main()
 {
-	// Multiply in reverse (as matrix multiplication is back to front)
+	fragPos = vec3(model * vec4(inVertexPosition, 1.0));
+
+	passNormal = mat3(transpose(inverse(model))) * inNormal;
 	gl_Position = projection * view * model * vec4(inVertexPosition, 1.0);
 
 	passColour = inColour;

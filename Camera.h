@@ -15,14 +15,12 @@ public:
 
 	void update();
 	void hookEntity(const Entity& _entity);
+	
+	const glm::vec3& getPosition() const;
 
 	const glm::mat4 getViewMatrix() const;
-	const glm::mat4 getProjectionMatrix() const;
-
-	//glm::vec3 front;
-	//glm::vec3 up;
-	//glm::vec3 right;
-	//glm::vec3 worldUp;
+	const glm::mat4 getProjectionMatrix() const;	
+	
 private:
 	const Entity* entity;
 

@@ -160,5 +160,11 @@
     <None Include="res\shaders\basic_vertex.glsl">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="res\shaders\terrain_fragment.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\shaders\terrain_vertex.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
