@@ -4,7 +4,7 @@ layout (location = 0) in vec3 inVertexPosition;
 layout (location = 1) in vec3 inColour;
 layout (location = 2) in vec3 inNormal;
 
-out vec3 passColour;
+flat out vec3 passColour;
 out vec3 passNormal;
 out vec3 fragPos;
 

@@ -14,7 +14,6 @@ public:
 	void update(sf::Time deltaTime);
 	void render(RenderMaster& renderer);
 	void toggle(bool state);
-	void initFont();
 
 private:
 	sf::Time timer;

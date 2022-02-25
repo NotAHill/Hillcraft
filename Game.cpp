@@ -8,6 +8,8 @@
 Game::Game(sf::VideoMode size, sf::String title, bool fullscreen) :
 	context(size, title, fullscreen)
 {
+	srand(time(0));
+
 	stack.pushState<GameState>(*this);
 }
 

@@ -17,16 +17,18 @@ class TerrainRenderer
 {
 public:
 	TerrainRenderer();
-	void add(const Vector3& position);
+	void add(const Vector3& position, const Vector3& rotation);
 	void render(const Camera& camera);
 
 private:
-	float getHeight(const unsigned int& u, const unsigned int& v, const sf::Image& image);
-	glm::vec3 calculateNormal(const unsigned int& x, const unsigned int& z, const sf::Image& image);
+	float getHeight(const unsigned int& u, const unsigned int& v, const sf::Image& image, const unsigned int& stepSize);
+	glm::vec3 getColour(const float& height);
+	glm::vec3 calculateNormal(const unsigned int& x, const unsigned int& z, const sf::Image& image, const unsigned int& stepSize);
 
-	std::vector<Vector3> terrainList;
+	std::vector<Entity> terrainList;
 	Model terrainModel;
 	
+	int vertexCount;
 	float size;
 	float maxHeight;
 };

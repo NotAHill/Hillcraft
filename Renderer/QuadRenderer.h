@@ -15,11 +15,11 @@ class QuadRenderer
 {
 public:
 	QuadRenderer();
-	void add(const Vector3& position);
+	void add(const Vector3& position, const Vector3& rotation);
 	void render(const Camera& camera);
 
 private:
-	std::vector<Vector3> quads;
+	std::vector<Entity> quads;
 	Model quadModel;
 };
 

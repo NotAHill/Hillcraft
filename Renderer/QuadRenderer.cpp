@@ -13,9 +13,9 @@ QuadRenderer::QuadRenderer()
 			-0.5, 0, -0.5
 		},
 		{
-			1.0, 0.0, 0.0,
-			0.0, 1.0, 0.0,
-			0.0, 0.0, 1.0,
+			1.0, 1.0, 1.0,
+			1.0, 1.0, 1.0,
+			1.0, 1.0, 1.0,
 			1.0, 1.0, 1.0,
 		},
 		{
@@ -30,19 +30,20 @@ QuadRenderer::QuadRenderer()
 		});
 }
 
-void QuadRenderer::add(const Vector3& position)
+void QuadRenderer::add(const Vector3& position, const Vector3& rotation)
 {
-	quads.push_back(position);
+	quads.push_back({ position, rotation });
 }
 
 void QuadRenderer::render(const Camera& camera)
 {
 	auto& shader = ResourceManager::get().shaders.get("basic_shader");
+
 	auto convert = [](const glm::mat4& matrix) { return sf::Glsl::Mat4(glm::value_ptr(matrix)); };
 
 	sf::Shader::bind(&shader);
 	quadModel.bindVAO();
-
+		
 	// TODO: fix aspect ratio
 	shader.setUniform("view", convert(camera.getViewMatrix()));
 	shader.setUniform("projection", convert(camera.getProjectionMatrix()));
@@ -51,7 +52,7 @@ void QuadRenderer::render(const Camera& camera)
 	for (auto& quad : quads)
 	{
 		//quadModel.bindVAO();
-		shader.setUniform("model", convert(makeModelMatrix({ quad, {0, 0, 0} })));
+		shader.setUniform("model", convert(makeModelMatrix(quad)));
 		glDrawElements(GL_TRIANGLES, quadModel.getIndicesCount(), GL_UNSIGNED_INT, nullptr);
 	}
 
