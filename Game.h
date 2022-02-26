@@ -14,9 +14,9 @@
 
 #include "Util/ResourceManager.h"
 
-#include "Camera.h"
+#include "Entities/Camera.h"
 
-#include "Statistics.h"
+#include "Util/Statistics.h"
 
 class Game
 {

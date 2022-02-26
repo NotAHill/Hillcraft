@@ -4,7 +4,7 @@
 
 #include "../Model.h"
 #include "../Util/Shader.h"
-#include "../Camera.h"
+#include "../Entities/Camera.h"
 
 #include <vector>
 

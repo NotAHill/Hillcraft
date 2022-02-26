@@ -3,7 +3,7 @@
 #define GAMESTATE_H
 
 #include "BaseState.h"
-#include "../Player.h"
+#include "../Entities/Player.h"
 
 class Game;
 

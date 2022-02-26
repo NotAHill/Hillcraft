@@ -43,14 +43,9 @@ void GameState::render(RenderMaster& renderer)
 	else
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-	static sf::Clock timer;
-
-	//renderer.drawQuad(
-	//	{
-	//	5.0f + 5*sinf(timer.getElapsedTime().asSeconds()),
-	//	2.0f,
-	//	5.0f + 5*cosf(timer.getElapsedTime().asSeconds()) },
-	//	{ 0, 0, 0 });
+	renderer.drawQuad(
+		{ 0, 0, 0 },
+		{ 0, 0, 0 });
 	renderer.drawTerrain({ 0, 0, 0 }, { 0, 0, 0 });
 	renderer.drawSFML(infoText);
 }

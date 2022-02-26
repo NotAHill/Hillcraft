@@ -1,7 +1,7 @@
 #include "QuadRenderer.h"
 #include "../Util/ResourceManager.h"
 
-#include "../Matrix.h"
+#include "../Maths/Matrix.h"
 
 QuadRenderer::QuadRenderer()
 {

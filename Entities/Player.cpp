@@ -5,7 +5,8 @@
 
 Player::Player()
 {
-	position = { 0, 0, -5.0f };
+	position = { 0, 0, -3.0f };
+	rotation = { 0, 180, 0 };
 }
 
 void Player::handleInput(const sf::RenderWindow& window)
@@ -35,32 +36,32 @@ void Player::keyboardInput()
 		speed *= 10;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{		
-		change.x = glm::cos(glm::radians(rotation.y + 90)) * speed;
+		change.x += -glm::cos(glm::radians(rotation.y + 90)) * speed;
 		// Comment out for xz rotation only
-		change.y = glm::sin(glm::radians(rotation.x)) * speed;
-		change.z = glm::sin(glm::radians(rotation.y + 90)) * speed;
+		change.y += -glm::sin(glm::radians(rotation.x)) * speed;
+		change.z += -glm::sin(glm::radians(rotation.y + 90)) * speed;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{
-		change.x = -glm::cos(glm::radians(rotation.y + 90)) * speed;
+		change.x += glm::cos(glm::radians(rotation.y + 90)) * speed;
 		// Comment out for xz rotation only
-		change.y = -glm::sin(glm::radians(rotation.x)) * speed;
-		change.z = -glm::sin(glm::radians(rotation.y + 90)) * speed;
+		change.y += glm::sin(glm::radians(rotation.x)) * speed;
+		change.z += glm::sin(glm::radians(rotation.y + 90)) * speed;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
-		change.x = glm::cos(glm::radians(rotation.y)) * speed;
-		change.z = glm::sin(glm::radians(rotation.y)) * speed;
+		change.x += -glm::cos(glm::radians(rotation.y)) * speed;
+		change.z += -glm::sin(glm::radians(rotation.y)) * speed;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
-		change.x = -glm::cos(glm::radians(rotation.y)) * speed;
-		change.z = -glm::sin(glm::radians(rotation.y)) * speed;
+		change.x += glm::cos(glm::radians(rotation.y)) * speed;
+		change.z += glm::sin(glm::radians(rotation.y)) * speed;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-		change.y = -speed;
+		change.y += speed;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
-		change.y = speed;
+		change.y -= speed;
 
 	velocity += change;
 }

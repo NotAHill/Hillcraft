@@ -1,6 +1,6 @@
 #include "Camera.h"
 
-#include "Matrix.h"
+#include "../Maths/Matrix.h"
 
 /*
 rotation x = pitch
@@ -22,14 +22,6 @@ void Camera::update()
 		position = entity->position;
 		rotation = entity->rotation;
 	}
-
-	//might not work
-	//viewMatrix = glm::lookAt(position, position + glm::vec3(0, 0, -1), glm::vec3(0, 1, 0));
-	//glm::mat4 matrix = glm::mat4(1.0f);
-
-	//matrix = glm::rotate(matrix, glm::radians(rotation.x), { 1, 0, 0 });
-	//matrix = glm::rotate(matrix, glm::radians(rotation.y), { 0, 1, 0 });
-	//matrix = glm::rotate(matrix, glm::radians(rotation.z), { 0, 0, 1 });
 
 	viewMatrix = makeViewMatrix(*this);
 }

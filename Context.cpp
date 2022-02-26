@@ -35,6 +35,7 @@ Context::Context(sf::VideoMode size, sf::String title, bool fullscreen)
 	ResourceManager::get().fonts.load("Sansation.ttf");
 	ResourceManager::get().textures.load("vector.jpg", "background");
 	ResourceManager::get().textures.load("heightmap.png");
+	//ResourceManager::get().textures.load("noiseMap2.jpg", "heightmap");
 	ResourceManager::get().shaders.loadShader("basic_vertex.glsl", "basic_fragment.glsl", "basic_shader");
 	ResourceManager::get().shaders.loadShader("terrain_vertex.glsl", "terrain_fragment.glsl", "terrain_shader");
 

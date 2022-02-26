@@ -6,7 +6,7 @@
 #include "SFMLRenderer.h"
 #include "TerrainRenderer.h"
 
-#include "../Camera.h"
+#include "../Entities/Camera.h"
 
 class Game;
 

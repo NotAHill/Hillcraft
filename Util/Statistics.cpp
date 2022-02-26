@@ -1,6 +1,6 @@
 #include "Statistics.h"
-#include "Renderer/RenderMaster.h"
-#include "Util/ResourceManager.h"
+#include "../Renderer/RenderMaster.h"
+#include "ResourceManager.h"
 
 Statistics::Statistics() :
 	text(),

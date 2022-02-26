@@ -145,13 +145,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Context.cpp" />
+    <ClCompile Include="Entities\Camera.cpp" />
+    <ClCompile Include="Entities\Player.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Model.cpp" />
-    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Renderer\QuadRenderer.cpp" />
     <ClCompile Include="Renderer\RenderMaster.cpp" />
     <ClCompile Include="Renderer\SFMLRenderer.cpp" />
@@ -161,21 +161,19 @@
     <ClCompile Include="States\PauseState.cpp" />
     <ClCompile Include="States\StateStack.cpp" />
     <ClCompile Include="States\TitleState.cpp" />
-    <ClCompile Include="Statistics.cpp" />
-    <ClCompile Include="Terrain.cpp" />
-    <ClCompile Include="Util\ResourceHolder.cpp" />
-    <ClCompile Include="Util\ResourceManager.cpp" />
-    <ClCompile Include="Util\Shader.cpp" />
+    <ClCompile Include="Util\Statistics.cpp" />
+    <ClCompile Include="World\Light.cpp" />
+    <ClCompile Include="World\Terrain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Camera.h" />
     <ClInclude Include="Context.h" />
-    <ClInclude Include="Entity.h" />
+    <ClInclude Include="Entities\Camera.h" />
+    <ClInclude Include="Entities\Entity.h" />
+    <ClInclude Include="Entities\Player.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Maths\glm.h" />
-    <ClInclude Include="Matrix.h" />
+    <ClInclude Include="Maths\Matrix.h" />
     <ClInclude Include="Model.h" />
-    <ClInclude Include="Player.h" />
     <ClInclude Include="Renderer\QuadRenderer.h" />
     <ClInclude Include="Renderer\RenderMaster.h" />
     <ClInclude Include="Renderer\SFMLRenderer.h" />
@@ -185,13 +183,11 @@
     <ClInclude Include="States\PauseState.h" />
     <ClInclude Include="States\StateStack.h" />
     <ClInclude Include="States\TitleState.h" />
-    <ClInclude Include="Statistics.h" />
-    <ClInclude Include="Terrain.h" />
-    <ClInclude Include="Util\FileLoader.h" />
     <ClInclude Include="Util\ResourceManager.h" />
     <ClInclude Include="Util\ResourceHolder.h" />
-    <ClInclude Include="Util\Shader.h" />
-    <ClInclude Include="Util\ShaderLoader.h" />
+    <ClInclude Include="Util\Statistics.h" />
+    <ClInclude Include="World\Light.h" />
+    <ClInclude Include="World\Terrain.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\basic_fragment.glsl" />

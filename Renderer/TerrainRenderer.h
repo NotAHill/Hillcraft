@@ -5,7 +5,8 @@
 
 #include "../Model.h"
 #include "../Util/Shader.h"
-#include "../Camera.h"
+#include "../Entities/Camera.h"
+#include "../World/Light.h"
 
 #include <vector>
 #include <SFML/Graphics/Image.hpp>
@@ -28,6 +29,8 @@ private:
 	std::vector<Entity> terrainList;
 	Model terrainModel;
 	
+	Light light;
+
 	int vertexCount;
 	float size;
 	float maxHeight;
