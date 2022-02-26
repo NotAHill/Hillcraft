@@ -9,7 +9,7 @@ TerrainRenderer::TerrainRenderer() :
 	size(100.0f),
 	maxHeight(30.0f),
 	vertexCount(200),
-	light({ 0, 0, 0 }, { 0.3f, -1.0f, 0.5f }, { 1.0f, 1.0f, 1.0f }, { 0.1f, 1.0f, 1.0f })
+	light({ 0, 0, 0 }, { 0.3f, -1.0f, 0.5f }, { 1.0f, 1.0f, 1.0f }, { 0.1f, 1.0f, 0.5f })
 {
 	sf::Image image = ResourceManager::get().textures.get("heightmap").copyToImage();
 	
