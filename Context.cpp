@@ -1,6 +1,7 @@
 #include "Context.h"
 #include "Util/ResourceManager.h"
 
+#include "Config.h"
 #include <iostream>
 
 Context::Context(sf::VideoMode size, sf::String title, bool fullscreen)
@@ -30,6 +31,8 @@ Context::Context(sf::VideoMode size, sf::String title, bool fullscreen)
 	// Create the OpenGL viewport
 	glViewport(0, 0, window.getSize().x, window.getSize().y);
 	window.setFramerateLimit(60);
+
+	//Config::ASPECT_RATIO = (float)window.getSize().x / (float)window.getSize().y;
 
 	ResourceManager::get().fonts.load("Fixedsys.ttf");
 	ResourceManager::get().fonts.load("Sansation.ttf");

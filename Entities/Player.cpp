@@ -7,6 +7,7 @@ Player::Player()
 {
 	position = { 0, 0, -3.0f };
 	rotation = { 0, 180, 0 };
+	velocity = { 0, 0, 0 };
 }
 
 void Player::handleInput(const sf::RenderWindow& window)

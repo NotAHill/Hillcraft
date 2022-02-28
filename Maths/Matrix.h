@@ -11,6 +11,8 @@ class Entity;
 #include "../Entities/Camera.h"
 #include "../Entities/Entity.h"
 
+#include "../Config.h"
+
 inline glm::mat4 makeModelMatrix(const Entity& entity)
 {
     glm::mat4 matrix(1.0f);
@@ -39,7 +41,7 @@ inline glm::mat4 makeViewMatrix(const Camera& camera)
 
 inline glm::mat4 makeProjectionMatrix(float fov)
 {
-    return glm::perspective(glm::radians(fov), 1280.0f / 640.0f, 0.1f, 1000.0f);
+    return glm::perspective(glm::radians(fov), Config::ASPECT_RATIO, Config::NEAR, Config::FAR);
 }
 
 #endif // !MATRIX_H

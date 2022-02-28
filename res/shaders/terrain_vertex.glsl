@@ -8,7 +8,7 @@ uniform mat4 projection;
 uniform mat4 view;
 uniform mat4 model;
 
-flat out vec3 passColour;
+out vec3 passColour;
 
 // Phong Shading
 flat out vec3 passNormal;

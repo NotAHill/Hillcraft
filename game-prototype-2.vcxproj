@@ -166,6 +166,7 @@
     <ClCompile Include="World\Terrain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Config.h" />
     <ClInclude Include="Context.h" />
     <ClInclude Include="Entities\Camera.h" />
     <ClInclude Include="Entities\Entity.h" />

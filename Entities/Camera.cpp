@@ -13,13 +13,14 @@ Camera::Camera()
 	projectionMatrix = makeProjectionMatrix(45.0f);
 	position = { 0, 0, -3.5f };
 	rotation = { 0, 0, 0 };
+	displacement = { 0, 2.0f, -3.5f };
 }
 
 void Camera::update()
 {
 	if (entity != nullptr)
 	{
-		position = entity->position;
+		position = entity->position + displacement; // Displacement for 3rd person only
 		rotation = entity->rotation;
 	}
 

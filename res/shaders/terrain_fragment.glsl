@@ -1,7 +1,9 @@
 #version 330 core
 
+#define MAX_LIGHTS 4
+
 out vec4 outColour;
-flat in vec3 passColour;
+in vec3 passColour;
 
 // Phong Shading
 struct Light
@@ -15,18 +17,24 @@ flat in vec3 passNormal;
 in vec3 passFragPos;
 
 uniform vec3 cameraPos;
-uniform Light light;
+uniform Light light[MAX_LIGHTS];
 
 vec3 calculateLighting()
 {
 	vec3 normal = normalize(passNormal);
-	float brightness = max(dot(-light.direction, normal), 0.0);
-
 	vec3 viewDir = normalize(cameraPos - passFragPos);
-	vec3 reflectDir = reflect(light.direction, normal);
-	float shininess = pow(max(dot(viewDir, reflectDir), 0.0), 32);
+	vec3 totalLight = vec3(0.0);
 
-	return (light.colour * light.bias.x) + (brightness * light.colour * light.bias.y) + (shininess * light.colour * light.bias.z);
+	for (int i = 0; i < MAX_LIGHTS; i++)
+	{
+		float brightness = max(dot(-light[i].direction, normal), 0.0);
+		vec3 reflectDir = reflect(light[i].direction, normal);
+		float shininess = pow(max(dot(viewDir, reflectDir), 0.0), 32);
+		
+		totalLight += (light[i].colour * light[i].bias.x) + (brightness * light[i].colour * light[i].bias.y) + (shininess * light[i].colour * light[i].bias.z);
+	}
+
+	return totalLight;
 }
 
 void main()
