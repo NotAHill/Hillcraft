@@ -7,7 +7,7 @@ void RenderMaster::drawQuad(const Vector3& position, const Vector3& rotation)
 
 void RenderMaster::drawTerrain(Terrain& terrain)
 {
-	terrains.push_back(terrain);
+	terrains.push_back(&terrain);
 }
 
 void RenderMaster::drawSFML(const sf::Drawable& drawable)
@@ -15,9 +15,9 @@ void RenderMaster::drawSFML(const sf::Drawable& drawable)
 	sfmlRenderer.add(drawable);
 }
 
-void RenderMaster::addLight(const Light& light)
+void RenderMaster::addLight(Light& light)
 {
-	lights.push_back(light);
+	lights.push_back(&light);
 }
 
 void RenderMaster::finishRender(sf::RenderWindow& window, const Camera& camera)

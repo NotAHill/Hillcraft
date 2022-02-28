@@ -9,7 +9,8 @@ GameState::GameState(Game& game) :
 	BaseState(game),
 	showWireframe(false),
 	terrain(20.0f, 100.0f, 200),
-	directionLight({0, 0, 0}, { 0.3f,-1.0f,0.5f }, { 1.0f,1.0f,1.0f }, { 0.1f, 1.0f, 0.7f })
+	directionLight({0, 0, 0}, { 0.3f,-1.0f,0.5f }, { 1.0f,1.0f,1.0f }, { 0.1f, 1.0f, 0.7f }),
+	secondLight({ 0, 0, 0 }, { -0.7f,0.4f,-0.8f }, { 0.6f,0.6f,1.0f }, { 0.2f, 0.8f, 0.2f })
 {
 	std::cout << "Currently in GAME state" << std::endl;
 	gamePtr->getCamera().hookEntity(player);
@@ -50,7 +51,8 @@ void GameState::render(RenderMaster& renderer)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	
-	renderer.addLight(directionLight);
+	//renderer.addLight(directionLight);
+	renderer.addLight(secondLight);
 	renderer.drawQuad(
 		{ 0, 0, 0 },
 		{ 0, 0, 0 });

@@ -7,17 +7,17 @@
 //{
 //}
 
-Terrain::Terrain(const Terrain& terrain) :
-	maxHeight(terrain.maxHeight),
-	vertexCount(terrain.vertexCount),
-	size(terrain.size)
-{
-	position = terrain.position;
-	rotation = terrain.rotation;
-
-	generateTerrain("heightmap");
-	std::cout << "Wrong terrain Generated" << std::endl;
-}
+//Terrain::Terrain(const Terrain& terrain) :
+//	maxHeight(terrain.maxHeight),
+//	vertexCount(terrain.vertexCount),
+//	size(terrain.size)
+//{
+//	position = terrain.position;
+//	rotation = terrain.rotation;
+//
+//	generateTerrain("heightmap");
+//	std::cout << "Wrong terrain Generated" << std::endl;
+//}
 
 Terrain::Terrain(const float& _maxHeight, const float& _size, const unsigned int& _vertexCount, glm::vec3 _position, glm::vec3 _rotation) :
 	maxHeight(_maxHeight),

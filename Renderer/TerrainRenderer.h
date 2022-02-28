@@ -18,11 +18,8 @@ class Game;
 class TerrainRenderer
 {
 public:
-	TerrainRenderer();
-	void render(const Camera& camera, std::vector<Terrain> terrains, std::vector<Light> lights);
-
-private:
-	
+	TerrainRenderer() {}
+	void render(const Camera& camera, std::vector<Terrain*> terrains, std::vector<Light*> lights);
 };
 
 

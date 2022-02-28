@@ -24,6 +24,7 @@ private:
 	Terrain terrain;
 	Player player;
 	Light directionLight;
+	Light secondLight;
 
 	sf::Text infoText;
 };

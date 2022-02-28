@@ -6,11 +6,9 @@
 
 #include "../Config.h"
 
-TerrainRenderer::TerrainRenderer() { }
-
-void TerrainRenderer::render(const Camera& camera, std::vector<Terrain> terrains, std::vector<Light> lights)
+void TerrainRenderer::render(const Camera& camera, std::vector<Terrain*> terrains, std::vector<Light*> lights)
 {
-	auto& shader = ResourceManager::get().shaders.get("terrain_shader");
+	static auto& shader = ResourceManager::get().shaders.get("terrain_shader");
 	auto convert = [](const glm::mat4& matrix) { return sf::Glsl::Mat4(glm::value_ptr(matrix)); };
 	auto convert2 = [](const glm::vec3& v) { return sf::Glsl::Vec3(v.x, v.y, v.z); };
 
@@ -24,16 +22,16 @@ void TerrainRenderer::render(const Camera& camera, std::vector<Terrain> terrains
 	// Iterate through all terrains
 	for (auto& terrain : terrains)
 	{
-		terrain.getModel().bindVAO();
+		terrain->getModel().bindVAO();
 		
 		// Set uniforms for each light
 		for (int i = 0; i < Config::MAX_LIGHTS; i++)
 		{
 			if (i < lights.size())
 			{
-				shader.setUniform("light[" + std::to_string(i) + "].direction", convert2(lights[i].getDirection()));
-				shader.setUniform("light[" + std::to_string(i) + "].colour", convert2(lights[i].getColour()));
-				shader.setUniform("light[" + std::to_string(i) + "].bias", convert2(lights[i].getBias()));
+				shader.setUniform("light[" + std::to_string(i) + "].direction", convert2(lights[i]->getDirection()));
+				shader.setUniform("light[" + std::to_string(i) + "].colour", convert2(lights[i]->getColour()));
+				shader.setUniform("light[" + std::to_string(i) + "].bias", convert2(lights[i]->getBias()));
 			}
 			else
 			{
@@ -45,8 +43,8 @@ void TerrainRenderer::render(const Camera& camera, std::vector<Terrain> terrains
 		}
 
 		// Get the model matrix and draw elements for each terrain
-		shader.setUniform("model", convert(makeModelMatrix(terrain)));
-		glDrawElements(GL_TRIANGLES, terrain.getModel().getIndicesCount(), GL_UNSIGNED_INT, nullptr);
+		shader.setUniform("model", convert(makeModelMatrix(*terrain)));
+		glDrawElements(GL_TRIANGLES, terrain->getModel().getIndicesCount(), GL_UNSIGNED_INT, nullptr);
 	}
 
 	sf::Shader::bind(NULL);
