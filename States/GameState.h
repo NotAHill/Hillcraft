@@ -25,8 +25,6 @@ private:
 	Player player;
 	Light directionLight;
 	Light secondLight;
-
-	sf::Text infoText;
 };
 
 #endif // !GAMESTATE_H

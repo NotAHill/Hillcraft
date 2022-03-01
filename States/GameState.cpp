@@ -14,13 +14,6 @@ GameState::GameState(Game& game) :
 {
 	std::cout << "Currently in GAME state" << std::endl;
 	gamePtr->getCamera().hookEntity(player);
-
-	infoText.setFont(ResourceManager::get().fonts.get("Fixedsys"));
-	infoText.setFillColor(sf::Color::White);
-	infoText.setOutlineColor(sf::Color::Black);
-	infoText.setOutlineThickness(1.0f);
-	infoText.setCharacterSize(26u);
-	infoText.setPosition(0.f, 50.f);
 }
 
 bool GameState::update(sf::Time deltaTime)
@@ -36,10 +29,9 @@ bool GameState::update(sf::Time deltaTime)
 													 std::to_string(v.y) + ", " +
 													 std::to_string(v.z); };
 
-	infoText.setString("Position: (" + to_string(player.position) + ")\n" +
+	Statistics::get().addText("Position: (" + to_string(player.position) + ")\n" +
 					   "Rotation: (" + to_string(player.rotation) + ")\n" + 
 					   "Velocity: (" + to_string(player.getVelocity()) + ")");
-		//+ "\n" + "Velocity: " + glm::to_string(player.getVelocity()));
 
 	return true;
 }

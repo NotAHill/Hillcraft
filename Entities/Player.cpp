@@ -1,5 +1,7 @@
 #include "Player.h"
 
+#include "../Config.h"
+
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Mouse.hpp>
 
@@ -21,7 +23,7 @@ void Player::handleInput(const sf::RenderWindow& window)
 void Player::update(float deltaTime, Terrain& terrain)
 {
 	// Do gravity calculation
-	if (!flyMode) velocity.y += GRAVITY;
+	if (!flyMode) velocity.y += Config::GRAVITY;
 
 	// Update position based on velocity
 	position += velocity * deltaTime;
@@ -122,7 +124,7 @@ void Player::keyboardInput()
 			// Jump
 			if (!inAir)
 			{
-				change.y += JUMP_STRENGTH;
+				change.y += Config::JUMP_STRENGTH;
 				inAir = !inAir;
 			}
 		}
@@ -138,7 +140,6 @@ void Player::keyboardInput()
 
 void Player::mouseInput(const sf::RenderWindow& window)
 {
-	static auto const MAX_ANGLE = 80;
 	static auto lastMousePosition = sf::Mouse::getPosition(window);
 	static auto lastDeltaPos = sf::Vector2i{ 0, 0 };
 
@@ -146,17 +147,17 @@ void Player::mouseInput(const sf::RenderWindow& window)
 
 	if (lastDeltaPos != sf::Vector2i(0, 0))
 	{
-		rotation.y += deltaPos.x * 0.05f;
-		rotation.x += deltaPos.y * 0.05f;
+		rotation.y += deltaPos.x * Config::MOUSE_SENSITIVITY;
+		rotation.x += deltaPos.y * Config::MOUSE_SENSITIVITY;
 	}
 
 	// Rotation along x-axis (yz plane)
-	if (rotation.x > MAX_ANGLE)			rotation.x = MAX_ANGLE;
-	else if (rotation.x < -MAX_ANGLE)	rotation.x = -MAX_ANGLE;
+	if (rotation.x > Config::MAX_PITCH_ANGLE)			rotation.x = Config::MAX_PITCH_ANGLE;
+	else if (rotation.x < -Config::MAX_PITCH_ANGLE)	rotation.x = -Config::MAX_PITCH_ANGLE;
 
 	// Rotation along y-axis (xz plane)
-	if (rotation.y > 360)       rotation.y = 0;
-	else if (rotation.y < 0)    rotation.y = 360;
+	if (rotation.y > 360.0f)       rotation.y = 0.0f;
+	else if (rotation.y < 0.0f)    rotation.y = 360.0f;
 
 	auto centerX = static_cast<int>(window.getSize().x / 2);
 	auto centerY = static_cast<int>(window.getSize().y / 2);

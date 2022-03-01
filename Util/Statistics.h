@@ -6,20 +6,27 @@
 
 class RenderMaster;
 
-class Statistics
+class Statistics : private sf::NonCopyable
 {
 public:
-	Statistics();
+	static Statistics& get();
 
 	void update(sf::Time deltaTime);
 	void render(RenderMaster& renderer);
-	void toggle(bool state);
+	void toggle();
+	void addText(sf::String string);
 
 private:
+	Statistics();
+
+	bool showText;
 	sf::Time timer;
-	sf::Text text;
+	sf::Text displayText;
+	sf::String fpsString;
+	sf::String otherString;
 	unsigned int frameCount;
 };
+
 
 #endif STATISTICS_H
 

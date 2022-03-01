@@ -56,13 +56,13 @@ void Game::update(sf::Time deltaTime)
 {
 	stack.update(deltaTime);
 	camera.update();
-	fpsCounter.update(deltaTime);
+	Statistics::get().update(deltaTime);
 }
 
 void Game::render()
 {
 	stack.render(masterRenderer);
-	fpsCounter.render(masterRenderer);
+	Statistics::get().render(masterRenderer);
 	masterRenderer.finishRender(context.window, camera);
 }
 
@@ -77,7 +77,11 @@ void Game::handleEvents()
 			context.window.close();
 
 		if (event.type == sf::Event::KeyPressed)
+		{
 			if (event.key.code == sf::Keyboard::Escape)
 				context.window.close();
+			if (event.key.code == sf::Keyboard::V)
+				Statistics::get().toggle();
+		}
 	}
 }

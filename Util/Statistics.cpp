@@ -3,15 +3,22 @@
 #include "ResourceManager.h"
 
 Statistics::Statistics() :
-	text(),
+	displayText(),
 	timer(sf::Time::Zero),
-	frameCount(0)
+	frameCount(0),
+	showText(true)
 {
-	text.setFont(ResourceManager::get().fonts.get("Fixedsys"));
-	text.setFillColor(sf::Color::White);
-	text.setOutlineColor(sf::Color::Black);
-	text.setOutlineThickness(1.0f);
-	text.setCharacterSize(26u);
+	displayText.setFont(ResourceManager::get().fonts.get("Fixedsys"));
+	displayText.setFillColor(sf::Color::White);
+	displayText.setOutlineColor(sf::Color::Black);
+	displayText.setOutlineThickness(1.0f);
+	displayText.setCharacterSize(26u);
+}
+
+Statistics& Statistics::get()
+{
+	static Statistics statistics;
+	return statistics;
 }
 
 void Statistics::update(sf::Time deltaTime)
@@ -21,8 +28,8 @@ void Statistics::update(sf::Time deltaTime)
 
 	if (timer >= sf::seconds(1.0f))
 	{
-		text.setString("FPS " + std::to_string(frameCount) + "\n" +
-					   "TPF " + std::to_string(timer.asMicroseconds() / frameCount) + "us");
+		fpsString = "FPS " + std::to_string(frameCount) + "\n" +
+							  "TPF " + std::to_string(timer.asMicroseconds() / frameCount) + "us\n";
 		timer -= sf::seconds(1.0f);
 		frameCount = 0;
 	}
@@ -30,10 +37,17 @@ void Statistics::update(sf::Time deltaTime)
 
 void Statistics::render(RenderMaster& renderer)
 {
-	renderer.drawSFML(text);
+	displayText.setString(fpsString + otherString);
+	if (showText) renderer.drawSFML(displayText);
+	otherString.clear();
 }
 
-void Statistics::toggle(bool state)
+void Statistics::toggle()
 {
-	// TODO
+	showText = !showText;
+}
+
+void Statistics::addText(sf::String string)
+{
+	otherString += string + "\n";
 }

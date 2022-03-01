@@ -36,7 +36,6 @@ private:
 	RenderMaster masterRenderer;
 	StateStack stack;
 	Camera camera;
-	Statistics fpsCounter;
 
 	void update(sf::Time deltaTime);
 	void render();

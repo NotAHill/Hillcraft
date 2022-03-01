@@ -23,11 +23,6 @@ private:
 
 	bool inAir;
 	bool flyMode;
-
-	const float GRAVITY = -0.5f;
-	const float JUMP_STRENGTH = 18.0f;
-
-
 };
 
 
