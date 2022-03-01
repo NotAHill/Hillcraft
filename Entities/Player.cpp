@@ -3,9 +3,11 @@
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Mouse.hpp>
 
-Player::Player()
+Player::Player() :
+	flyMode(false),
+	inAir(true)
 {
-	position = { 0, 0, -3.0f };
+	position = { 0, 10.0f, 0 };
 	rotation = { 0, 180, 0 };
 	velocity = { 0, 0, 0 };
 }
@@ -16,11 +18,37 @@ void Player::handleInput(const sf::RenderWindow& window)
 	mouseInput(window);
 }
 
-void Player::update(float deltaTime)
+void Player::update(float deltaTime, Terrain& terrain)
 {
+	// Do gravity calculation
+	if (!flyMode) velocity.y += GRAVITY;
+
+	// Update position based on velocity
 	position += velocity * deltaTime;
-	// Deceleration
-	velocity *= 0.95f;
+
+	// If the player is not flying then the y-level must be checked
+	if (!flyMode)
+	{
+		float terrainHeight = terrain.getHeightOfTerrain(position.x, position.z);
+		
+		// Happens when not jumping
+		if (position.y <= terrainHeight)
+		{
+			// Reset y speed when on ground
+			velocity.y = 0.0f;
+			inAir = false;
+			position.y = terrainHeight;
+		}
+		// Deceleration on x and z axes
+		velocity.x *= 0.95f;
+		velocity.z *= 0.95f;
+	}
+	else
+	{
+		velocity *= 0.95f;
+	}
+	
+
 }
 
 const glm::vec3& Player::getVelocity()
@@ -34,35 +62,76 @@ void Player::keyboardInput()
 	float speed = 0.5f;
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
-		speed *= 10;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-	{		
-		change.x += -glm::cos(glm::radians(rotation.y + 90)) * speed;
-		// Comment out for xz rotation only
-		change.y += -glm::sin(glm::radians(rotation.x)) * speed;
-		change.z += -glm::sin(glm::radians(rotation.y + 90)) * speed;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		speed *= 5;
+
+	if (flyMode)
 	{
-		change.x += glm::cos(glm::radians(rotation.y + 90)) * speed;
-		// Comment out for xz rotation only
-		change.y += glm::sin(glm::radians(rotation.x)) * speed;
-		change.z += glm::sin(glm::radians(rotation.y + 90)) * speed;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+		{
+			change.x += -glm::cos(glm::radians(rotation.y + 90)) * speed;
+			// Comment out for xz rotation only
+			change.y += -glm::sin(glm::radians(rotation.x)) * speed;
+			change.z += -glm::sin(glm::radians(rotation.y + 90)) * speed;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		{
+			change.x += glm::cos(glm::radians(rotation.y + 90)) * speed;
+			// Comment out for xz rotation only
+			change.y += glm::sin(glm::radians(rotation.x)) * speed;
+			change.z += glm::sin(glm::radians(rotation.y + 90)) * speed;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		{
+			change.x += -glm::cos(glm::radians(rotation.y)) * speed;
+			change.z += -glm::sin(glm::radians(rotation.y)) * speed;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		{
+			change.x += glm::cos(glm::radians(rotation.y)) * speed;
+			change.z += glm::sin(glm::radians(rotation.y)) * speed;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+			change.y += speed;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+			change.y -= speed;
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+	else
 	{
-		change.x += -glm::cos(glm::radians(rotation.y)) * speed;
-		change.z += -glm::sin(glm::radians(rotation.y)) * speed;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+		{
+			change.x += -glm::cos(glm::radians(rotation.y + 90)) * speed;
+			change.z += -glm::sin(glm::radians(rotation.y + 90)) * speed;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		{
+			change.x += glm::cos(glm::radians(rotation.y + 90)) * speed;
+			change.z += glm::sin(glm::radians(rotation.y + 90)) * speed;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		{
+			change.x += -glm::cos(glm::radians(rotation.y)) * speed;
+			change.z += -glm::sin(glm::radians(rotation.y)) * speed;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		{
+			change.x += glm::cos(glm::radians(rotation.y)) * speed;
+			change.z += glm::sin(glm::radians(rotation.y)) * speed;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+		{
+			// Jump
+			if (!inAir)
+			{
+				change.y += JUMP_STRENGTH;
+				inAir = !inAir;
+			}
+		}
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
 	{
-		change.x += glm::cos(glm::radians(rotation.y)) * speed;
-		change.z += glm::sin(glm::radians(rotation.y)) * speed;
+		flyMode = !flyMode;
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-		change.y += speed;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
-		change.y -= speed;
 
 	velocity += change;
 }

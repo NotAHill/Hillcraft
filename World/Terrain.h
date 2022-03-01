@@ -15,6 +15,7 @@ public:
 	Terrain(const float& _maxHeight, const float& _size, const unsigned int& _vertexCount, glm::vec3 position = { 0, 0, 0 }, glm::vec3 rotation = { 0, 0, 0 });
 
 	Model& getModel();
+	float getHeightOfTerrain(const float& x, const float& z);
 
 private:
 	void generateTerrain(std::string heightmapLocation);
@@ -31,7 +32,7 @@ private:
 	const unsigned int vertexCount;
 
 	float stepSize;
-	std::vector<float> heights;
+	std::vector<std::vector<float>> heights;
 };
 
 

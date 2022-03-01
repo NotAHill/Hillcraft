@@ -1,7 +1,7 @@
 #include "Terrain.h"
 #include "../Util/ResourceManager.h"
 #include "../Config.h"
-
+#include "../Maths/Matrix.h"
 
 //Terrain::Terrain(const Terrain& terrain)
 //{
@@ -36,6 +36,45 @@ Model& Terrain::getModel()
 	return terrainModel;
 }
 
+float Terrain::getHeightOfTerrain(const float& x, const float& z)
+{
+	// Position of player in terrain
+	float terrainX = x - position.x;
+	float terrainZ = z - position.z;
+
+	// Absolute size of grid
+	float gridSquareSize = size / (float)(vertexCount - 1);
+
+	// Grid position
+	int gridX = (int)floor(terrainX / gridSquareSize);
+	int gridZ = (int)floor(terrainZ / gridSquareSize);
+
+	if (gridX >= vertexCount - 1 || gridZ >= vertexCount - 1 || gridX < 0 || gridZ < 0)
+		return -INFINITY;
+	
+	// Normalised offset in grid
+	float xCoord = fmodf(terrainX, gridSquareSize) / gridSquareSize;
+	float zCoord = fmodf(terrainZ, gridSquareSize) / gridSquareSize;
+	float answer;
+
+	if (xCoord <= (1 - zCoord)) 
+	{
+		answer = barycentricInterpolation({ 0, heights[gridX][gridZ], 0 }, 
+										  { 1, heights[gridX + 1][gridZ], 0}, 
+										  { 0, heights[gridX][gridZ + 1], 1}, 
+										  {xCoord, zCoord});
+	}
+	else 
+	{
+		answer = barycentricInterpolation({ 1, heights[gridX + 1][gridZ], 0 },
+										  { 1, heights[gridX + 1][gridZ + 1], 1 }, 
+										  { 0, heights[gridX][gridZ + 1], 1}, 
+										  {xCoord, zCoord});
+	}
+
+	return answer;
+}
+
 void Terrain::generateTerrain(std::string heightmapLocation)
 {
 	// Convert texture in GPU to image in CPU, allows reading RGB values
@@ -44,7 +83,7 @@ void Terrain::generateTerrain(std::string heightmapLocation)
 	stepSize = image.getSize().x / vertexCount;
 	unsigned int count = vertexCount * vertexCount;
 
-	heights.reserve(count);
+	heights.resize(vertexCount, std::vector<float>(vertexCount));
 	std::vector<float> vertices(count * 3);
 	std::vector<float> colours(count * 3);
 	std::vector<float> normals(count * 3);
@@ -65,7 +104,7 @@ void Terrain::generateTerrain(std::string heightmapLocation)
 			vertices[vertexPointer * 3 + 2] = (float)i / ((float)vertexCount - 1) * size;
 
 			// Might need to swap
-			//heights[getPos(i, j)] = vertexHeight;
+			heights[j][i] = vertexHeight;
 
 			// Calculate colour values
 			auto vertexColour = getColour(vertexHeight / maxHeight);

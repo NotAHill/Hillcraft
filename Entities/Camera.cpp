@@ -1,7 +1,7 @@
 #include "Camera.h"
 
 #include "../Maths/Matrix.h"
-
+#include <glm/gtx/rotate_vector.hpp>
 /*
 rotation x = pitch
 rotation y = yaw
@@ -13,7 +13,7 @@ Camera::Camera()
 	projectionMatrix = makeProjectionMatrix(45.0f);
 	position = { 0, 0, -3.5f };
 	rotation = { 0, 0, 0 };
-	displacement = { 0, 2.0f, -3.5f };
+	displacement = { 0, 2.0f, 0 };
 }
 
 void Camera::update()
