@@ -152,6 +152,7 @@
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Model.cpp" />
+    <ClCompile Include="NoiseGenerator.cpp" />
     <ClCompile Include="Renderer\QuadRenderer.cpp" />
     <ClCompile Include="Renderer\RenderMaster.cpp" />
     <ClCompile Include="Renderer\SFMLRenderer.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="Maths\glm.h" />
     <ClInclude Include="Maths\Matrix.h" />
     <ClInclude Include="Model.h" />
+    <ClInclude Include="NoiseGenerator.h" />
     <ClInclude Include="Renderer\QuadRenderer.h" />
     <ClInclude Include="Renderer\RenderMaster.h" />
     <ClInclude Include="Renderer\SFMLRenderer.h" />

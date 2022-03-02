@@ -50,7 +50,6 @@ void GameState::render(RenderMaster& renderer)
 		{ 0, 0, 0 },
 		{ 0, 0, 0 });
 	renderer.drawTerrain(terrain);
-	renderer.drawSFML(infoText);
 }
 
 bool GameState::fixedUpdate(sf::Time deltaTime)
@@ -70,6 +69,8 @@ bool GameState::handleEvent(sf::Event& event)
 		}
 		if (event.key.code == sf::Keyboard::P)
 			showWireframe = !showWireframe;
+		if (event.key.code == sf::Keyboard::F)
+			player.toggleFlight();
 
 	}
 

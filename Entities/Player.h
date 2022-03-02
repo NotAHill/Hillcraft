@@ -12,6 +12,7 @@ public:
 	Player();
 
 	void handleInput(const sf::RenderWindow& window);
+	void toggleFlight();
 	void update(float deltaTime, Terrain& terrain);
 	const glm::vec3& getVelocity();
 

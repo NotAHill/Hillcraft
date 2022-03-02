@@ -1,6 +1,7 @@
 #include "Player.h"
 
 #include "../Config.h"
+#include "../Util/Statistics.h"
 
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Mouse.hpp>
@@ -18,6 +19,11 @@ void Player::handleInput(const sf::RenderWindow& window)
 {
 	keyboardInput();
 	mouseInput(window);
+}
+
+void Player::toggleFlight()
+{
+	flyMode = !flyMode;
 }
 
 void Player::update(float deltaTime, Terrain& terrain)
@@ -49,8 +55,7 @@ void Player::update(float deltaTime, Terrain& terrain)
 	{
 		velocity *= 0.95f;
 	}
-	
-
+	Statistics::get().addText("Flight Mode: " + std::to_string(flyMode));
 }
 
 const glm::vec3& Player::getVelocity()
@@ -128,11 +133,6 @@ void Player::keyboardInput()
 				inAir = !inAir;
 			}
 		}
-	}
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
-	{
-		flyMode = !flyMode;
 	}
 
 	velocity += change;
