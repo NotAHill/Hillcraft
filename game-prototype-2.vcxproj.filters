@@ -72,7 +72,10 @@
     <ClCompile Include="Entities\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="NoiseGenerator.cpp">
+    <ClCompile Include="Util\Noise\GradientNoiseGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\Noise\FractalNoiseGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -146,7 +149,16 @@
     <ClInclude Include="Config.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="NoiseGenerator.h">
+    <ClInclude Include="Util\FileLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\ObjModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\Noise\GradientNoiseGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\Noise\FractalNoiseGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

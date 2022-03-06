@@ -5,6 +5,7 @@
 #include "../Model.h"
 #include "../Maths/glm.h"
 #include "../Entities/Entity.h"
+#include "../Util/Noise/FractalNoiseGenerator.h"
 
 #include <SFML/Graphics/Image.hpp>
 #include <string>
@@ -19,7 +20,9 @@ public:
 
 private:
 	void generateTerrain(std::string heightmapLocation);
-	float getHeight(const unsigned int& u, const unsigned int& v, const sf::Image& image);
+	float getHeightImg(const unsigned int& u, const unsigned int& v, const sf::Image& image);
+	float getHeight(const unsigned int& u, const unsigned int& v);
+
 	glm::vec3 getColour(const float& height);
 	glm::vec3 calculateNormal(const unsigned int& x, const unsigned int& z, const sf::Image& image);
 
@@ -33,6 +36,7 @@ private:
 
 	float stepSize;
 	std::vector<std::vector<float>> heights;
+	FractalNoiseGenerator noise;
 };
 
 

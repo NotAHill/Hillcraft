@@ -13,7 +13,6 @@ public:
 	const glm::vec3& getBias();
 	const glm::vec3& getPosition();
 
-private:
 	glm::vec3 colour;
 	glm::vec3 direction;
 	glm::vec3 bias;

@@ -22,7 +22,8 @@
 Terrain::Terrain(const float& _maxHeight, const float& _size, const unsigned int& _vertexCount, glm::vec3 _position, glm::vec3 _rotation) :
 	maxHeight(_maxHeight),
 	size(_size),
-	vertexCount(_vertexCount)
+	vertexCount(_vertexCount),
+	noise(30.2f, 1)
 {
 	position = _position;
 	rotation = _rotation;
@@ -80,7 +81,7 @@ void Terrain::generateTerrain(std::string heightmapLocation)
 	// Convert texture in GPU to image in CPU, allows reading RGB values
 	sf::Image image = ResourceManager::get().textures.get(heightmapLocation).copyToImage();
 
-	stepSize = image.getSize().x / vertexCount;
+	stepSize = 1;//image.getSize().x / vertexCount;
 	unsigned int count = vertexCount * vertexCount;
 
 	heights.resize(vertexCount, std::vector<float>(vertexCount));
@@ -98,7 +99,8 @@ void Terrain::generateTerrain(std::string heightmapLocation)
 		for (int j = 0; j < vertexCount; j++)
 		{
 			// Calculate position values
-			float vertexHeight = getHeight(j, i, image);
+			float vertexHeight = getHeight(j, i); //getHeightImg(j, i, image);
+			//float vertexHeight = perlin((float)j/0.1f, (float)i/0.1f);
 			vertices[vertexPointer * 3] = (float)j / ((float)vertexCount - 1) * size;
 			vertices[vertexPointer * 3 + 1] = vertexHeight;
 			vertices[vertexPointer * 3 + 2] = (float)i / ((float)vertexCount - 1) * size;
@@ -142,7 +144,7 @@ void Terrain::generateTerrain(std::string heightmapLocation)
 	terrainModel.addData(vertices, colours, normals, indices);
 }
 
-float Terrain::getHeight(const unsigned int& u, const unsigned int& v, const sf::Image& image)
+float Terrain::getHeightImg(const unsigned int& u, const unsigned int& v, const sf::Image& image)
 {
 	// Check bounds
 	if (u < 0 || u >= image.getSize().x || v < 0 || v >= image.getSize().y)
@@ -153,12 +155,24 @@ float Terrain::getHeight(const unsigned int& u, const unsigned int& v, const sf:
 	
 	// Normalise height value between -1 and 1
 	height /= Config::MAX_PIXEL_COLOUR;
-	return (2.0f * height - 1.0f) * maxHeight;
+
+	height = 2.0f * height - 1.0f;
+
+	// height is between -0.1 and -1
+	if (height <= -0.1f)
+		height = -0.105f + 0.005f * sinf((float)rand());
+
+	return height * maxHeight;
+}
+
+float Terrain::getHeight(const unsigned int& u, const unsigned int& v)
+{
+	return (2.0f * noise.getNoise((float)u, (float)v) - 1.0f) * maxHeight;
 }
 
 glm::vec3 Terrain::getColour(const float& height)
 {
-	if (height <= -0.1f) return { 0.0f, 0.0f, 1.0f }; // Water
+	if (height <= -0.1f) return { 0.65f, 0.95f, 0.95f }; // Ice
 
 	if (height > -0.1f && height <= -0.05f) return { 1.0f, 1.0f, 0.8f }; // Sand
 
@@ -172,10 +186,10 @@ glm::vec3 Terrain::getColour(const float& height)
 glm::vec3 Terrain::calculateNormal(const unsigned int& x, const unsigned int& z, const sf::Image& image)
 {
 	// Calculate height of adjacent vertices (offset=1)
-	float heightL = getHeight(x - 1, z, image);
-	float heightR = getHeight(x + 1, z, image);
-	float heightD = getHeight(x, z - 1, image);
-	float heightU = getHeight(x, z + 1, image);
+	float heightL = getHeight(x - 1, z); //getHeightImg(x - 1, z, image);
+	float heightR = getHeight(x + 1, z); //getHeightImg(x + 1, z, image);
+	float heightD = getHeight(x, z - 1); //getHeightImg(x, z - 1, image);
+	float heightU = getHeight(x, z + 1); //getHeightImg(x, z + 1, image);
 
 	// Create normal vector, y-component is double the offset
 	glm::vec3 normal(heightL - heightR, 2.0f, heightD - heightU);

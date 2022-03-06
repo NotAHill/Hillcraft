@@ -27,8 +27,9 @@ vec3 calculateLighting()
 
 	for (int i = 0; i < MAX_LIGHTS; i++)
 	{
-		float brightness = max(dot(-light[i].direction, normal), 0.0);
-		vec3 reflectDir = reflect(light[i].direction, normal);
+		vec3 lightDir = normalize(light[i].direction);
+		float brightness = max(dot(-lightDir, normal), 0.0);
+		vec3 reflectDir = reflect(lightDir, normal);
 		float shininess = pow(max(dot(viewDir, reflectDir), 0.0), 32);
 		
 		totalLight += (light[i].colour * light[i].bias.x) + (brightness * light[i].colour * light[i].bias.y) + (shininess * light[i].colour * light[i].bias.z);

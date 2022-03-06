@@ -55,7 +55,7 @@ void Player::update(float deltaTime, Terrain& terrain)
 	{
 		velocity *= 0.95f;
 	}
-	Statistics::get().addText("Flight Mode: " + std::to_string(flyMode));
+	Statistics::get().addText("Flight Mode: " + std::string(flyMode ? "ON" : "OFF"));
 }
 
 const glm::vec3& Player::getVelocity()

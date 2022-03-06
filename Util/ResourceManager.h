@@ -4,6 +4,7 @@
 
 #include "ResourceHolder.h"
 #include "Shader.h"
+//#include "ObjModel.h"
 
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Texture.hpp>
@@ -22,12 +23,14 @@ public:
 	ResourceHolder<sf::Texture> textures;
 	//ResourceHolder<Shader> shaders;
 	ResourceHolder<sf::Shader> shaders;
+	//ResourceHolder<ObjModel> objects;
 
 private:
 	ResourceManager() :
 		fonts("res/fonts/"),
 		textures("res/textures/"),
 		shaders("res/shaders/")
+		//objects("res/objects/")
 	{
 	}
 	

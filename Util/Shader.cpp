@@ -1,6 +1,5 @@
 #include "Shader.h"
 #include "ShaderLoader.h"
-
 #include <iostream>
 
 Shader::Shader()

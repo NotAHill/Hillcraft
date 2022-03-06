@@ -152,7 +152,6 @@
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Model.cpp" />
-    <ClCompile Include="NoiseGenerator.cpp" />
     <ClCompile Include="Renderer\QuadRenderer.cpp" />
     <ClCompile Include="Renderer\RenderMaster.cpp" />
     <ClCompile Include="Renderer\SFMLRenderer.cpp" />
@@ -162,6 +161,8 @@
     <ClCompile Include="States\PauseState.cpp" />
     <ClCompile Include="States\StateStack.cpp" />
     <ClCompile Include="States\TitleState.cpp" />
+    <ClCompile Include="Util\Noise\FractalNoiseGenerator.cpp" />
+    <ClCompile Include="Util\Noise\GradientNoiseGenerator.cpp" />
     <ClCompile Include="Util\Statistics.cpp" />
     <ClCompile Include="World\Light.cpp" />
     <ClCompile Include="World\Terrain.cpp" />
@@ -176,7 +177,6 @@
     <ClInclude Include="Maths\glm.h" />
     <ClInclude Include="Maths\Matrix.h" />
     <ClInclude Include="Model.h" />
-    <ClInclude Include="NoiseGenerator.h" />
     <ClInclude Include="Renderer\QuadRenderer.h" />
     <ClInclude Include="Renderer\RenderMaster.h" />
     <ClInclude Include="Renderer\SFMLRenderer.h" />
@@ -186,6 +186,10 @@
     <ClInclude Include="States\PauseState.h" />
     <ClInclude Include="States\StateStack.h" />
     <ClInclude Include="States\TitleState.h" />
+    <ClInclude Include="Util\FileLoader.h" />
+    <ClInclude Include="Util\Noise\FractalNoiseGenerator.h" />
+    <ClInclude Include="Util\Noise\GradientNoiseGenerator.h" />
+    <ClInclude Include="Util\ObjModel.h" />
     <ClInclude Include="Util\ResourceManager.h" />
     <ClInclude Include="Util\ResourceHolder.h" />
     <ClInclude Include="Util\Statistics.h" />
