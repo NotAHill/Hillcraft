@@ -23,7 +23,7 @@ Terrain::Terrain(const float& _maxHeight, const float& _size, const unsigned int
 	maxHeight(_maxHeight),
 	size(_size),
 	vertexCount(_vertexCount),
-	noise(30.2f, 1)
+	noise(100.1f, 1)
 {
 	position = _position;
 	rotation = _rotation;
@@ -81,7 +81,7 @@ void Terrain::generateTerrain(std::string heightmapLocation)
 	// Convert texture in GPU to image in CPU, allows reading RGB values
 	sf::Image image = ResourceManager::get().textures.get(heightmapLocation).copyToImage();
 
-	stepSize = 1;//image.getSize().x / vertexCount;
+	//stepSize = image.getSize().x / vertexCount;
 	unsigned int count = vertexCount * vertexCount;
 
 	heights.resize(vertexCount, std::vector<float>(vertexCount));
@@ -167,7 +167,11 @@ float Terrain::getHeightImg(const unsigned int& u, const unsigned int& v, const 
 
 float Terrain::getHeight(const unsigned int& u, const unsigned int& v)
 {
-	return (2.0f * noise.getNoise((float)u, (float)v) - 1.0f) * maxHeight;
+	float height = noise.getNoise((float)u, (float)v);
+	// height is between -0.1 and -1
+	if (height <= -0.1f)
+		height = -0.105f + 0.005f * sinf((float)rand());
+	return height * maxHeight;
 }
 
 glm::vec3 Terrain::getColour(const float& height)

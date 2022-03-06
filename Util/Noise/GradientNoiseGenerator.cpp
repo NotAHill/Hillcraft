@@ -11,11 +11,14 @@ void GradientNoiseGenerator::reseed(unsigned int _seed)
 	// Set the seed for the noisemap generation
 	seed = _seed;
 
+	// Create map of integers
 	for (unsigned i = 0; i < 256; i++)
 		noiseMap[i] = i;
 
+	// Permute integers using seed
 	std::shuffle(std::begin(noiseMap), std::begin(noiseMap) + 256, std::mt19937(seed));
 
+	// Duplicate integers to prevent buffer oveflow
 	for (unsigned i = 0; i < 256; i++)
 		noiseMap[256 + i] = noiseMap[i];
 }
@@ -23,14 +26,14 @@ void GradientNoiseGenerator::reseed(unsigned int _seed)
 // Fade/Smootherstep function: 6x^5 -15x^4 + 10x^3
 float GradientNoiseGenerator::fade(float t)
 {
-	//t = clamp(t, 0, 1);
+	t = clamp(t, 0, 1);
 	return t * t * t * (t * (t * 6 - 15) + 10);
 }
 
 // Linear interpolation between 2 values
 float GradientNoiseGenerator::lerp(float t, float a, float b)
 {
-	t = clamp(t, a, b);
+	//t = clamp(t, a, b);
 	return a + t * (b - a);
 }
 
@@ -103,7 +106,7 @@ float GradientNoiseGenerator::noise2D(float x, float y)
 	);
 
 	// average: [-1, 1] -> [0, 1]
-	return map(average, -1, 1, 0, 1);
+	return average;//map(average, -1, 1, 0, 1);
 }
 
 
