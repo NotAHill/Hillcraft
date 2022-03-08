@@ -44,11 +44,16 @@ float GradientNoiseGenerator::clamp(float t, float lower, float upper)
 	return t;
 }
 
+float GradientNoiseGenerator::invLerp(float t, float a, float b)
+{
+	return (t - a) / (b - a);
+}
+
 float GradientNoiseGenerator::map(float value, float oldMin, float oldMax, float newMin, float newMax)
 {
-	float proportion = (value - oldMin) / (oldMax - oldMin);
+	float proportion = invLerp(value, oldMin, oldMax); //(value - oldMin) / (oldMax - oldMin);
 
-	return lerp(value, newMin, newMax);
+	return lerp(proportion, newMin, newMax);
 }
 
 float GradientNoiseGenerator::gradient(int hash, float x, float y, float z)
@@ -105,8 +110,8 @@ float GradientNoiseGenerator::noise2D(float x, float y)
 		)
 	);
 
-	// average: [-1, 1] -> [0, 1]
-	return average;//map(average, -1, 1, 0, 1);
+	// return (mapped) average
+	return map(average, -1, 1, 0, 1);
 }
 
 

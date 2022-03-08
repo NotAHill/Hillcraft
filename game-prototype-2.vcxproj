@@ -92,6 +92,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>SFML_STATIC;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -107,6 +108,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>SFML_STATIC;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -164,6 +166,7 @@
     <ClCompile Include="Util\Noise\FractalNoiseGenerator.cpp" />
     <ClCompile Include="Util\Noise\GradientNoiseGenerator.cpp" />
     <ClCompile Include="Util\Statistics.cpp" />
+    <ClCompile Include="World.cpp" />
     <ClCompile Include="World\Light.cpp" />
     <ClCompile Include="World\Terrain.cpp" />
   </ItemGroup>
@@ -193,6 +196,7 @@
     <ClInclude Include="Util\ResourceManager.h" />
     <ClInclude Include="Util\ResourceHolder.h" />
     <ClInclude Include="Util\Statistics.h" />
+    <ClInclude Include="World.h" />
     <ClInclude Include="World\Light.h" />
     <ClInclude Include="World\Terrain.h" />
   </ItemGroup>

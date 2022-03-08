@@ -13,30 +13,30 @@
 class Terrain : public Entity, private sf::NonCopyable
 {
 public:
-	Terrain(const float& _maxHeight, const float& _size, const unsigned int& _vertexCount, glm::vec3 position = { 0, 0, 0 }, glm::vec3 rotation = { 0, 0, 0 });
+	Terrain(const glm::vec2& _offset, const float& _size, const unsigned int& _vertexCount, const float& _maxHeight, std::unique_ptr<FractalNoiseGenerator> _noise);
 
 	Model& getModel();
 	float getHeightOfTerrain(const float& x, const float& z);
+	void setVisible(const bool& _visible);
+	const bool& isVisible() const;
 
 private:
-	void generateTerrain(std::string heightmapLocation);
-	float getHeightImg(const unsigned int& u, const unsigned int& v, const sf::Image& image);
+	void generateTerrain();
 	float getHeight(const unsigned int& u, const unsigned int& v);
-
 	glm::vec3 getColour(const float& height);
-	glm::vec3 calculateNormal(const unsigned int& x, const unsigned int& z, const sf::Image& image);
+	glm::vec3 calculateNormal(const unsigned int& x, const unsigned int& z);
+
 
 private:
 	Model terrainModel;
+	std::unique_ptr<FractalNoiseGenerator> noise;
+	std::vector<std::vector<float>> heights;
 
-	// Constant attributes
-	const float maxHeight;
 	const float size;
 	const unsigned int vertexCount;
-
-	float stepSize;
-	std::vector<std::vector<float>> heights;
-	FractalNoiseGenerator noise;
+	const float maxHeight;
+	bool visible;
+	glm::vec2 offset;
 };
 
 

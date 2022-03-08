@@ -8,7 +8,7 @@
 GameState::GameState(Game& game) :
 	BaseState(game),
 	showWireframe(false),
-	terrain(20.0f, 100.0f, 50, { 0, 0, 0 }),
+	terrain(20.0f, 100.0f, 200, { 0, 0, 0 }),
 	directionLight({0, 0, 0}, { 0.3f,-1.0f,0.5f }, { 0.8f,0.95f,0.95f }, { 0.15f, 0.8f, 0.5f }),
 	secondLight({ 0, 0, 0 }, { 0.1f, -1.0f, -0.0f }, { 0.8f,0.95f,0.95f }, { 0.0f, 0.3f, 0.6f })
 {
@@ -18,27 +18,27 @@ GameState::GameState(Game& game) :
 
 bool GameState::update(sf::Time deltaTime)
 {
+	auto to_string = [](const glm::vec3& v) { return std::to_string(v.x) + ", " +
+		std::to_string(v.y) + ", " +
+		std::to_string(v.z); };
+
 	if (gamePtr->getWindow().hasFocus())
 	{
 		gamePtr->setCursor(false);
 		player.handleInput(gamePtr->getWindow());
 		player.update(deltaTime.asSeconds(), terrain);
+
+		Statistics::get().addText("Position: (" + to_string(player.position) + ")\n" +
+			"Rotation: (" + to_string(player.rotation) + ")\n" +
+			"Velocity: (" + to_string(player.getVelocity()) + ")");
+
+		//static float elapsedTime = 0.0f;
+		//directionLight.direction = { 0.3f, -cosf(elapsedTime) , 0.5f };
+		//if (directionLight.direction.y >= 0.2f) elapsedTime += 0.5f * deltaTime.asSeconds();
+		//else elapsedTime += 0.1f * deltaTime.asSeconds();
+		//Statistics::get().addText("Light Direction: (" + to_string(directionLight.direction) + ")");
 	}
 
-	auto to_string = [](const glm::vec3& v) { return std::to_string(v.x) + ", " +
-													 std::to_string(v.y) + ", " +
-													 std::to_string(v.z); };
-
-	Statistics::get().addText("Position: (" + to_string(player.position) + ")\n" +
-					   "Rotation: (" + to_string(player.rotation) + ")\n" + 
-					   "Velocity: (" + to_string(player.getVelocity()) + ")");
-
-	static float elapsedTime = 0.0f;
-	directionLight.direction = { 0.3f, -cosf(elapsedTime) , 0.5f};
-	if (directionLight.direction.y >= 0.2f) elapsedTime += 0.5f * deltaTime.asSeconds();
-	else elapsedTime += 0.1f * deltaTime.asSeconds();
-
-	Statistics::get().addText("Light Direction: (" + to_string(directionLight.direction) + ")");
 	return true;
 }
 

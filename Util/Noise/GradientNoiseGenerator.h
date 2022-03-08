@@ -20,6 +20,7 @@ private:
 	float lerp(float t, float a, float b);
 	float clamp(float t, float lower, float upper);
 
+	float invLerp(float t, float a, float b);
 	float map(float value, float oldMin, float oldMax, float newMin, float newMax);
 	float gradient(int hash, float x, float y, float z);
 

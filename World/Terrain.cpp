@@ -3,33 +3,19 @@
 #include "../Config.h"
 #include "../Maths/Matrix.h"
 
-//Terrain::Terrain(const Terrain& terrain)
-//{
-//}
-
-//Terrain::Terrain(const Terrain& terrain) :
-//	maxHeight(terrain.maxHeight),
-//	vertexCount(terrain.vertexCount),
-//	size(terrain.size)
-//{
-//	position = terrain.position;
-//	rotation = terrain.rotation;
-//
-//	generateTerrain("heightmap");
-//	std::cout << "Wrong terrain Generated" << std::endl;
-//}
-
-Terrain::Terrain(const float& _maxHeight, const float& _size, const unsigned int& _vertexCount, glm::vec3 _position, glm::vec3 _rotation) :
+Terrain::Terrain(const glm::vec2& _offset, const float& _size, const unsigned int& _vertexCount, const float& _maxHeight, std::unique_ptr<FractalNoiseGenerator> _noise) :
 	maxHeight(_maxHeight),
 	size(_size),
 	vertexCount(_vertexCount),
-	noise(100.1f, 1)
+	noise(std::move(_noise)),
+	offset(_offset),
+	visible(false)
 {
-	position = _position;
-	rotation = _rotation;
+	position = { offset.x * size, 0, offset.y * size};
+	rotation = { 0, 0, 0 };
 
-	generateTerrain("heightmap");
-	std::cout << "Right Terrain generated" << std::endl;
+	generateTerrain();
+	std::cout << "Terrain: " << offset.x << ", " << offset.y << " created" << std::endl;
 } 
 
 Model& Terrain::getModel()
@@ -76,37 +62,27 @@ float Terrain::getHeightOfTerrain(const float& x, const float& z)
 	return answer;
 }
 
-void Terrain::generateTerrain(std::string heightmapLocation)
+void Terrain::generateTerrain()
 {
-	// Convert texture in GPU to image in CPU, allows reading RGB values
-	sf::Image image = ResourceManager::get().textures.get(heightmapLocation).copyToImage();
-
-	//stepSize = image.getSize().x / vertexCount;
 	unsigned int count = vertexCount * vertexCount;
 
-	heights.resize(vertexCount, std::vector<float>(vertexCount));
-	std::vector<float> vertices(count * 3);
+	// Allocate memory for vertex data
+	std::vector<float> positions(count * 3);
 	std::vector<float> colours(count * 3);
 	std::vector<float> normals(count * 3);
-
 	std::vector<unsigned int> indices(6 * (vertexCount - 1) * (vertexCount - 1));
 
-	auto getPos = [&](int x, int z) { return (z * vertexCount) + x; };
-
+	// Iterate through each vertex
 	int vertexPointer = 0;
-	for (int i = 0; i < vertexCount; i++)
+	for (int z = 0; z < vertexCount; z++)
 	{
-		for (int j = 0; j < vertexCount; j++)
+		for (int x = 0; x < vertexCount; x++)
 		{
 			// Calculate position values
-			float vertexHeight = getHeight(j, i); //getHeightImg(j, i, image);
-			//float vertexHeight = perlin((float)j/0.1f, (float)i/0.1f);
-			vertices[vertexPointer * 3] = (float)j / ((float)vertexCount - 1) * size;
-			vertices[vertexPointer * 3 + 1] = vertexHeight;
-			vertices[vertexPointer * 3 + 2] = (float)i / ((float)vertexCount - 1) * size;
-
-			// Might need to swap
-			heights[j][i] = vertexHeight;
+			float vertexHeight = getHeight(x, z);
+			positions[vertexPointer * 3] = (float)x / ((float)vertexCount - 1) * size;
+			positions[vertexPointer * 3 + 1] = vertexHeight;
+			positions[vertexPointer * 3 + 2] = (float)z / ((float)vertexCount - 1) * size;
 
 			// Calculate colour values
 			auto vertexColour = getColour(vertexHeight / maxHeight);
@@ -115,7 +91,7 @@ void Terrain::generateTerrain(std::string heightmapLocation)
 			colours[vertexPointer * 3 + 2] = vertexColour.z;
 
 			// calcualte normals
-			auto normal = calculateNormal(j, i, image);
+			auto normal = calculateNormal(x, z);
 			normals[vertexPointer * 3] = normal.x;
 			normals[vertexPointer * 3 + 1] = normal.y;
 			normals[vertexPointer * 3 + 2] = normal.z;
@@ -124,12 +100,15 @@ void Terrain::generateTerrain(std::string heightmapLocation)
 		}
 	}
 
+	// Calculate index values
 	int pointer = 0;
-	for (int gz = 0; gz < vertexCount - 1; gz++) {
-		for (int gx = 0; gx < vertexCount - 1; gx++) {
-			int topLeft = (gz * vertexCount) + gx;
+	for (int z = 0; z < vertexCount - 1; z++) 
+	{
+		for (int x = 0; x < vertexCount - 1; x++) 
+		{
+			int topLeft = (z * vertexCount) + x;
 			int topRight = topLeft + 1;
-			int bottomLeft = ((gz + 1) * vertexCount) + gx;
+			int bottomLeft = ((z + 1) * vertexCount) + x;
 			int bottomRight = bottomLeft + 1;
 
 			indices[pointer++] = topLeft;
@@ -141,34 +120,12 @@ void Terrain::generateTerrain(std::string heightmapLocation)
 		}
 	}
 
-	terrainModel.addData(vertices, colours, normals, indices);
-}
-
-float Terrain::getHeightImg(const unsigned int& u, const unsigned int& v, const sf::Image& image)
-{
-	// Check bounds
-	if (u < 0 || u >= image.getSize().x || v < 0 || v >= image.getSize().y)
-		return 0;
-
-	// Get the integer value of the grayscale image
-	float height = (float)image.getPixel(u * stepSize, v * stepSize).toInteger();
-	
-	// Normalise height value between -1 and 1
-	height /= Config::MAX_PIXEL_COLOUR;
-
-	height = 2.0f * height - 1.0f;
-
-	// height is between -0.1 and -1
-	if (height <= -0.1f)
-		height = -0.105f + 0.005f * sinf((float)rand());
-
-	return height * maxHeight;
+	terrainModel.addData(positions, colours, normals, indices);
 }
 
 float Terrain::getHeight(const unsigned int& u, const unsigned int& v)
 {
-	float height = noise.getNoise((float)u, (float)v);
-	// height is between -0.1 and -1
+	float height = noise->getNoise((float)u + vertexCount * offset.x, (float)v + vertexCount * offset.y);
 	if (height <= -0.1f)
 		height = -0.105f + 0.005f * sinf((float)rand());
 	return height * maxHeight;
@@ -177,25 +134,31 @@ float Terrain::getHeight(const unsigned int& u, const unsigned int& v)
 glm::vec3 Terrain::getColour(const float& height)
 {
 	if (height <= -0.1f) return { 0.65f, 0.95f, 0.95f }; // Ice
-
 	if (height > -0.1f && height <= -0.05f) return { 1.0f, 1.0f, 0.8f }; // Sand
-
 	if (height >= 0.1f && height < 0.25f) return { 0.8f, 0.8f, 0.8f }; // Stone
-
-	if (height >= 0.25f) return { 1.0f, 1.0f, 1.0f }; // Ice
-
+	if (height >= 0.25f) return { 1.0f, 1.0f, 1.0f }; // Snow
 	return { 0.4f, 1.0f, 0.4f }; // Grass
 }
 
-glm::vec3 Terrain::calculateNormal(const unsigned int& x, const unsigned int& z, const sf::Image& image)
+glm::vec3 Terrain::calculateNormal(const unsigned int& x, const unsigned int& z)
 {
 	// Calculate height of adjacent vertices (offset=1)
-	float heightL = getHeight(x - 1, z); //getHeightImg(x - 1, z, image);
-	float heightR = getHeight(x + 1, z); //getHeightImg(x + 1, z, image);
-	float heightD = getHeight(x, z - 1); //getHeightImg(x, z - 1, image);
-	float heightU = getHeight(x, z + 1); //getHeightImg(x, z + 1, image);
+	float heightL = getHeight(x - 1, z);
+	float heightR = getHeight(x + 1, z);
+	float heightD = getHeight(x, z - 1);
+	float heightU = getHeight(x, z + 1);
 
 	// Create normal vector, y-component is double the offset
 	glm::vec3 normal(heightL - heightR, 2.0f, heightD - heightU);
 	return glm::normalize(normal);
+}
+
+void Terrain::setVisible(const bool& _visible)
+{
+	visible = _visible;
+}
+
+const bool& Terrain::isVisible() const
+{
+	return visible;
 }
