@@ -4,8 +4,8 @@
 
 #include "BaseState.h"
 #include "../Entities/Player.h"
-#include "../World/Terrain.h"
 #include "../World/Light.h"
+#include "../World.h"
 
 class Game;
 
@@ -21,7 +21,7 @@ public:
 
 private:
 	bool showWireframe;
-	Terrain terrain;
+	World world;
 	Player player;
 	Light directionLight;
 	Light secondLight;

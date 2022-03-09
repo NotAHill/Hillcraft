@@ -8,7 +8,6 @@
 GameState::GameState(Game& game) :
 	BaseState(game),
 	showWireframe(false),
-	terrain(20.0f, 100.0f, 200, { 0, 0, 0 }),
 	directionLight({0, 0, 0}, { 0.3f,-1.0f,0.5f }, { 0.8f,0.95f,0.95f }, { 0.15f, 0.8f, 0.5f }),
 	secondLight({ 0, 0, 0 }, { 0.1f, -1.0f, -0.0f }, { 0.8f,0.95f,0.95f }, { 0.0f, 0.3f, 0.6f })
 {
@@ -26,8 +25,9 @@ bool GameState::update(sf::Time deltaTime)
 	{
 		gamePtr->setCursor(false);
 		player.handleInput(gamePtr->getWindow());
-		player.update(deltaTime.asSeconds(), terrain);
-
+		world.updateChunks(gamePtr->getCamera());
+		player.update(deltaTime.asSeconds(), *world.getCurrentChunk());
+		
 		Statistics::get().addText("Position: (" + to_string(player.position) + ")\n" +
 			"Rotation: (" + to_string(player.rotation) + ")\n" +
 			"Velocity: (" + to_string(player.getVelocity()) + ")");
@@ -52,10 +52,8 @@ void GameState::render(RenderMaster& renderer)
 	
 	renderer.addLight(directionLight);
 	//renderer.addLight(secondLight);
-	renderer.drawQuad(
-		{ 0, 0, 0 },
-		{ 0, 0, 0 });
-	renderer.drawTerrain(terrain);
+	renderer.drawQuad({ 0, 0, 0 }, { 0, 0, 0 });
+	renderer.drawWorld(world);
 }
 
 bool GameState::fixedUpdate(sf::Time deltaTime)

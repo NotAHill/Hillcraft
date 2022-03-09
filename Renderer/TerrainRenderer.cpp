@@ -6,7 +6,7 @@
 
 #include "../Config.h"
 
-void TerrainRenderer::render(const Camera& camera, std::vector<Terrain*> terrains, std::vector<Light*> lights)
+void TerrainRenderer::render(const Camera& camera, std::vector<Light*> lights)
 {
 	static auto& shader = ResourceManager::get().shaders.get("terrain_shader");
 	auto convert = [](const glm::mat4& matrix) { return sf::Glsl::Mat4(glm::value_ptr(matrix)); };
@@ -20,7 +20,7 @@ void TerrainRenderer::render(const Camera& camera, std::vector<Terrain*> terrain
 	shader.setUniform("projection", convert(camera.getProjectionMatrix()));
 
 	// Iterate through all terrains
-	for (auto& terrain : terrains)
+	for (auto& terrain : world->getLoadedChunks())
 	{
 		terrain->getModel().bindVAO();
 		
@@ -48,5 +48,10 @@ void TerrainRenderer::render(const Camera& camera, std::vector<Terrain*> terrain
 	}
 
 	sf::Shader::bind(NULL);
+}
+
+void TerrainRenderer::add(World& _world)
+{
+	world = &_world;
 }
 

@@ -5,9 +5,9 @@ void RenderMaster::drawQuad(const Vector3& position, const Vector3& rotation)
 	quadRenderer.add(position, rotation);
 }
 
-void RenderMaster::drawTerrain(Terrain& terrain)
+void RenderMaster::drawWorld(World& world)
 {
-	terrains.push_back(&terrain);
+	terrainRenderer.add(world);
 }
 
 void RenderMaster::drawSFML(const sf::Drawable& drawable)
@@ -31,8 +31,8 @@ void RenderMaster::finishRender(sf::RenderWindow& window, const Camera& camera)
 	// Process entities
 	//entityRender.render();
 
-	// Process terrain
-	terrainRenderer.render(camera, terrains, lights);
+	// Process world
+	terrainRenderer.render(camera, lights);
 
 	// Quad Rendering for testing
 	quadRenderer.render(camera);
@@ -40,7 +40,6 @@ void RenderMaster::finishRender(sf::RenderWindow& window, const Camera& camera)
 	// Lastly, process SFML
 	sfmlRenderer.render(window);
 
-	terrains.clear();
 	lights.clear();
 	window.display();
 }

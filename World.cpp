@@ -2,10 +2,13 @@
 
 World::World() :
 	heightGen(20.2f, 4, 0.5f, 2.0f, 1),
-	colourGen(20.4f, 4, 0.5f, 2.0f)
+	colourGen(20.4f, 4, 0.5f, 2.0f),
+	chunkMap(),
+	chunksPreviousUpdate()
 {
 	// Maximum possible chunks seen in any direction
 	visibleChunks = static_cast<int>(Config::VIEW_DISTANCE / Config::CHUNK_SIZE);
+	chunkMap.insert(std::make_pair(glm::vec2{ 0,0 }, std::make_shared<Terrain>(glm::vec2{ 0,0 }, Config::CHUNK_SIZE, Config::VERTEX_COUNT, Config::MAX_HEIGHT, &heightGen)));
 }
 
 void World::updateChunks(const Camera& camera)
@@ -19,9 +22,9 @@ void World::updateChunks(const Camera& camera)
 
 	// Coordinates of the current chunk the player is on
 	int currentChunkX = static_cast<int>(camera.getPosition().x / Config::CHUNK_SIZE);
-	int currentChunkY = static_cast<int>(camera.getPosition().y / Config::CHUNK_SIZE);
+	int currentChunkY = static_cast<int>(camera.getPosition().z / Config::CHUNK_SIZE);
 
-	currentChunk = std::move(chunkMap[{currentChunkX, currentChunkY}]);
+	//currentChunk = chunkMap[{currentChunkX, currentChunkY}];
 
 	// Iterate through player's surrounding chunks
 	for (int offsetY = -visibleChunks; offsetY <= visibleChunks; offsetY++)
@@ -42,15 +45,20 @@ void World::updateChunks(const Camera& camera)
 			}
 			else
 			{
-				// Insert an instance of the terrain class alongside the chunk coordinate
-				chunkMap.insert(std::make_pair(viewedChunkCoord, std::make_unique<Terrain>(viewedChunkCoord, Config::CHUNK_SIZE, Config::VERTEX_COUNT, Config::MAX_HEIGHT, &heightGen)));
+				// Insert an instance of the terrain class alongside the chunk coordinate to the chunk map
+				chunkMap.insert(std::make_pair(viewedChunkCoord, std::make_shared<Terrain>(viewedChunkCoord, Config::CHUNK_SIZE, Config::VERTEX_COUNT, Config::MAX_HEIGHT, &heightGen)));
 			}
 		}
 
 
 }
 
-std::unique_ptr<Terrain> World::getCurrentChunk() const
+std::shared_ptr<Terrain> World::getCurrentChunk() const
 {
 	return currentChunk;
+}
+
+std::vector<std::shared_ptr<Terrain>>& World::getLoadedChunks()
+{
+	return chunksPreviousUpdate;
 }

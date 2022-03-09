@@ -9,6 +9,7 @@
 
 #include <SFML/Graphics/Image.hpp>
 #include <string>
+#include <memory>
 
 class Terrain : public Entity, private sf::NonCopyable
 {
