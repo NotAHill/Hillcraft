@@ -10,7 +10,7 @@ Player::Player() :
 	flyMode(false),
 	inAir(true)
 {
-	position = { 0, 10.0f, 0 };
+	position = { 10.0f, 10.0f, 10.0f };
 	rotation = { 0, 180, 0 };
 	velocity = { 0, 0, 0 };
 }
@@ -28,6 +28,8 @@ void Player::toggleFlight()
 
 void Player::update(float deltaTime, Terrain& terrain)
 {
+	Statistics::get().addText("Current chunk: " + std::to_string(terrain.offset.x) + ", " + std::to_string(terrain.offset.y));
+
 	// Do gravity calculation
 	if (!flyMode) velocity.y += Config::GRAVITY;
 

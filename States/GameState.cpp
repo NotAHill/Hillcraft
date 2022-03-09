@@ -25,7 +25,7 @@ bool GameState::update(sf::Time deltaTime)
 	{
 		gamePtr->setCursor(false);
 		player.handleInput(gamePtr->getWindow());
-		world.updateChunks(gamePtr->getCamera());
+		world.updateChunks(player);
 		player.update(deltaTime.asSeconds(), *world.getCurrentChunk());
 		
 		Statistics::get().addText("Position: (" + to_string(player.position) + ")\n" +

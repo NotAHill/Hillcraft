@@ -1,18 +1,23 @@
 #include "World.h"
+#include "Util/Statistics.h"
+
+#include <iostream>
 
 World::World() :
-	heightGen(20.2f, 4, 0.5f, 2.0f, 1),
+	heightGen(Config::SCALE, Config::OCTAVES, Config::PERSISTANCE, Config::LACUNARITY, 1),
 	colourGen(20.4f, 4, 0.5f, 2.0f),
 	chunkMap(),
 	chunksPreviousUpdate()
 {
 	// Maximum possible chunks seen in any direction
-	visibleChunks = static_cast<int>(Config::VIEW_DISTANCE / Config::CHUNK_SIZE);
-	chunkMap.insert(std::make_pair(glm::vec2{ 0,0 }, std::make_shared<Terrain>(glm::vec2{ 0,0 }, Config::CHUNK_SIZE, Config::VERTEX_COUNT, Config::MAX_HEIGHT, &heightGen)));
+	visibleChunks = Config::RENDER_DISTANCE; //static_cast<int>(std::floorf(Config::VIEW_DISTANCE / Config::CHUNK_SIZE));
+	chunkMap.insert(std::make_pair(glm::vec2{ 0,0 }, std::make_shared<Terrain>(glm::vec2{ 0,0 }, Config::CHUNK_SIZE, Config::VERTEX_COUNT, Config::MAX_HEIGHT, heightGen)));
 }
 
-void World::updateChunks(const Camera& camera)
+void World::updateChunks(const Entity& entity)
 {
+	bool oneChunkPerFrame = true;
+
 	// Reset the previous frame's chunks
 	for (auto& chunk : chunksPreviousUpdate)
 		chunk->setVisible(false);
@@ -21,11 +26,9 @@ void World::updateChunks(const Camera& camera)
 	// TODO: Calculate relative position
 
 	// Coordinates of the current chunk the player is on
-	int currentChunkX = static_cast<int>(camera.getPosition().x / Config::CHUNK_SIZE);
-	int currentChunkY = static_cast<int>(camera.getPosition().z / Config::CHUNK_SIZE);
-
-	//currentChunk = chunkMap[{currentChunkX, currentChunkY}];
-
+	int currentChunkX = static_cast<int>(std::floorf(entity.position.x / Config::CHUNK_SIZE));
+	int currentChunkY = static_cast<int>(std::floorf(entity.position.z / Config::CHUNK_SIZE));
+	//std::cout << currentChunkX << " " << currentChunkY << std::endl;
 	// Iterate through player's surrounding chunks
 	for (int offsetY = -visibleChunks; offsetY <= visibleChunks; offsetY++)
 		for (int offsetX = -visibleChunks; offsetX <= visibleChunks; offsetX++)
@@ -34,23 +37,22 @@ void World::updateChunks(const Camera& camera)
 			glm::vec2 viewedChunkCoord = { currentChunkX + offsetX, currentChunkY + offsetY };
 
 			// Check if the chunk exists in the map or not
-			if (chunkMap.contains(viewedChunkCoord))
+			if (!chunkMap.contains(viewedChunkCoord))
 			{
-				// Update chunk for current frame
-				//chunkMap[viewedChunkCoord]->updateChunk();
-				chunkMap[viewedChunkCoord]->setVisible(true);
-				// Append chunks to previous frame's chunks
-				if (chunkMap[viewedChunkCoord]->isVisible())
-					chunksPreviousUpdate.push_back(chunkMap[viewedChunkCoord]);
-			}
-			else
-			{
+				if (!oneChunkPerFrame) continue;
 				// Insert an instance of the terrain class alongside the chunk coordinate to the chunk map
-				chunkMap.insert(std::make_pair(viewedChunkCoord, std::make_shared<Terrain>(viewedChunkCoord, Config::CHUNK_SIZE, Config::VERTEX_COUNT, Config::MAX_HEIGHT, &heightGen)));
+				chunkMap.insert(std::make_pair(viewedChunkCoord, std::make_shared<Terrain>(viewedChunkCoord, Config::CHUNK_SIZE, Config::VERTEX_COUNT, Config::MAX_HEIGHT, heightGen)));
+				oneChunkPerFrame = false;
 			}
+			chunkMap[viewedChunkCoord]->setVisible(true);
+			if (chunkMap[viewedChunkCoord]->isVisible())
+				chunksPreviousUpdate.push_back(chunkMap[viewedChunkCoord]);
 		}
 
+	currentChunk = chunkMap[glm::vec2{currentChunkX, currentChunkY}];
 
+	Statistics::get().addText("Total chunks: " + std::to_string(chunkMap.size()));
+	//Statistics::get().addText("Loaded chunks: " + std::to_string(chunksPreviousUpdate.size()));
 }
 
 std::shared_ptr<Terrain> World::getCurrentChunk() const

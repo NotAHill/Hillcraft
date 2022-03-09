@@ -21,11 +21,17 @@ struct Config
 	static constexpr float MAX_PITCH_ANGLE = 80.0f;
 	static constexpr float MOUSE_SENSITIVITY = 0.05f;
 
-	// World Generation
-	static constexpr float VIEW_DISTANCE = 150.0f;
+	// Chunk Generation
+	static constexpr int RENDER_DISTANCE = 1;
 	static constexpr float CHUNK_SIZE = 100.0f;
-	static constexpr int VERTEX_COUNT = 200;
+	static constexpr int VERTEX_COUNT = 30;
 	static constexpr float MAX_HEIGHT = 20.0f;
+
+	// Height generation
+	static constexpr float SCALE = 31.4f;
+	static constexpr float PERSISTANCE = 0.5f;
+	static constexpr float LACUNARITY = 2.0f;
+	static constexpr int OCTAVES = 1;
 
 };
 

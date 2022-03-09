@@ -14,13 +14,13 @@
 class Terrain : public Entity, private sf::NonCopyable
 {
 public:
-	Terrain(const glm::vec2& _offset, const float& _size, const unsigned int& _vertexCount, const float& _maxHeight, std::unique_ptr<FractalNoiseGenerator> _noise);
+	Terrain(const glm::vec2& _offset, const float& _size, const unsigned int& _vertexCount, const float& _maxHeight, FractalNoiseGenerator& _noise);
 
 	Model& getModel();
 	float getHeightOfTerrain(const float& x, const float& z);
 	void setVisible(const bool& _visible);
 	const bool& isVisible() const;
-
+	glm::vec2 offset;
 private:
 	void generateTerrain();
 	float getHeight(const unsigned int& u, const unsigned int& v);
@@ -30,14 +30,13 @@ private:
 
 private:
 	Model terrainModel;
-	std::unique_ptr<FractalNoiseGenerator> noise;
+	FractalNoiseGenerator* noise;
 	std::vector<std::vector<float>> heights;
 
 	const float size;
 	const unsigned int vertexCount;
 	const float maxHeight;
 	bool visible;
-	glm::vec2 offset;
 };
 
 

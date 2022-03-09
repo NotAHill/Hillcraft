@@ -34,7 +34,7 @@ float FractalNoiseGenerator::getNoise(float x, float y)
 		float sampleX = x / scale * frequency + octaveOffsets[i].x;
 		float sampleY = y / scale * frequency + octaveOffsets[i].y;
 
-		noiseValue = perlin.noise2D(sampleX, sampleY) * amplitude;
+		noiseValue += perlin.noise2D(sampleX, sampleY) * amplitude;
 		maxNoiseValue += amplitude;
 
 		amplitude *= persistance;

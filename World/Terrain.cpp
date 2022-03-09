@@ -3,11 +3,11 @@
 #include "../Config.h"
 #include "../Maths/Matrix.h"
 
-Terrain::Terrain(const glm::vec2& _offset, const float& _size, const unsigned int& _vertexCount, const float& _maxHeight, std::unique_ptr<FractalNoiseGenerator> _noise) :
+Terrain::Terrain(const glm::vec2& _offset, const float& _size, const unsigned int& _vertexCount, const float& _maxHeight, FractalNoiseGenerator& _noise) :
 	maxHeight(_maxHeight),
 	size(_size),
 	vertexCount(_vertexCount),
-	noise(std::move(_noise)),
+	noise(&_noise),
 	offset(_offset),
 	visible(false)
 {
@@ -15,7 +15,7 @@ Terrain::Terrain(const glm::vec2& _offset, const float& _size, const unsigned in
 	rotation = { 0, 0, 0 };
 
 	generateTerrain();
-	std::cout << "Terrain: " << offset.x << ", " << offset.y << " created" << std::endl;
+	//std::cout << "Terrain: " << offset.x << ", " << offset.y << " created" << std::endl;
 } 
 
 Model& Terrain::getModel()
@@ -71,6 +71,7 @@ void Terrain::generateTerrain()
 	std::vector<float> colours(count * 3);
 	std::vector<float> normals(count * 3);
 	std::vector<unsigned int> indices(6 * (vertexCount - 1) * (vertexCount - 1));
+	heights.resize(vertexCount, std::vector<float>(vertexCount));
 
 	// Iterate through each vertex
 	int vertexPointer = 0;
@@ -83,6 +84,8 @@ void Terrain::generateTerrain()
 			positions[vertexPointer * 3] = (float)x / ((float)vertexCount - 1) * size;
 			positions[vertexPointer * 3 + 1] = vertexHeight;
 			positions[vertexPointer * 3 + 2] = (float)z / ((float)vertexCount - 1) * size;
+
+			heights[x][z] = vertexHeight;
 
 			// Calculate colour values
 			auto vertexColour = getColour(vertexHeight / maxHeight);
@@ -125,9 +128,9 @@ void Terrain::generateTerrain()
 
 float Terrain::getHeight(const unsigned int& u, const unsigned int& v)
 {
-	float height = noise->getNoise((float)u + vertexCount * offset.x, (float)v + vertexCount * offset.y);
+	float height = noise->getNoise((float)u + (float)(vertexCount-1) * offset.x, (float)v + (float)(vertexCount-1)* offset.y);
 	if (height <= -0.1f)
-		height = -0.105f + 0.005f * sinf((float)rand());
+		height = -0.1f;//-0.105f + 0.005f * sinf((float)rand());
 	return height * maxHeight;
 }
 
