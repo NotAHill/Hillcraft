@@ -28,7 +28,7 @@ void Player::toggleFlight()
 
 void Player::update(float deltaTime, Terrain& terrain)
 {
-	Statistics::get().addText("Current chunk: " + std::to_string(terrain.offset.x) + ", " + std::to_string(terrain.offset.y));
+	Statistics::get().addText("Current chunk: (" + std::to_string((int)terrain.offset.x) + ", " + std::to_string((int)terrain.offset.y) + ")");
 
 	// Do gravity calculation
 	if (!flyMode) velocity.y += Config::GRAVITY;

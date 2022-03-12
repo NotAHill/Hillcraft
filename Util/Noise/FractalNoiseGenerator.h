@@ -10,6 +10,7 @@ class FractalNoiseGenerator
 public:
 	FractalNoiseGenerator(float _scale, int _octaves, float _persistance, float _lacunarity, int _seed = std::time(nullptr), glm::vec2 _offset = { 0, 0 });
 	float getNoise(float x, float y);
+	void reseed(const unsigned int& _seed);
 	std::vector<std::vector<float>> generateNoiseMap(int size);
 
 private:

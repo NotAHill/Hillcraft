@@ -37,7 +37,7 @@ private:
 	// Maybe try shared ptr
 	std::shared_ptr<Terrain> currentChunk;
 	FractalNoiseGenerator heightGen;
-	FractalNoiseGenerator colourGen;
+	//FractalNoiseGenerator colourGen;
 
 };
 

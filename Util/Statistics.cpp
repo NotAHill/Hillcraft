@@ -37,9 +37,9 @@ void Statistics::update(sf::Time deltaTime)
 
 void Statistics::render(RenderMaster& renderer)
 {
-	displayText.setString(fpsString + otherString);
+	displayText.setString(fpsString + staticString + dynamicString);
 	if (showText) renderer.drawSFML(displayText);
-	otherString.clear();
+	dynamicString.clear();
 }
 
 void Statistics::toggle()
@@ -49,5 +49,10 @@ void Statistics::toggle()
 
 void Statistics::addText(sf::String string)
 {
-	otherString += string + "\n";
+	dynamicString += string + "\n";
+}
+
+void Statistics::addStaticText(sf::String string)
+{
+	staticString += string + "\n";
 }

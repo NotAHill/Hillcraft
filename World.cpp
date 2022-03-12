@@ -5,7 +5,7 @@
 
 World::World() :
 	heightGen(Config::SCALE, Config::OCTAVES, Config::PERSISTANCE, Config::LACUNARITY, 1),
-	colourGen(20.4f, 4, 0.5f, 2.0f),
+	//colourGen(20.4f, 4, 0.5f, 2.0f),
 	chunkMap(),
 	chunksPreviousUpdate()
 {
@@ -44,15 +44,17 @@ void World::updateChunks(const Entity& entity)
 				chunkMap.insert(std::make_pair(viewedChunkCoord, std::make_shared<Terrain>(viewedChunkCoord, Config::CHUNK_SIZE, Config::VERTEX_COUNT, Config::MAX_HEIGHT, heightGen)));
 				oneChunkPerFrame = false;
 			}
-			chunkMap[viewedChunkCoord]->setVisible(true);
-			if (chunkMap[viewedChunkCoord]->isVisible())
-				chunksPreviousUpdate.push_back(chunkMap[viewedChunkCoord]);
+
+			chunksPreviousUpdate.push_back(chunkMap[viewedChunkCoord]);
+			//chunkMap[viewedChunkCoord]->setVisible(true);
+			//if (chunkMap[viewedChunkCoord]->isVisible())
+			//	chunksPreviousUpdate.push_back(chunkMap[viewedChunkCoord]);
 		}
 
 	currentChunk = chunkMap[glm::vec2{currentChunkX, currentChunkY}];
 
 	Statistics::get().addText("Total chunks: " + std::to_string(chunkMap.size()));
-	//Statistics::get().addText("Loaded chunks: " + std::to_string(chunksPreviousUpdate.size()));
+	Statistics::get().addText("Loaded chunks: " + std::to_string(chunksPreviousUpdate.size()));
 }
 
 std::shared_ptr<Terrain> World::getCurrentChunk() const

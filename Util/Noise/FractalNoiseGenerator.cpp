@@ -1,5 +1,9 @@
 #include "FractalNoiseGenerator.h"
+#include "../Statistics.h"
+
 #include <iostream>
+#include <iomanip>
+#include <sstream>
 
 FractalNoiseGenerator::FractalNoiseGenerator(float _scale, int _octaves, float _persistance, float _lacunarity, int _seed, glm::vec2 _offset) :
 	perlin(_seed),
@@ -8,6 +12,19 @@ FractalNoiseGenerator::FractalNoiseGenerator(float _scale, int _octaves, float _
 	persistance(_persistance),
 	lacunarity(_lacunarity)
 {
+	auto float_to_str = [&](const float& val, const int& dp)
+	{
+		std::stringstream stream;
+		stream << std::fixed << std::setprecision(dp) << val;
+		return stream.str();
+	};
+
+	Statistics::get().addStaticText("Seed: " + std::to_string(_seed) +
+		"\tScale: " + float_to_str(scale, 2) +
+		"\tOctaves: " + std::to_string(octaves) +
+		"\tPersistence: " + float_to_str(persistance, 2) +
+		"\tLacunarity: " + float_to_str(lacunarity, 2));
+
 	// Pseudo-random number generator
 	std::mt19937 prng(_seed);
 	std::uniform_int_distribution<int> nextInt(-1000, 1000);

@@ -32,11 +32,11 @@ bool GameState::update(sf::Time deltaTime)
 			"Rotation: (" + to_string(player.rotation) + ")\n" +
 			"Velocity: (" + to_string(player.getVelocity()) + ")");
 
-		//static float elapsedTime = 0.0f;
-		//directionLight.direction = { 0.3f, -cosf(elapsedTime) , 0.5f };
-		//if (directionLight.direction.y >= 0.2f) elapsedTime += 0.5f * deltaTime.asSeconds();
-		//else elapsedTime += 0.1f * deltaTime.asSeconds();
-		//Statistics::get().addText("Light Direction: (" + to_string(directionLight.direction) + ")");
+		static float elapsedTime = 0.0f;
+		directionLight.direction = { 0.3f, -cosf(elapsedTime) , 0.5f };
+		if (directionLight.direction.y >= 0.2f) elapsedTime += 0.5f * deltaTime.asSeconds();
+		else elapsedTime += 0.1f * deltaTime.asSeconds();
+		Statistics::get().addText("Light Direction: (" + to_string(directionLight.direction) + ")");
 	}
 
 	return true;

@@ -15,6 +15,7 @@ public:
 	void render(RenderMaster& renderer);
 	void toggle();
 	void addText(sf::String string);
+	void addStaticText(sf::String string);
 
 private:
 	Statistics();
@@ -23,7 +24,8 @@ private:
 	sf::Time timer;
 	sf::Text displayText;
 	sf::String fpsString;
-	sf::String otherString;
+	sf::String dynamicString;
+	sf::String staticString;
 	unsigned int frameCount;
 };
 
