@@ -1,19 +1,18 @@
 #pragma once
-#ifndef OBJMODEL_H
-#define OBJMODEL_H
-
-#include "../Maths/glm.h"
-#include "../TexturedModel.h"
+#ifndef MESH_H
+#define MESH_H
 
 #include <string>
-#include <sstream>
 #include <fstream>
 #include <vector>
+#include <sstream>
 #include <iostream>
 
-class ObjModel
+class Mesh
 {
 public:
+	Mesh();
+
 	bool loadFromFile(const std::string& filename)
 	{
 		try
@@ -24,18 +23,12 @@ public:
 			// Return false (error) if not found
 			if (!inputFile) return false;
 
-			// Declare vertex attributes
-			std::vector<float> positions;
-			std::vector<unsigned int> indices;
-			std::vector<float> texCoords;
-			std::vector<float> normals;
-
 			// Holds attributes temporarily
 			std::vector<float> tempTexCoords;
 			std::vector<float> tempNormals;
 
 			// Lambda function which splits string based on delimiter
-			auto split = [&](const std::string& s, char delim) 
+			auto split = [&](const std::string& s, char delim)
 			{
 				std::vector<std::string> result;
 				std::stringstream ss(s);
@@ -95,8 +88,6 @@ public:
 				}
 			}
 
-			model.addData(positions, texCoords, normals, indices);
-
 			return true;
 		}
 		catch (const std::exception& e)
@@ -106,10 +97,15 @@ public:
 		}
 	}
 
+	// Vertex attributes
+	std::vector<float> positions;
+	std::vector<unsigned int> indices;
+	std::vector<float> texCoords;
+	std::vector<float> normals;
 private:
 	void processVertex(const std::vector<std::string>& vertices, std::vector<unsigned int>& indices,
 		const std::vector<float>& oldTextures, const std::vector<float>& oldNormals, std::vector<float>& newTextures,
-		std::vector<float>& newNormals) 
+		std::vector<float>& newNormals)
 	{
 		// Vertices are 1-indexed so subtract 1.
 		int currentVertexPointer = std::stoi(vertices[0]) - 1;
@@ -124,9 +120,9 @@ private:
 		newNormals[currentVertexPointer * 3 + 1] = oldNormals[std::stoi(vertices[2])];
 		newNormals[currentVertexPointer * 3 + 2] = oldNormals[std::stoi(vertices[2]) + 1];
 	}
-
-	TexturedModel model;
 };
 
-#endif // !OBJMODEL_H
+#endif // !MESH_H
+
+
 

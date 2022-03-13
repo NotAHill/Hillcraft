@@ -128,9 +128,10 @@ void Terrain::generateTerrain()
 
 float Terrain::getHeight(const unsigned int& u, const unsigned int& v)
 {
-	float height = noise->getNoise((float)u + (float)(vertexCount-1) * offset.x, (float)v + (float)(vertexCount-1)* offset.y);
+	float height = noise->getNoise((float)u + (float)(vertexCount - 1) * offset.x, (float)v + (float)(vertexCount - 1) * offset.y);
 	if (height <= -0.1f)
-		height = -0.1f;//-0.105f + 0.005f * sinf((float)rand());
+		height = -0.105f + 0.005f * sinf((float)rand());
+	//height = height * height;
 	return height * maxHeight;
 }
 

@@ -22,7 +22,7 @@ struct Config
 	static constexpr float MOUSE_SENSITIVITY = 0.05f;
 
 	// Chunk Generation
-	static constexpr int RENDER_DISTANCE = 2;
+	static constexpr int RENDER_DISTANCE = 1;
 	static constexpr float CHUNK_SIZE = 100.0f;
 	static constexpr int VERTEX_COUNT = 50;
 	static constexpr float MAX_HEIGHT = 30.0f;
@@ -30,7 +30,7 @@ struct Config
 	// Height generation
 	static constexpr float SCALE = 50.0f;
 	static constexpr float PERSISTANCE = 0.6f;
-	static constexpr float LACUNARITY = 2.5f;
+	static constexpr float LACUNARITY = 2.2f;
 	static constexpr int OCTAVES = 4;
 
 };

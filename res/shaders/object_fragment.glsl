@@ -4,7 +4,6 @@
 const float LEVELS = 6.0;
 
 out vec4 outColour;
-in vec3 passColour;
 
 // Phong Shading
 struct Light
@@ -16,7 +15,9 @@ struct Light
 
 in vec3 passNormal;
 in vec3 passFragPos;
+in vec2 passTextureCoords;
 
+uniform sampler2D modelTexture;
 uniform vec3 cameraPos;
 uniform Light light[MAX_LIGHTS];
 
@@ -53,11 +54,6 @@ vec3 calculateLighting()
 void main()
 {
 	vec3 lighting = calculateLighting();
-	outColour = vec4(passColour * lighting, 1.0);
+	vec4 textureColour = texture(modelTexture, passTextureCoords);
+	outColour = textureColour * vec4( lighting, 1.0);
 }
-
-// Gouraud Shading
-//void main()
-//{
-//	outColour = vec4(passColour, 1.0);
-//}

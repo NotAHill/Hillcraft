@@ -81,6 +81,18 @@
     <ClCompile Include="World.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TexturedModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\Object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\ObjectRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -167,6 +179,21 @@
     <ClInclude Include="World.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TexturedModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\Object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\ObjectRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\basic_fragment.glsl">
@@ -181,5 +208,15 @@
     <None Include="res\shaders\terrain_vertex.glsl">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="res\shaders\object_fragment.glsl" />
+    <None Include="res\shaders\object_vertex.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="res\objects\toonRocks.obj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\textures\rock.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

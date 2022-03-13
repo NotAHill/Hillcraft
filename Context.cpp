@@ -41,5 +41,6 @@ Context::Context(sf::VideoMode size, sf::String title, bool fullscreen)
 	//ResourceManager::get().textures.load("noiseMap2.jpg", "heightmap");
 	ResourceManager::get().shaders.loadShader("basic_vertex.glsl", "basic_fragment.glsl", "basic_shader");
 	ResourceManager::get().shaders.loadShader("terrain_vertex.glsl", "terrain_fragment.glsl", "terrain_shader");
-
+	ResourceManager::get().meshes.load("toonRocks.obj", "rock");
+	ResourceManager::get().textures.load("rock.png");
 }

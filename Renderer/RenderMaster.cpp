@@ -15,6 +15,11 @@ void RenderMaster::drawSFML(const sf::Drawable& drawable)
 	sfmlRenderer.add(drawable);
 }
 
+void RenderMaster::drawObject(const Object& object)
+{
+	objectRenderer.addObject(object);
+}
+
 void RenderMaster::addLight(Light& light)
 {
 	lights.push_back(&light);
@@ -29,7 +34,7 @@ void RenderMaster::finishRender(sf::RenderWindow& window, const Camera& camera)
 	//glProvokingVertex(GL_LAST_VERTEX_CONVENTION);
 
 	// Process entities
-	//entityRender.render();
+	objectRenderer.render(camera, lights);
 
 	// Process world
 	terrainRenderer.render(camera, lights);

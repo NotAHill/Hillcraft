@@ -11,7 +11,7 @@ uniform mat4 model;
 out vec3 passColour;
 
 // Phong Shading
-flat out vec3 passNormal;
+out vec3 passNormal;
 out vec3 passFragPos;
 
 

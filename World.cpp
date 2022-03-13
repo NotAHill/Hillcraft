@@ -4,7 +4,7 @@
 #include <iostream>
 
 World::World() :
-	heightGen(Config::SCALE, Config::OCTAVES, Config::PERSISTANCE, Config::LACUNARITY, 1),
+	heightGen(Config::SCALE, Config::OCTAVES, Config::PERSISTANCE, Config::LACUNARITY),
 	//colourGen(20.4f, 4, 0.5f, 2.0f),
 	chunkMap(),
 	chunksPreviousUpdate()

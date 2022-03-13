@@ -18,7 +18,7 @@ public:
 		  const std::vector<unsigned int>& indices);
 	~Model();
 
-	void addData(const std::vector<float>& vertexPositions,
+	virtual void addData(const std::vector<float>& vertexPositions,
 				 const std::vector<float>& colourValues,
 				 const std::vector<float>& normalDirections,
 				 const std::vector<unsigned int>& indices);
@@ -30,7 +30,7 @@ public:
 
 	int getIndicesCount() const;
 
-private:
+protected:
 	void addEBO(const std::vector<unsigned int> indices);
 	
 	int indicesCount;
