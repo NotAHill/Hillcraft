@@ -3,7 +3,7 @@
 TexturedModel::TexturedModel(const std::string& mesh, const std::string& texture)
 {
 	addData(ResourceManager::get().meshes.get(mesh));
-	addTexture(texture);
+	addTexture(ResourceManager::get().images.get(texture));
 }
 
 void TexturedModel::addData(const std::vector<float>& vertexPositions, const std::vector<float>& textureCoords, const std::vector<float>& normalDirections, const std::vector<unsigned int>& indices)
@@ -29,16 +29,13 @@ void TexturedModel::addData(const Mesh& mesh)
 	addData(mesh.positions, mesh.texCoords, mesh.normals, mesh.indices);
 }
 
-void TexturedModel::addTexture(const std::string& name)
-{
-	// Load texture from memory
-	auto texture = ResourceManager::get().images.get(name);
-	
+void TexturedModel::addTexture(const sf::Image& img)
+{	
 	// Create texture
 	glGenTextures(1, &ID);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, ID);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture.getSize().x, texture.getSize().y, 0, GL_RGBA, GL_UNSIGNED_BYTE, texture.getPixelsPtr());
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img.getSize().x, img.getSize().y, 0, GL_RGBA, GL_UNSIGNED_BYTE, img.getPixelsPtr());
 	
 	// Set texture attributes
 	glGenerateMipmap(GL_TEXTURE_2D);

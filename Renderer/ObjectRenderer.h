@@ -26,6 +26,6 @@ public:
 	void render(const Camera& camera, std::vector<Light*> lights);
 
 private:
-	std::unordered_map<std::unique_ptr<TexturedModel>, std::vector<Object>> objects;
+	std::unordered_map<TexturedModel*, std::vector<Object>> objects;
 };
 #endif // !OBJECT_RENDERER_H

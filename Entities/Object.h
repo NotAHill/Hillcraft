@@ -10,15 +10,13 @@
 class Object : public Entity
 {
 public:
-	Object(const TexturedModel& _model, glm::vec3 _position, glm::vec3 _rotation, float _scale);
+	Object(TexturedModel& _model, glm::vec3 _position, glm::vec3 _rotation, float _scale);
 
-	Texture& getTexture();
-	TexturedModel& getModel() const;
+	TexturedModel* getModel() const;
 
 private:
 	// make unique ptr instead
-	TexturedModel model;
-	Texture texture;
+	TexturedModel* model;
 };
 
 

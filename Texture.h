@@ -6,16 +6,16 @@
 
 #include <string>
 
-class Texture
-{
-public:
-	Texture();
-	void load(const std::string& name);
-	const unsigned int& getID() const;
-
-private:
-	unsigned int ID;
-};
+//class Texture
+//{
+//public:
+//	void load(const std::string& name);
+//	unsigned int& getID() const;
+//
+//private:
+//	sf::Texture* ptr;
+//	unsigned int ID;
+//};
 
 #endif // !TEXTURE_H
 

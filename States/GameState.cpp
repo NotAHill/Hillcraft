@@ -13,6 +13,14 @@ GameState::GameState(Game& game) :
 {
 	std::cout << "Currently in GAME state" << std::endl;
 	gamePtr->getCamera().hookEntity(player);
+
+	// Load a textured model
+	TexturedModel rock("toonRocks", "rock");
+
+	for (int i = 0; i < 10; i++)
+	{
+		objects.push_back(Object(rock, { rand() % 100, 0.0f, rand() % 100 }, { 0, rand() % 360, 0 }, rand() % 2));
+	}
 }
 
 bool GameState::update(sf::Time deltaTime)
@@ -49,7 +57,9 @@ void GameState::render(RenderMaster& renderer)
 	else
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-	
+	for (const auto& obj : objects)
+		renderer.drawObject(obj);
+
 	renderer.addLight(directionLight);
 	renderer.addLight(secondLight);
 	renderer.drawQuad({ 0, 0, 0 }, { 0, 0, 0 });

@@ -6,6 +6,7 @@
 #include "../Entities/Player.h"
 #include "../World/Light.h"
 #include "../World.h"
+#include "../Entities/Object.h"
 
 class Game;
 
@@ -21,6 +22,8 @@ public:
 
 private:
 	bool showWireframe;
+
+	std::vector<Object> objects;
 	World world;
 	Player player;
 	Light directionLight;

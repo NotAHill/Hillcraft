@@ -11,8 +11,6 @@
 class Mesh
 {
 public:
-	Mesh();
-
 	bool loadFromFile(const std::string& filename)
 	{
 		try

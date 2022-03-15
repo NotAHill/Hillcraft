@@ -3,20 +3,23 @@
 
 void ObjectRenderer::addObject(const Object& object)
 {
-	std::vector<Object>& batch = objects.at(&object.getModel());
+	// Get the batch which contains the textured model
+	std::vector<Object>& batch = objects.at(object.getModel());
+
+	// Add the object to an existing batch otherwise make a new batch
 	if (batch.size() != 0)
 		batch.push_back(object);
 	else
 	{
 		std::vector<Object> newBatch;
 		newBatch.push_back(object);
-		objects.insert({ std::move(object.getModel()), newBatch });
+		objects.insert({ object.getModel(), newBatch });
 	}
 }
 
 void ObjectRenderer::render(const Camera& camera, std::vector<Light*> lights)
 {
-	static auto& shader = ResourceManager::get().shaders.get("terrain_shader");
+	static auto& shader = ResourceManager::get().shaders.get("object_shader");
 	auto convert = [](const glm::mat4& matrix) { return sf::Glsl::Mat4(glm::value_ptr(matrix)); };
 	auto convert2 = [](const glm::vec3& v) { return sf::Glsl::Vec3(v.x, v.y, v.z); };
 
@@ -30,14 +33,14 @@ void ObjectRenderer::render(const Camera& camera, std::vector<Light*> lights)
 
 	for (const auto& [model, batch]: objects)
 	{
-		model.bindVAO();
-		model.bindTexture();
+		model->bindVAO();
+		model->bindTexture();
 
 		for (const auto& object : batch)
 		{
 			// Get the model matrix and draw elements for each terrain
 			shader.setUniform("model", convert(makeModelMatrix(object)));
-			glDrawElements(GL_TRIANGLES, model.getIndicesCount(), GL_UNSIGNED_INT, nullptr);
+			glDrawElements(GL_TRIANGLES, model->getIndicesCount(), GL_UNSIGNED_INT, nullptr);
 		}
 	}
 }

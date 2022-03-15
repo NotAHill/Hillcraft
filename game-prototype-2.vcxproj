@@ -218,9 +218,6 @@
     <None Include="res\shaders\terrain_vertex.glsl" />
   </ItemGroup>
   <ItemGroup>
-    <Object Include="res\objects\toonRocks.obj" />
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="res\textures\rock.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
