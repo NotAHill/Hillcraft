@@ -34,13 +34,18 @@ Context::Context(sf::VideoMode size, sf::String title, bool fullscreen)
 
 	//Config::ASPECT_RATIO = (float)window.getSize().x / (float)window.getSize().y;
 
+	// 2D fonts and textures
 	ResourceManager::get().fonts.load("Fixedsys.ttf");
 	ResourceManager::get().fonts.load("Sansation.ttf");
 	ResourceManager::get().textures.load("vector.jpg", "background");
 	ResourceManager::get().textures.load("heightmap.png");
-	//ResourceManager::get().textures.load("noiseMap2.jpg", "heightmap");
+	
+	// Shaders
 	ResourceManager::get().shaders.loadShader("basic_vertex.glsl", "basic_fragment.glsl", "basic_shader");
 	ResourceManager::get().shaders.loadShader("terrain_vertex.glsl", "terrain_fragment.glsl", "terrain_shader");
-	ResourceManager::get().meshes.load("toonRocks.obj", "rock");
-	ResourceManager::get().textures.load("rock.png");
+	ResourceManager::get().shaders.loadShader("object_vertex.glsl", "object_fragment.glsl", "object_shader");
+	
+	// 3D Objects and textures
+	ResourceManager::get().meshes.load("toonRocks.obj");
+	ResourceManager::get().images.load("rock.png");
 }

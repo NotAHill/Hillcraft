@@ -4,6 +4,7 @@ TexturedModel::TexturedModel(const std::string& mesh, const std::string& texture
 {
 	addData(ResourceManager::get().meshes.get(mesh));
 	addTexture(ResourceManager::get().images.get(texture));
+
 }
 
 void TexturedModel::addData(const std::vector<float>& vertexPositions, const std::vector<float>& textureCoords, const std::vector<float>& normalDirections, const std::vector<unsigned int>& indices)
@@ -40,6 +41,7 @@ void TexturedModel::addTexture(const sf::Image& img)
 	// Set texture attributes
 	glGenerateMipmap(GL_TEXTURE_2D);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, -0.4f);
 }
 
 const unsigned int& TexturedModel::getID() const

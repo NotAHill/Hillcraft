@@ -54,6 +54,6 @@ vec3 calculateLighting()
 void main()
 {
 	vec3 lighting = calculateLighting();
-	vec4 textureColour = texture(modelTexture, passTextureCoords);
-	outColour = textureColour * vec4( lighting, 1.0);
+	//vec4 textureColour = texture(modelTexture, passTextureCoords);
+	outColour = vec4(lighting, 1.0);
 }

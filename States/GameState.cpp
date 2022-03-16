@@ -9,17 +9,20 @@ GameState::GameState(Game& game) :
 	BaseState(game),
 	showWireframe(false),
 	directionLight({0, 0, 0}, { 0.3f,-1.0f,0.5f }, { 0.8f,0.95f,0.95f }, { 0.15f, 0.8f, 0.5f }),
-	secondLight({ 0, 0, 0 }, { 0.1f, -1.0f, -0.0f }, { 0.8f,0.95f,0.95f }, { 0.0f, 0.3f, 0.6f })
+	secondLight({ 0, 0, 0 }, { 0.1f, -1.0f, -0.0f }, { 0.8f,0.95f,0.95f }, { 0.0f, 0.3f, 0.6f }),
+	rock("toonRocks", "rock")
 {
 	std::cout << "Currently in GAME state" << std::endl;
 	gamePtr->getCamera().hookEntity(player);
 
-	// Load a textured model
-	TexturedModel rock("toonRocks", "rock");
+	world.updateChunks(player);
 
 	for (int i = 0; i < 10; i++)
 	{
-		objects.push_back(Object(rock, { rand() % 100, 0.0f, rand() % 100 }, { 0, rand() % 360, 0 }, rand() % 2));
+		auto x = rand() % 50;
+		auto z = rand() % 50;
+		auto y = world.getCurrentChunk()->getHeightOfTerrain(x, z);
+		objects.push_back(Object(rock, { x, y, z }, { 0, rand() % 360, 0 }, (float)rand() / (float)RAND_MAX));
 	}
 }
 
@@ -40,11 +43,11 @@ bool GameState::update(sf::Time deltaTime)
 			"Rotation: (" + to_string(player.rotation) + ")\n" +
 			"Velocity: (" + to_string(player.getVelocity()) + ")");
 
-		//static float elapsedTime = 0.0f;
-		//directionLight.direction = { 0.3f, -cosf(elapsedTime) , 0.5f };
-		//if (directionLight.direction.y >= 0.2f) elapsedTime += 0.5f * deltaTime.asSeconds();
-		//else elapsedTime += 0.1f * deltaTime.asSeconds();
-		//Statistics::get().addText("Light Direction: (" + to_string(directionLight.direction) + ")");
+		static float elapsedTime = 0.0f;
+		directionLight.direction = { 0.3f, -cosf(elapsedTime) , 0.5f };
+		if (directionLight.direction.y >= 0.2f) elapsedTime += 0.5f * deltaTime.asSeconds();
+		else elapsedTime += 0.1f * deltaTime.asSeconds();
+		Statistics::get().addText("Light Direction: (" + to_string(directionLight.direction) + ")");
 	}
 
 	return true;

@@ -28,12 +28,12 @@ public:
 			// Lambda function which splits string based on delimiter
 			auto split = [&](const std::string& s, char delim)
 			{
-				std::vector<std::string> result;
+				std::vector<int> result;
 				std::stringstream ss(s);
 				std::string item;
 
 				while (std::getline(ss, item, delim))
-					result.push_back(item);
+					result.push_back(std::stoi(item));
 
 				return result;
 			};
@@ -68,7 +68,7 @@ public:
 				{
 					// Allocate memory for texCoords and normals
 					static bool doOnce = true;
-					if (doOnce) { texCoords.resize(tempTexCoords.size()), normals.resize(tempNormals.size()); doOnce = false; }
+					if (doOnce) { texCoords.resize(2 * positions.size() / 3), normals.resize(positions.size()); doOnce = false; }
 
 					// vertices of each triangle
 					std::string v1, v2, v3;
@@ -80,9 +80,9 @@ public:
 					auto vertex3 = split(v3, '/');
 
 					// Sets the indices, texCoords and normals in correct order
-					processVertex(vertex1, indices, tempTexCoords, tempNormals, texCoords, normals);
-					processVertex(vertex2, indices, tempTexCoords, tempNormals, texCoords, normals);
-					processVertex(vertex3, indices, tempTexCoords, tempNormals, texCoords, normals);
+					processVertex(vertex1, tempTexCoords, tempNormals);
+					processVertex(vertex2, tempTexCoords, tempNormals);
+					processVertex(vertex3, tempTexCoords, tempNormals);
 				}
 			}
 
@@ -101,22 +101,20 @@ public:
 	std::vector<float> texCoords;
 	std::vector<float> normals;
 private:
-	void processVertex(const std::vector<std::string>& vertices, std::vector<unsigned int>& indices,
-		const std::vector<float>& oldTextures, const std::vector<float>& oldNormals, std::vector<float>& newTextures,
-		std::vector<float>& newNormals)
+	void processVertex(const std::vector<int>& vertices, const std::vector<float>& oldTextures, const std::vector<float>& oldNormals)
 	{
 		// Vertices are 1-indexed so subtract 1.
-		int currentVertexPointer = std::stoi(vertices[0]) - 1;
+		unsigned int currentVertexPointer = vertices[0] - 1;
 		indices.push_back(currentVertexPointer);
 
 		// Textures
-		newTextures[currentVertexPointer * 2] = oldTextures[std::stoi(vertices[1]) - 1];
-		newTextures[currentVertexPointer * 2 + 1] = oldTextures[std::stoi(vertices[1])];
+		texCoords[currentVertexPointer] = oldTextures[vertices[1] - 1];
+		texCoords[currentVertexPointer + 1] = 1 - oldTextures[vertices[1]];
 
 		// Normals
-		newNormals[currentVertexPointer * 3] = oldNormals[std::stoi(vertices[2]) - 1];
-		newNormals[currentVertexPointer * 3 + 1] = oldNormals[std::stoi(vertices[2])];
-		newNormals[currentVertexPointer * 3 + 2] = oldNormals[std::stoi(vertices[2]) + 1];
+		normals[currentVertexPointer] = oldNormals[vertices[2] - 1];
+		normals[currentVertexPointer + 1] = oldNormals[vertices[2]];
+		normals[currentVertexPointer + 2] = oldNormals[vertices[2] + 1];
 	}
 };
 

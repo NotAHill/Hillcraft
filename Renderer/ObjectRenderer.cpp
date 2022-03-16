@@ -4,11 +4,12 @@
 void ObjectRenderer::addObject(const Object& object)
 {
 	// Get the batch which contains the textured model
-	std::vector<Object>& batch = objects.at(object.getModel());
-
+	
 	// Add the object to an existing batch otherwise make a new batch
-	if (batch.size() != 0)
-		batch.push_back(object);
+	if (objects.contains(object.getModel()))
+	{
+		objects[object.getModel()].push_back(object);
+	}
 	else
 	{
 		std::vector<Object> newBatch;
@@ -34,13 +35,34 @@ void ObjectRenderer::render(const Camera& camera, std::vector<Light*> lights)
 	for (const auto& [model, batch]: objects)
 	{
 		model->bindVAO();
-		model->bindTexture();
+		model->bindTexture();		
 
 		for (const auto& object : batch)
 		{
-			// Get the model matrix and draw elements for each terrain
+			// Set uniforms for each light
+			for (int i = 0; i < Config::MAX_LIGHTS; i++)
+			{
+				if (i < lights.size())
+				{
+					shader.setUniform("light[" + std::to_string(i) + "].direction", convert2(lights[i]->getDirection()));
+					shader.setUniform("light[" + std::to_string(i) + "].colour", convert2(lights[i]->getColour()));
+					shader.setUniform("light[" + std::to_string(i) + "].bias", convert2(lights[i]->getBias()));
+				}
+				else
+				{
+					// Default remaining lights to 0 so no uniform errors
+					shader.setUniform("light[" + std::to_string(i) + "].direction", sf::Glsl::Vec3(0, 0, 0));
+					shader.setUniform("light[" + std::to_string(i) + "].colour", sf::Glsl::Vec3(0, 0, 0));
+					shader.setUniform("light[" + std::to_string(i) + "].bias", sf::Glsl::Vec3(0, 0, 0));
+				}
+			}
+
+			// Get the model matrix and draw elements for each object
 			shader.setUniform("model", convert(makeModelMatrix(object)));
 			glDrawElements(GL_TRIANGLES, model->getIndicesCount(), GL_UNSIGNED_INT, nullptr);
 		}
 	}
+
+	objects.clear();
+	sf::Shader::bind(NULL);
 }

@@ -16,7 +16,7 @@ void main()
 {
 	passFragPos = vec3(model * vec4(inVertexPosition, 1.0));
 	passNormal = mat3(transpose(inverse(model))) * inNormal;
-	passTextureCoods = inTextureCoods;
+	passTextureCoords = inTextureCoords;
 
 	gl_Position = projection * view * vec4(passFragPos, 1.0);
 }

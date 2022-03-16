@@ -23,11 +23,17 @@ public:
 private:
 	bool showWireframe;
 
+	// Entities
 	std::vector<Object> objects;
 	World world;
 	Player player;
+
+	// Lights
 	Light directionLight;
 	Light secondLight;
+
+	// Models for each type of object
+	TexturedModel rock;
 };
 
 #endif // !GAMESTATE_H
