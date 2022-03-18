@@ -10,7 +10,8 @@ GameState::GameState(Game& game) :
 	showWireframe(false),
 	directionLight({0, 0, 0}, { 0.3f,-1.0f,0.5f }, { 0.8f,0.95f,0.95f }, { 0.15f, 0.8f, 0.5f }),
 	secondLight({ 0, 0, 0 }, { 0.1f, -1.0f, -0.0f }, { 0.8f,0.95f,0.95f }, { 0.0f, 0.3f, 0.6f }),
-	rock("toonRocks", "rock")
+	rock("toonRocks", "rock"),
+	tree("tree", "tree")
 {
 	std::cout << "Currently in GAME state" << std::endl;
 	gamePtr->getCamera().hookEntity(player);
@@ -22,7 +23,11 @@ GameState::GameState(Game& game) :
 		auto x = rand() % 50;
 		auto z = rand() % 50;
 		auto y = world.getCurrentChunk()->getHeightOfTerrain(x, z);
-		objects.push_back(Object(rock, { x, y, z }, { 0, rand() % 360, 0 }, (float)rand() / (float)RAND_MAX));
+
+		if (i >= 5)
+			objects.push_back(Object(rock, { x, y, z }, { 0, rand() % 360, 0 }, 1.0f));
+		else
+			objects.push_back(Object(tree, { x, y, z }, { 0, rand() % 360, 0 }, 0.3f));
 	}
 }
 
@@ -64,7 +69,7 @@ void GameState::render(RenderMaster& renderer)
 		renderer.drawObject(obj);
 
 	renderer.addLight(directionLight);
-	renderer.addLight(secondLight);
+	//renderer.addLight(secondLight);
 	renderer.drawQuad({ 0, 0, 0 }, { 0, 0, 0 });
 	renderer.drawWorld(world);
 }

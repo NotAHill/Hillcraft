@@ -16,6 +16,7 @@ void Model::addData(const std::vector<float>& vertexPositions, const std::vector
 		deleteData();
 
 	indicesCount = indices.size();
+	vertexCount = vertexPositions.size() / 3;
 
 	// Generate the VAO and bind it
 	glGenVertexArrays(1, &VAO);
@@ -76,6 +77,11 @@ void Model::bindVAO() const
 int Model::getIndicesCount() const
 {
 	return indicesCount;
+}
+
+int Model::getVertexCount() const
+{
+	return vertexCount;
 }
 
 void Model::addEBO(const std::vector<unsigned int> indices)

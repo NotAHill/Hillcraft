@@ -29,11 +29,13 @@ public:
 	void bindVAO() const;
 
 	int getIndicesCount() const;
+	int getVertexCount() const;
 
 protected:
 	void addEBO(const std::vector<unsigned int> indices);
 	
 	int indicesCount;
+	int vertexCount;
 	unsigned int VAO;
 	unsigned int EBO;
 	std::vector<unsigned int> VBO_list;

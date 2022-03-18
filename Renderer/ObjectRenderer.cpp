@@ -60,6 +60,7 @@ void ObjectRenderer::render(const Camera& camera, std::vector<Light*> lights)
 			// Get the model matrix and draw elements for each object
 			shader.setUniform("model", convert(makeModelMatrix(object)));
 			glDrawElements(GL_TRIANGLES, model->getIndicesCount(), GL_UNSIGNED_INT, nullptr);
+			//glDrawArrays(GL_TRIANGLES, 0, model->getIndicesCount());
 		}
 	}
 

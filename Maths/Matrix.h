@@ -15,13 +15,15 @@ class Entity;
 
 inline glm::mat4 makeModelMatrix(const Entity& entity)
 {
-	glm::mat4 matrix(entity.scale);
+	glm::mat4 matrix(1.0f);
+
+    matrix = glm::translate(matrix, entity.position);
 
 	matrix = glm::rotate(matrix, glm::radians(entity.rotation.x), { 1, 0, 0 });
 	matrix = glm::rotate(matrix, glm::radians(entity.rotation.y), { 0, 1, 0 });
 	matrix = glm::rotate(matrix, glm::radians(entity.rotation.z), { 0, 0, 1 });
 
-	matrix = glm::translate(matrix, entity.position);
+    matrix = glm::scale(matrix, glm::vec3(entity.scale));
 
 	return matrix;
 }

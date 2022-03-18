@@ -1,7 +1,7 @@
 #version 330 core
 
 #define MAX_LIGHTS 4
-const float LEVELS = 6.0;
+const float LEVELS = 3.0;
 
 out vec4 outColour;
 
@@ -39,11 +39,11 @@ vec3 calculateLighting()
 
 		// Specular
 		vec3 reflectDir = reflect(lightDir, normal);
-		float shininess = pow(max(dot(viewDir, reflectDir), 0.0), 32);
+		float shininess = pow(max(dot(viewDir, reflectDir), 0.0), 16);
 		
 		// Cel Shading
-		//level = floor(shininess * LEVELS);
-		//shininess = level / LEVELS;
+		level = floor(shininess * LEVELS);
+		shininess = level / LEVELS;
 
 		totalLight += (light[i].colour * light[i].bias.x) + (brightness * light[i].colour * light[i].bias.y) + (shininess * light[i].colour * light[i].bias.z);
 	}
@@ -54,6 +54,6 @@ vec3 calculateLighting()
 void main()
 {
 	vec3 lighting = calculateLighting();
-	//vec4 textureColour = texture(modelTexture, passTextureCoords);
-	outColour = vec4(lighting, 1.0);
+	vec4 textureColour = texture(modelTexture, passTextureCoords);
+	outColour = textureColour * vec4(lighting, 1.0);
 }

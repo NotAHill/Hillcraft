@@ -2,6 +2,8 @@
 #ifndef MESH_H
 #define MESH_H
 
+#include "Maths/glm.h"
+
 #include <string>
 #include <fstream>
 #include <vector>
@@ -22,8 +24,11 @@ public:
 			if (!inputFile) return false;
 
 			// Holds attributes temporarily
-			std::vector<float> tempTexCoords;
-			std::vector<float> tempNormals;
+			std::vector<glm::vec3> tempPositions;
+			std::vector<glm::vec2> tempTexCoords;
+			std::vector<glm::vec3> tempNormals;
+
+			bool doOnce = true;
 
 			// Lambda function which splits string based on delimiter
 			auto split = [&](const std::string& s, char delim)
@@ -48,27 +53,26 @@ public:
 				// v = position, vt = texture coords, vn = normal, f = index
 				if (line.starts_with("v "))
 				{
-					float x, y, z;
-					stream >> junk >> x >> y >> z;
-					positions.insert(positions.end(), { x, y, z });
+					glm::vec3 v;
+					stream >> junk >> v.x >> v.y >> v.z;
+					tempPositions.push_back(v);
 				}
 				if (line.starts_with("vt "))
 				{
-					float u, v;
-					stream >> junk >> u >> v;
-					tempTexCoords.insert(tempTexCoords.end(), { u, v });
+					glm::vec2 v;
+					stream >> junk >> v.x >> v.y;
+					tempTexCoords.push_back(v);
 				}
 				if (line.starts_with("vn "))
 				{
-					float x, y, z;
-					stream >> junk >> x >> y >> z;
-					tempNormals.insert(tempNormals.end(), { x, y, z });
+					glm::vec3 v;
+					stream >> junk >> v.x >> v.y >> v.z;
+					tempNormals.push_back(v);
 				}
 				if (line.starts_with("f "))
 				{
 					// Allocate memory for texCoords and normals
-					static bool doOnce = true;
-					if (doOnce) { texCoords.resize(2 * positions.size() / 3), normals.resize(positions.size()); doOnce = false; }
+					if (doOnce) { texCoords.resize(tempPositions.size() * 2), normals.resize(tempPositions.size() * 3); doOnce = false; }
 
 					// vertices of each triangle
 					std::string v1, v2, v3;
@@ -86,6 +90,15 @@ public:
 				}
 			}
 
+			positions.resize(tempPositions.size() * 3);
+			int vertexPointer = 0;
+			for (auto& vertex : tempPositions) 
+			{
+				positions[vertexPointer++] = vertex.x;
+				positions[vertexPointer++] = vertex.y;
+				positions[vertexPointer++] = vertex.z;
+			}
+
 			return true;
 		}
 		catch (const std::exception& e)
@@ -101,20 +114,22 @@ public:
 	std::vector<float> texCoords;
 	std::vector<float> normals;
 private:
-	void processVertex(const std::vector<int>& vertices, const std::vector<float>& oldTextures, const std::vector<float>& oldNormals)
+	void processVertex(const std::vector<int>& vertices, const std::vector<glm::vec2>& oldTextures, const std::vector<glm::vec3>& oldNormals)
 	{
 		// Vertices are 1-indexed so subtract 1.
 		unsigned int currentVertexPointer = vertices[0] - 1;
 		indices.push_back(currentVertexPointer);
 
 		// Textures
-		texCoords[currentVertexPointer] = oldTextures[vertices[1] - 1];
-		texCoords[currentVertexPointer + 1] = 1 - oldTextures[vertices[1]];
+		auto& currentTex = oldTextures[vertices[1] - 1];
+		texCoords[currentVertexPointer * 2] = currentTex.x;
+		texCoords[currentVertexPointer * 2 + 1] = 1 - currentTex.y;
 
 		// Normals
-		normals[currentVertexPointer] = oldNormals[vertices[2] - 1];
-		normals[currentVertexPointer + 1] = oldNormals[vertices[2]];
-		normals[currentVertexPointer + 2] = oldNormals[vertices[2] + 1];
+		auto& currentNormal = oldNormals[vertices[2] - 1];
+		normals[currentVertexPointer * 3] = currentNormal.x;
+		normals[currentVertexPointer * 3 + 1] = currentNormal.y;
+		normals[currentVertexPointer * 3 + 2] = currentNormal.z;
 	}
 };
 

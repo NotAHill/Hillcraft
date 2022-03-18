@@ -30,7 +30,7 @@ Context::Context(sf::VideoMode size, sf::String title, bool fullscreen)
 
 	// Create the OpenGL viewport
 	glViewport(0, 0, window.getSize().x, window.getSize().y);
-	window.setFramerateLimit(60);
+	//window.setFramerateLimit(60);
 
 	//Config::ASPECT_RATIO = (float)window.getSize().x / (float)window.getSize().y;
 
@@ -47,5 +47,8 @@ Context::Context(sf::VideoMode size, sf::String title, bool fullscreen)
 	
 	// 3D Objects and textures
 	ResourceManager::get().meshes.load("toonRocks.obj");
+	ResourceManager::get().meshes.load("tree.obj");
+	//ResourceManager::get().meshes.load("test.obj");
 	ResourceManager::get().images.load("rock.png");
+	ResourceManager::get().images.load("tree.png");
 }

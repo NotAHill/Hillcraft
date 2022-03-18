@@ -41,8 +41,8 @@ vec3 calculateLighting()
 		float shininess = pow(max(dot(viewDir, reflectDir), 0.0), 32);
 		
 		// Cel Shading
-		//level = floor(shininess * LEVELS);
-		//shininess = level / LEVELS;
+		level = floor(shininess * LEVELS);
+		shininess = level / LEVELS;
 
 		totalLight += (light[i].colour * light[i].bias.x) + (brightness * light[i].colour * light[i].bias.y) + (shininess * light[i].colour * light[i].bias.z);
 	}
