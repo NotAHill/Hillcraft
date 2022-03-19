@@ -16,10 +16,12 @@ struct Light
 in vec3 passNormal;
 in vec3 passFragPos;
 in vec2 passTextureCoords;
+in float visibility;
 
 uniform sampler2D modelTexture;
 uniform vec3 cameraPos;
 uniform Light light[MAX_LIGHTS];
+uniform vec3 skyColour;
 
 vec3 calculateLighting()
 {
@@ -56,4 +58,5 @@ void main()
 	vec3 lighting = calculateLighting();
 	vec4 textureColour = texture(modelTexture, passTextureCoords);
 	outColour = textureColour * vec4(lighting, 1.0);
+	outColour = mix(vec4(skyColour, 1.0), outColour, visibility);
 }

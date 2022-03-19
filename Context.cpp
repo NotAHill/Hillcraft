@@ -30,7 +30,7 @@ Context::Context(sf::VideoMode size, sf::String title, bool fullscreen)
 
 	// Create the OpenGL viewport
 	glViewport(0, 0, window.getSize().x, window.getSize().y);
-	//window.setFramerateLimit(60);
+	window.setFramerateLimit(60);
 
 	//Config::ASPECT_RATIO = (float)window.getSize().x / (float)window.getSize().y;
 

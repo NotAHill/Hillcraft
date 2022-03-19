@@ -31,6 +31,7 @@ void ObjectRenderer::render(const Camera& camera, std::vector<Light*> lights)
 	shader.setUniform("cameraPos", convert2(camera.getPosition()));
 	shader.setUniform("view", convert(camera.getViewMatrix()));
 	shader.setUniform("projection", convert(camera.getProjectionMatrix()));
+	shader.setUniform("skyColour", convert2({ Config::RED, Config::GREEN, Config::BLUE }));
 
 	for (const auto& [model, batch]: objects)
 	{

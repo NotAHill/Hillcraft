@@ -5,6 +5,7 @@
 #include "../Model.h"
 #include "../Maths/glm.h"
 #include "../Entities/Entity.h"
+#include "../Entities/Object.h"
 #include "../Util/Noise/FractalNoiseGenerator.h"
 
 #include <SFML/Graphics/Image.hpp>
@@ -32,6 +33,9 @@ private:
 	Model terrainModel;
 	FractalNoiseGenerator* noise;
 	std::vector<std::vector<float>> heights;
+	
+	// TEMP
+	std::vector<Object> objects;
 
 	const float size;
 	const unsigned int vertexCount;

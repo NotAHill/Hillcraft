@@ -28,20 +28,21 @@ void RenderMaster::addLight(Light& light)
 void RenderMaster::finishRender(sf::RenderWindow& window, const Camera& camera)
 {
 	// Purple 0.6f, 0.1f, 1.0f
-	glClearColor(0.6f, 0.1f, 1.0f, 1.0f);
+	glClearColor(Config::RED, Config::GREEN, Config::BLUE, 1.0f);
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_CULL_FACE);
 	//glProvokingVertex(GL_LAST_VERTEX_CONVENTION);
-
-	// Process entities
-	objectRenderer.render(camera, lights);
 
 	// Process world
 	terrainRenderer.render(camera, lights);
 
 	// Quad Rendering for testing
 	quadRenderer.render(camera);
+
+	// Process entities
+	objectRenderer.render(camera, lights);
 
 	// Lastly, process SFML
 	sfmlRenderer.render(window);

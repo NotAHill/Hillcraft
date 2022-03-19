@@ -2,36 +2,47 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-struct Config
+namespace Config
 {
 	// Lighting values
-	static constexpr int MAX_LIGHTS = 4;
-	static constexpr float MAX_PIXEL_COLOUR = 4294967296.0f;
+	const int MAX_LIGHTS = 4;
+	const float MAX_PIXEL_COLOUR = 4294967296.0f;
 	
+	// Sky colour
+	// purple 0.6, 0.1, 1.0
+	const float RED = 0.6f;
+	const float GREEN = 0.1f;
+	const float BLUE = 1.0f;
+
+	// TODO: Uniform variable fog settings
+	const float FOG_DENSITY = 0.0f;
+	const float FOG_GRADIENT = 0.0f;
+
 	// Matrix arguments
-	static constexpr float ASPECT_RATIO = 2.0f;
-	static constexpr float NEAR = 0.1f;
-	static constexpr float FAR = 1000.0f;
+	const float ASPECT_RATIO = 2.0f;
+	const float NEAR = 0.1f;
+	const float FAR = 1000.0f;
+	const float FOV = 45.0f;
 
 	// Player physics
-	static constexpr float GRAVITY = -0.5f;
-	static constexpr float JUMP_STRENGTH = 18.0f;
+	const float GRAVITY = -0.5f;
+	const float JUMP_STRENGTH = 18.0f;
 
 	// Mouse values
-	static constexpr float MAX_PITCH_ANGLE = 80.0f;
-	static constexpr float MOUSE_SENSITIVITY = 0.05f;
+	const float MAX_PITCH_ANGLE = 80.0f;
+	const float MOUSE_SENSITIVITY = 0.05f;
 
 	// Chunk Generation
-	static constexpr int RENDER_DISTANCE = 1;
-	static constexpr float CHUNK_SIZE = 100.0f;
-	static constexpr int VERTEX_COUNT = 50;
-	static constexpr float MAX_HEIGHT = 30.0f;
+	const int RENDER_DISTANCE = 1;
+	const float CHUNK_SIZE = 100.0f;
+	const int VERTEX_COUNT = 39;
+	const float MAX_HEIGHT = 30.0f;
 
 	// Height generation
-	static constexpr float SCALE = 50.0f;
-	static constexpr float PERSISTANCE = 0.6f;
-	static constexpr float LACUNARITY = 2.2f;
-	static constexpr int OCTAVES = 4;
+	const float SCALE = 50.0f;
+	const float PERSISTANCE = 0.6f;
+	const float LACUNARITY = 2.2f;
+	const int OCTAVES = 4;
 
 };
 

@@ -11,6 +11,10 @@ uniform mat4 model;
 out vec2 passTextureCoords;
 out vec3 passNormal;
 out vec3 passFragPos;
+out float visibility;
+
+const float density = 0.0;
+const float gradient = 4.0;
 
 void main()
 {
@@ -18,5 +22,11 @@ void main()
 	passNormal = mat3(transpose(inverse(model))) * inNormal;
 	passTextureCoords = inTextureCoords;
 
-	gl_Position = projection * view * vec4(passFragPos, 1.0);
+	vec4 positionFromCamera = view * vec4(passFragPos, 1.0);
+	gl_Position = projection * positionFromCamera;
+
+	// Fog calculation
+	float distanceFromCamera = length(positionFromCamera.xyz);
+	visibility = exp(-pow((distanceFromCamera * density), gradient));
+	visibility = clamp(visibility, 0.0, 1.0);
 }

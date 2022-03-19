@@ -16,9 +16,11 @@ struct Light
 
 in vec3 passNormal;
 in vec3 passFragPos;
+in float visibility;
 
 uniform vec3 cameraPos;
 uniform Light light[MAX_LIGHTS];
+uniform vec3 skyColour;
 
 vec3 calculateLighting()
 {
@@ -54,6 +56,7 @@ void main()
 {
 	vec3 lighting = calculateLighting();
 	outColour = vec4(passColour * lighting, 1.0);
+	outColour = mix(vec4(skyColour, 1.0), outColour, visibility);
 }
 
 // Gouraud Shading

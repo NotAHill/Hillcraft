@@ -22,6 +22,7 @@ void TerrainRenderer::render(const Camera& camera, std::vector<Light*> lights)
 		shader.setUniform("cameraPos", convert2(camera.getPosition()));
 		shader.setUniform("view", convert(camera.getViewMatrix()));
 		shader.setUniform("projection", convert(camera.getProjectionMatrix()));
+		shader.setUniform("skyColour", convert2({ Config::RED, Config::GREEN, Config::BLUE }));
 
 		// Iterate through all terrains
 		for (auto& terrain : world->getLoadedChunks())

@@ -15,6 +15,18 @@ Terrain::Terrain(const glm::vec2& _offset, const float& _size, const unsigned in
 	rotation = { 0, 0, 0 };
 
 	generateTerrain();
+
+	//for (int i = 0; i < 10; i++)
+	//{
+	//	auto x = (float) rand() / (float) RAND_MAX;
+	//	auto z = (float) rand() / (float) RAND_MAX;
+	//	auto y = getHeightOfTerrain(x * size, z * size);
+	//
+	//	if (i >= 5)
+	//		objects.push_back(Object(rock, { x + position.x, y, z + position.z }, { 0, rand() % 360, 0 }, 1.0f));
+	//	else
+	//		objects.push_back(Object(tree, { x + position.x, y, z + position.z }, { 0, rand() % 360, 0 }, 0.3f));
+	//}
 	//std::cout << "Terrain: " << offset.x << ", " << offset.y << " created" << std::endl;
 } 
 

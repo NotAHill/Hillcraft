@@ -10,7 +10,7 @@ rotation z = roll
 
 Camera::Camera()
 {
-	projectionMatrix = makeProjectionMatrix(45.0f);
+	projectionMatrix = makeProjectionMatrix(Config::FOV);
 	position = { 0, 0, -3.5f };
 	rotation = { 0, 0, 0 };
 	displacement = { 0, 2.0f, 0 };
