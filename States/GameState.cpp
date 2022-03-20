@@ -9,26 +9,10 @@ GameState::GameState(Game& game) :
 	BaseState(game),
 	showWireframe(false),
 	directionLight({0, 0, 0}, { 0.0f,-1.0f,0.0f }, { 0.8f,0.95f,0.95f }, { 0.15f, 0.8f, 0.5f }),
-	secondLight({ 0, 0, 0 }, { 0.1f, -1.0f, -0.0f }, { 0.8f,0.95f,0.95f }, { 0.0f, 0.3f, 0.6f }),
-	rock("toonRocks", "rock"),
-	tree("tree", "tree")
+	secondLight({ 0, 0, 0 }, { 0.1f, -1.0f, -0.0f }, { 0.8f,0.95f,0.95f }, { 0.0f, 0.3f, 0.6f })
 {
 	std::cout << "Currently in GAME state" << std::endl;
 	gamePtr->getCamera().hookEntity(player);
-
-	world.updateChunks(player);
-
-	for (int i = 0; i < 10; i++)
-	{
-		auto x = rand() % 50;
-		auto z = rand() % 50;
-		auto y = world.getCurrentChunk()->getHeightOfTerrain(x, z);
-
-		if (i >= 5)
-			objects.push_back(Object(rock, { x, y, z }, { 0, rand() % 360, 0 }, 1.0f));
-		else
-			objects.push_back(Object(tree, { x, y, z }, { 0, rand() % 360, 0 }, 0.3f));
-	}
 }
 
 bool GameState::update(sf::Time deltaTime)
@@ -64,9 +48,6 @@ void GameState::render(RenderMaster& renderer)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	else
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
-	for (const auto& obj : objects)
-		renderer.drawObject(obj);
 
 	renderer.addLight(directionLight);
 	//renderer.addLight(secondLight);

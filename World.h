@@ -27,15 +27,30 @@ class World
 public:
 	World();
 	void updateChunks(const Entity& entity);
-	std::shared_ptr<Terrain> getCurrentChunk() const;
-	std::vector<std::shared_ptr<Terrain>>& getLoadedChunks();
-private:
-	int visibleChunks;
-	std::unordered_map<glm::vec2, std::shared_ptr<Terrain>> chunkMap;
-	std::vector<std::shared_ptr<Terrain>> chunksPreviousUpdate;
 
-	// Maybe try shared ptr
+	std::shared_ptr<Terrain> getCurrentChunk() const;
+
+	std::vector<std::shared_ptr<Terrain>>& getLoadedChunks();
+	std::vector<std::shared_ptr<Object>>& getLoadedObjects();
+
+private:
+	// Maybe unnecessary
+	int visibleChunks;
+
+	// Contains all the chunks
+	std::unordered_map<glm::vec2, std::shared_ptr<Terrain>> chunkMap;
+
+	// Contains all the textured models
+	std::unordered_map<std::string , std::shared_ptr<TexturedModel>> modelMap;
+
+	// Contains all the rendered chunks/objects for drawing
+	std::vector<std::shared_ptr<Terrain>> chunksPreviousUpdate;
+	std::vector<std::shared_ptr<Object>> objectsPreviousUpdate;
+
+	// For height calculation
 	std::shared_ptr<Terrain> currentChunk;
+
+	// Procedural generation
 	FractalNoiseGenerator heightGen;
 	//FractalNoiseGenerator colourGen;
 

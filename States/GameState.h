@@ -31,10 +31,6 @@ private:
 	// Lights
 	Light directionLight;
 	Light secondLight;
-
-	// Models for each type of object
-	TexturedModel rock;
-	TexturedModel tree;
 };
 
 #endif // !GAMESTATE_H
