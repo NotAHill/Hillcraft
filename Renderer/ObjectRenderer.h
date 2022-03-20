@@ -9,13 +9,11 @@
 
 #include <unordered_map>
 
-// Hash function for pointer to TextureModel class
 template<>
 struct std::hash<TexturedModel*>
 {
 	std::size_t operator()(TexturedModel* tex) const noexcept
 	{
-		// Hash based on ID of the model; Each texturedModel has unique ID
 		std::size_t h1 = std::hash<unsigned int>{}(tex->getID());
 		return h1;
 	}
@@ -24,7 +22,7 @@ struct std::hash<TexturedModel*>
 class ObjectRenderer
 {
 public:
-	void add(const std::vector<std::shared_ptr<Object>>& _objects);
+	void addObject(const Object& object);
 	void render(const Camera& camera, std::vector<Light*> lights);
 
 private:

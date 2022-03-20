@@ -15,8 +15,8 @@ out float visibility;
 out vec3 passNormal;
 out vec3 passFragPos;
 
-const float density = 0.01;
-const float gradient = 2.0;
+const float density = 0.0;
+const float gradient = 4.0;
 
 void main()
 {

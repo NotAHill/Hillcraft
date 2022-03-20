@@ -3,7 +3,7 @@
 #include "../Config.h"
 #include "../Maths/Matrix.h"
 
-Terrain::Terrain(const glm::vec2& _offset, const float& _size, const unsigned int& _vertexCount, const float& _maxHeight, FractalNoiseGenerator& _noise, std::unordered_map<std::string, std::shared_ptr<TexturedModel>>& modelMap) :
+Terrain::Terrain(const glm::vec2& _offset, const float& _size, const unsigned int& _vertexCount, const float& _maxHeight, FractalNoiseGenerator& _noise) :
 	maxHeight(_maxHeight),
 	size(_size),
 	vertexCount(_vertexCount),
@@ -16,22 +16,17 @@ Terrain::Terrain(const glm::vec2& _offset, const float& _size, const unsigned in
 
 	generateTerrain();
 
-	// Generate random objects
-	for (int i = 0; i < 10; i++)
-	{
-		auto x = ((float) rand() / (float) RAND_MAX) * size;
-		auto z = ((float) rand() / (float) RAND_MAX) * size;
-		auto y = getHeightOfTerrain(x + position.x, z + position.z);
-		
-		// Prevent object from being on water
-		if (y <= -0.1f) continue;
-
-		if (i >= 5)
-			objects.push_back(std::make_shared<Object>(*modelMap.at("rock"), glm::vec3{ x + position.x, y, z + position.z }, glm::vec3{ 0, rand() % 360, 0 }, 1.0f));
-		else
-			objects.push_back(std::make_shared<Object>(*modelMap.at("tree"), glm::vec3{ x + position.x, y, z + position.z }, glm::vec3{ 0, rand() % 360, 0 }, 0.3f));
-	}
-
+	//for (int i = 0; i < 10; i++)
+	//{
+	//	auto x = (float) rand() / (float) RAND_MAX;
+	//	auto z = (float) rand() / (float) RAND_MAX;
+	//	auto y = getHeightOfTerrain(x * size, z * size);
+	//
+	//	if (i >= 5)
+	//		objects.push_back(Object(rock, { x + position.x, y, z + position.z }, { 0, rand() % 360, 0 }, 1.0f));
+	//	else
+	//		objects.push_back(Object(tree, { x + position.x, y, z + position.z }, { 0, rand() % 360, 0 }, 0.3f));
+	//}
 	//std::cout << "Terrain: " << offset.x << ", " << offset.y << " created" << std::endl;
 } 
 
@@ -145,19 +140,7 @@ void Terrain::generateTerrain()
 
 float Terrain::getHeight(const unsigned int& u, const unsigned int& v)
 {
-	auto func = [](float x)
-	{// a= 1.2, b = 3.6
-		x = x > 1.0f ? 1.0f : x;
-		x = x < 0.0f ? 0.0f : x;
-
-		float a = 1.2f;
-		float b = 3.6f;
-		
-		return powf(x, a) / (powf(x, a) + powf(b, a) * powf(1.0f-x, a));
-	};
-
 	float height = noise->getNoise((float)u + (float)(vertexCount - 1) * offset.x, (float)v + (float)(vertexCount - 1) * offset.y);
-	//if (height < 0.0f) height = -func(abs(height));
 	if (height <= -0.1f)
 		height = -0.105f + 0.005f * sinf((float)rand());
 	//height = height * height;
@@ -194,9 +177,4 @@ void Terrain::setVisible(const bool& _visible)
 const bool& Terrain::isVisible() const
 {
 	return visible;
-}
-
-const std::vector<std::shared_ptr<Object>>& Terrain::getObjects() const
-{
-	return objects;
 }

@@ -7,7 +7,6 @@ void RenderMaster::drawQuad(const Vector3& position, const Vector3& rotation)
 
 void RenderMaster::drawWorld(World& world)
 {
-	objectRenderer.add(world.getLoadedObjects());
 	terrainRenderer.add(world);
 }
 
@@ -18,8 +17,7 @@ void RenderMaster::drawSFML(const sf::Drawable& drawable)
 
 void RenderMaster::drawObject(const Object& object)
 {
-	// Defunct
-	//objectRenderer.addObject(object);
+	objectRenderer.addObject(object);
 }
 
 void RenderMaster::addLight(Light& light)

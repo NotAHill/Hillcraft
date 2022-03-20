@@ -61,11 +61,6 @@ void Game::update(sf::Time deltaTime)
 
 void Game::render()
 {
-	// Display Memory info
-	int mem_kb = 0;
-	glGetIntegerv(0x9049, &mem_kb);
-	Statistics::get().addText("Remaining VRAM: " + std::to_string(mem_kb / 1000) + "MB");
-
 	stack.render(masterRenderer);
 	Statistics::get().render(masterRenderer);
 	masterRenderer.finishRender(context.window, camera);

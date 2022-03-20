@@ -7,7 +7,6 @@
 #include "../Entities/Entity.h"
 #include "../Entities/Object.h"
 #include "../Util/Noise/FractalNoiseGenerator.h"
-#include "../TexturedModel.h"
 
 #include <SFML/Graphics/Image.hpp>
 #include <string>
@@ -16,16 +15,13 @@
 class Terrain : public Entity, private sf::NonCopyable
 {
 public:
-	Terrain(const glm::vec2& _offset, const float& _size, const unsigned int& _vertexCount, const float& _maxHeight, FractalNoiseGenerator& _noise, std::unordered_map<std::string, std::shared_ptr<TexturedModel>>& modelMap);
+	Terrain(const glm::vec2& _offset, const float& _size, const unsigned int& _vertexCount, const float& _maxHeight, FractalNoiseGenerator& _noise);
 
 	Model& getModel();
 	float getHeightOfTerrain(const float& x, const float& z);
 	void setVisible(const bool& _visible);
 	const bool& isVisible() const;
-	const std::vector<std::shared_ptr<Object>>& getObjects() const;
-
 	glm::vec2 offset;
-
 private:
 	void generateTerrain();
 	float getHeight(const unsigned int& u, const unsigned int& v);
@@ -39,7 +35,7 @@ private:
 	std::vector<std::vector<float>> heights;
 	
 	// TEMP
-	std::vector<std::shared_ptr<Object>> objects;
+	std::vector<Object> objects;
 
 	const float size;
 	const unsigned int vertexCount;
