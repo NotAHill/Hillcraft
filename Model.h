@@ -25,17 +25,16 @@ public:
 
 	void deleteData();
 
+	void addEBO(const std::vector<unsigned int> indices);
+	void genVAO();
 	void addVBO(int size, const std::vector<float>& data);
 	void bindVAO() const;
 
 	int getIndicesCount() const;
-	int getVertexCount() const;
 
-protected:
-	void addEBO(const std::vector<unsigned int> indices);
-	
+protected:	
 	int indicesCount;
-	int vertexCount;
+
 	unsigned int VAO;
 	unsigned int EBO;
 	std::vector<unsigned int> VBO_list;

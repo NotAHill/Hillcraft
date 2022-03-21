@@ -6,6 +6,7 @@
 #include "SFMLRenderer.h"
 #include "TerrainRenderer.h"
 #include "ObjectRenderer.h"
+#include "SkyboxRenderer.h"
 
 #include "../Entities/Camera.h"
 
@@ -26,6 +27,7 @@ private:
 	SFMLRenderer sfmlRenderer;
 	TerrainRenderer terrainRenderer;
 	ObjectRenderer objectRenderer;
+	SkyboxRenderer skyboxRenderer;
 
 	std::vector<Light*> lights;
 };

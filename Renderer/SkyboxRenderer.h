@@ -2,7 +2,7 @@
 #ifndef SKYBOX_RENDERER_H
 #define SKYBOX_RENDERER_H
 
-#include "../Model.h"
+#include "../TexturedModel.h"
 #include "../Entities/Camera.h"
 #include "../Util/ResourceManager.h"
 #include "../Maths/Matrix.h"
@@ -15,7 +15,7 @@ public:
 	void render(const Camera& camera);
 
 private:
-	Model cubeModel;
+	TexturedModel cubeModel;
 };
 
 #endif // !SKYBOX_RENDERER_H

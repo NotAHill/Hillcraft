@@ -12,16 +12,8 @@ Model::~Model()
 
 void Model::addData(const std::vector<float>& vertexPositions, const std::vector<float>& colourValues, const std::vector<float>& normalDirections, const std::vector<unsigned int>& indices)
 {
-	if (VAO != 0)
-		deleteData();
-
-	indicesCount = indices.size();
-	vertexCount = vertexPositions.size() / 3;
-
-	// Generate the VAO and bind it
-	glGenVertexArrays(1, &VAO);
-	bindVAO();
-
+	genVAO();
+	
 	// Create the VBOs and the EBO
 	addVBO(3, vertexPositions);
 	addVBO(3, colourValues);
@@ -73,19 +65,15 @@ void Model::bindVAO() const
 	glBindVertexArray(VAO);
 }
 
-
 int Model::getIndicesCount() const
 {
 	return indicesCount;
 }
 
-int Model::getVertexCount() const
-{
-	return vertexCount;
-}
-
 void Model::addEBO(const std::vector<unsigned int> indices)
 {
+	indicesCount = indices.size();
+
 	// Create EBO
 	glGenBuffers(1, &EBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
@@ -95,4 +83,14 @@ void Model::addEBO(const std::vector<unsigned int> indices)
 				 indices.size() * sizeof(unsigned int),
 				 indices.data(),
 				 GL_STATIC_DRAW);
+}
+
+void Model::genVAO()
+{
+	if (VAO != 0)
+		deleteData();
+
+	// Generate the VAO and bind it
+	glGenVertexArrays(1, &VAO);
+	bindVAO();
 }

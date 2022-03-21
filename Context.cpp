@@ -44,11 +44,20 @@ Context::Context(sf::VideoMode size, sf::String title, bool fullscreen)
 	ResourceManager::get().shaders.loadShader("basic_vertex.glsl", "basic_fragment.glsl", "basic_shader");
 	ResourceManager::get().shaders.loadShader("terrain_vertex.glsl", "terrain_fragment.glsl", "terrain_shader");
 	ResourceManager::get().shaders.loadShader("object_vertex.glsl", "object_fragment.glsl", "object_shader");
-	
+	ResourceManager::get().shaders.loadShader("skybox_vertex.glsl", "skybox_fragment.glsl", "skybox_shader");
+
 	// 3D Objects and textures
 	ResourceManager::get().meshes.load("toonRocks.obj");
 	ResourceManager::get().meshes.load("tree.obj");
 	//ResourceManager::get().meshes.load("test.obj");
 	ResourceManager::get().images.load("rock.png");
 	ResourceManager::get().images.load("tree.png");
+
+	// Load skybox
+	ResourceManager::get().images.load("right.png");
+	ResourceManager::get().images.load("left.png");
+	ResourceManager::get().images.load("top.png");
+	ResourceManager::get().images.load("bottom.png");
+	ResourceManager::get().images.load("front.png");
+	ResourceManager::get().images.load("back.png");
 }

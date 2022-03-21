@@ -4,7 +4,6 @@ TexturedModel::TexturedModel(const std::string& mesh, const std::string& texture
 {
 	addData(ResourceManager::get().meshes.get(mesh));
 	addTexture(ResourceManager::get().images.get(texture));
-
 }
 
 void TexturedModel::addData(const std::vector<float>& vertexPositions, const std::vector<float>& textureCoords, const std::vector<float>& normalDirections, const std::vector<unsigned int>& indices)
@@ -45,6 +44,11 @@ void TexturedModel::addTexture(const sf::Image& img)
 }
 
 const unsigned int& TexturedModel::getID() const
+{
+	return ID;
+}
+
+unsigned int& TexturedModel::getID()
 {
 	return ID;
 }

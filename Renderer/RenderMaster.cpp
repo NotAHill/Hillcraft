@@ -37,6 +37,8 @@ void RenderMaster::finishRender(sf::RenderWindow& window, const Camera& camera)
 	glEnable(GL_CULL_FACE);
 	glProvokingVertex(GL_LAST_VERTEX_CONVENTION);
 
+
+
 	// Process world
 	terrainRenderer.render(camera, lights);
 
@@ -45,6 +47,9 @@ void RenderMaster::finishRender(sf::RenderWindow& window, const Camera& camera)
 
 	// Process entities
 	objectRenderer.render(camera, lights);
+
+	// Draw skybox
+	skyboxRenderer.render(camera);
 
 	// Lastly, process SFML
 	sfmlRenderer.render(window);

@@ -19,7 +19,7 @@ void main()
 	float sum = (textureColour.r + textureColour.g + textureColour.b) / 3.0;
 	sum = floor(sum * levels) / levels;
 	textureColour.rgb = sum * skyColour;
-
+	//
 	float factor = (textureCoords.y - lower) / (upper - lower);
 	factor = clamp(factor, 0.0, 1.0);
 	outColour = mix(vec4(skyColour, 1.0), textureColour, factor);
