@@ -35,7 +35,7 @@ void RenderMaster::finishRender(sf::RenderWindow& window, const Camera& camera)
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_CULL_FACE);
-	//glProvokingVertex(GL_LAST_VERTEX_CONVENTION);
+	glProvokingVertex(GL_LAST_VERTEX_CONVENTION);
 
 	// Process world
 	terrainRenderer.render(camera, lights);

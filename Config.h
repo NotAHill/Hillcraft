@@ -35,7 +35,7 @@ namespace Config
 	// Chunk Generation
 	const int RENDER_DISTANCE = 1;
 	const float CHUNK_SIZE = 100.0f;
-	const int VERTEX_COUNT = 40;
+	const int VERTEX_COUNT = 42;
 	const float MAX_HEIGHT = 30.0f;
 
 	// Height generation

@@ -28,7 +28,7 @@ void Statistics::update(sf::Time deltaTime)
 
 	if (timer >= sf::seconds(1.0f))
 	{
-		fpsString = "FPS " + std::to_string(frameCount) + "\n" +
+		fpsString = "FPS " + std::to_string(frameCount) + "\t" +
 							  "TPF " + std::to_string(timer.asMicroseconds() / frameCount) + "us\n";
 		timer -= sf::seconds(1.0f);
 		frameCount = 0;

@@ -60,3 +60,4 @@ void main()
 	outColour = textureColour * vec4(lighting, 1.0);
 	outColour = mix(vec4(skyColour, 1.0), outColour, visibility);
 }
+// rgba, rbga, brga, bgra, gbra, grba

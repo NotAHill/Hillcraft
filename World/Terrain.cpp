@@ -27,9 +27,14 @@ Terrain::Terrain(const glm::vec2& _offset, const float& _size, const unsigned in
 		if (y <= -0.1f) continue;
 
 		if (i >= 5)
+		{
 			objects.push_back(std::make_shared<Object>(*modelMap.at("rock"), glm::vec3{ x + position.x, y, z + position.z }, glm::vec3{ 0, rand() % 360, 0 }, 1.0f));
+		}
 		else
-			objects.push_back(std::make_shared<Object>(*modelMap.at("tree"), glm::vec3{ x + position.x, y, z + position.z }, glm::vec3{ 0, rand() % 360, 0 }, 0.3f));
+		{
+			//if (y >= 0.1f) continue;
+			objects.push_back(std::make_shared<Object>(*modelMap.at("tree"), glm::vec3{ x + position.x, y - 0.4f, z + position.z }, glm::vec3{ 0, rand() % 360, 0 }, 0.3f));
+		}
 	}
 
 	//std::cout << "Terrain: " << offset.x << ", " << offset.y << " created" << std::endl;

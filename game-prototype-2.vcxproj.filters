@@ -93,6 +93,9 @@
     <ClCompile Include="Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\SkyboxRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -194,6 +197,9 @@
     <ClInclude Include="Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer\SkyboxRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\basic_fragment.glsl">
@@ -210,6 +216,8 @@
     </None>
     <None Include="res\shaders\object_fragment.glsl" />
     <None Include="res\shaders\object_vertex.glsl" />
+    <None Include="res\shaders\skybox_fragment.glsl" />
+    <None Include="res\shaders\skybox_vertex.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\textures\rock.png">

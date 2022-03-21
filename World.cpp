@@ -67,8 +67,7 @@ void World::updateChunks(const Entity& entity)
 
 	currentChunk = chunkMap[glm::vec2{currentChunkX, currentChunkY}];
 
-	Statistics::get().addText("Total chunks: " + std::to_string(chunkMap.size()));
-	Statistics::get().addText("Loaded chunks: " + std::to_string(chunksPreviousUpdate.size()));
+	Statistics::get().addText("Total chunks: " + std::to_string(chunkMap.size()) + "\tLoaded chunks: " + std::to_string(chunksPreviousUpdate.size()));
 }
 
 std::shared_ptr<Terrain> World::getCurrentChunk() const

@@ -159,6 +159,7 @@
     <ClCompile Include="Renderer\QuadRenderer.cpp" />
     <ClCompile Include="Renderer\RenderMaster.cpp" />
     <ClCompile Include="Renderer\SFMLRenderer.cpp" />
+    <ClCompile Include="Renderer\SkyboxRenderer.cpp" />
     <ClCompile Include="Renderer\TerrainRenderer.cpp" />
     <ClCompile Include="States\BaseState.cpp" />
     <ClCompile Include="States\GameState.cpp" />
@@ -190,6 +191,7 @@
     <ClInclude Include="Renderer\QuadRenderer.h" />
     <ClInclude Include="Renderer\RenderMaster.h" />
     <ClInclude Include="Renderer\SFMLRenderer.h" />
+    <ClInclude Include="Renderer\SkyboxRenderer.h" />
     <ClInclude Include="Renderer\TerrainRenderer.h" />
     <ClInclude Include="States\BaseState.h" />
     <ClInclude Include="States\GameState.h" />
@@ -214,6 +216,8 @@
     <None Include="res\shaders\basic_vertex.glsl" />
     <None Include="res\shaders\object_fragment.glsl" />
     <None Include="res\shaders\object_vertex.glsl" />
+    <None Include="res\shaders\skybox_fragment.glsl" />
+    <None Include="res\shaders\skybox_vertex.glsl" />
     <None Include="res\shaders\terrain_fragment.glsl" />
     <None Include="res\shaders\terrain_vertex.glsl" />
   </ItemGroup>

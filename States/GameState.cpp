@@ -4,6 +4,7 @@
 #include "../Config.h"
 
 #include <iostream>
+#include <iomanip>
 
 GameState::GameState(Game& game) :
 	BaseState(game),
@@ -17,9 +18,17 @@ GameState::GameState(Game& game) :
 
 bool GameState::update(sf::Time deltaTime)
 {
-	auto to_string = [](const glm::vec3& v) { return std::to_string(v.x) + ", " +
-		std::to_string(v.y) + ", " +
-		std::to_string(v.z); };
+	auto float_to_str = [&](const float& val, const int& dp)
+	{
+		std::stringstream stream;
+		stream << std::fixed << std::setprecision(dp) << val;
+		return stream.str();
+	};
+
+
+	auto to_string = [&](const glm::vec3& v) 
+	{ return float_to_str(v.x, 1) + ", " + float_to_str(v.y, 1) + ", " + float_to_str(v.z, 1); };
+
 
 	if (gamePtr->getWindow().hasFocus())
 	{

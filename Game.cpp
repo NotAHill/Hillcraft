@@ -10,19 +10,27 @@ Game::Game(sf::VideoMode size, sf::String title, bool fullscreen) :
 {
 	srand(time(0));
 
-	stack.pushState<GameState>(*this);
+	stack.pushState<TitleState>(*this);
 }
 
 void Game::run()
 {
 	sf::Clock timer;
 
+	float elapsedTime = 0.0f;
+	int minutes, seconds;
+
 	while (context.window.isOpen())
 	{
 		sf::Time deltaTime = timer.restart();
 
-		update(deltaTime);
+		elapsedTime += deltaTime.asSeconds();
+		seconds = (int)elapsedTime % 60;
+		minutes = ((int)elapsedTime / 60) % 60;
+		Statistics::get().addText("Elapsed Time: " + std::to_string(minutes) + "m " + std::to_string(seconds) + "s");
 
+		update(deltaTime);
+		
 		if (stack.isEmpty())
 			context.window.close();
 
