@@ -2,7 +2,7 @@
 #ifndef MESH_H
 #define MESH_H
 
-#include "Maths/glm.h"
+#include "../Maths/glm.h"
 
 #include <string>
 #include <fstream>

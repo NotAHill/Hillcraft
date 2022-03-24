@@ -3,8 +3,7 @@
 #define RESOURCEMANAGER_H
 
 #include "ResourceHolder.h"
-#include "Shader.h"
-#include "../Mesh.h"
+#include "Mesh.h"
 
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Texture.hpp>

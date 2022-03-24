@@ -3,7 +3,7 @@
 #define OBJECT_H
 
 #include "Entity.h"
-#include "../TexturedModel.h"
+#include "../Model/TexturedModel.h"
 
 #include <SFML/Graphics/Texture.hpp>
 

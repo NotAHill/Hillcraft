@@ -33,8 +33,9 @@ void RenderMaster::finishRender(sf::RenderWindow& window, const Camera& camera)
 	glClearColor(Config::RED, Config::GREEN, Config::BLUE, 1.0f);
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_TEXTURE_2D);
-	glEnable(GL_CULL_FACE);
+	//glEnable(GL_TEXTURE_2D);
+	//glEnable(GL_TEXTURE_CUBE_MAP);
+	//glEnable(GL_CULL_FACE);
 	glProvokingVertex(GL_LAST_VERTEX_CONVENTION);
 
 

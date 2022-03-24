@@ -1,4 +1,5 @@
 #include "TexturedModel.h"
+#include "../Util/ResourceManager.h"
 
 TexturedModel::TexturedModel(const std::string& mesh, const std::string& texture)
 {

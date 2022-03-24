@@ -5,7 +5,7 @@
 #include "../Entities/Camera.h"
 #include "../Entities/Object.h"
 #include "../World/Light.h"
-#include "../TexturedModel.h"
+#include "../Model/TexturedModel.h"
 
 #include <unordered_map>
 

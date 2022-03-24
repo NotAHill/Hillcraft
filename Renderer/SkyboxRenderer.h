@@ -2,7 +2,7 @@
 #ifndef SKYBOX_RENDERER_H
 #define SKYBOX_RENDERER_H
 
-#include "../TexturedModel.h"
+#include "../Model/TexturedModel.h"
 #include "../Entities/Camera.h"
 #include "../Util/ResourceManager.h"
 #include "../Maths/Matrix.h"

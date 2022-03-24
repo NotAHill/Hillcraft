@@ -55,8 +55,8 @@ vec3 calculateLighting()
 void main()
 {
 	vec3 lighting = calculateLighting();
-	outColour = vec4(passColour * lighting, 1.0);
-	outColour = mix(vec4(skyColour, 1.0), outColour, visibility);
+	outColour = vec4(passColour * lighting, visibility);
+	outColour = mix(vec4(skyColour, visibility), outColour, visibility);
 }
 
 // Gouraud Shading

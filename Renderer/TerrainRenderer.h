@@ -3,11 +3,11 @@
 #define TERRAINRENDERER_H
 
 
-#include "../Model.h"
+#include "../Model/Model.h"
 #include "../Util/Shader.h"
 #include "../Entities/Camera.h"
 #include "../World/Light.h"
-#include "../World.h"
+#include "../World/World.h"
 
 #include <vector>
 #include <SFML/Graphics/Image.hpp>

@@ -57,7 +57,7 @@ void main()
 {
 	vec3 lighting = calculateLighting();
 	vec4 textureColour = texture(modelTexture, passTextureCoords);
-	outColour = textureColour * vec4(lighting, 1.0);
-	outColour = mix(vec4(skyColour, 1.0), outColour, visibility);
+	outColour = textureColour * vec4(lighting, visibility);
+	outColour = mix(vec4(skyColour, visibility), outColour, visibility);
 }
 // rgba, rbga, brga, bgra, gbra, grba

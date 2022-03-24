@@ -54,10 +54,10 @@ Context::Context(sf::VideoMode size, sf::String title, bool fullscreen)
 	ResourceManager::get().images.load("tree.png");
 
 	// Load skybox
-	ResourceManager::get().images.load("right.png");
-	ResourceManager::get().images.load("left.png");
-	ResourceManager::get().images.load("top.png");
-	ResourceManager::get().images.load("bottom.png");
-	ResourceManager::get().images.load("front.png");
-	ResourceManager::get().images.load("back.png");
+	ResourceManager::get().images.load("right.jpg");
+	ResourceManager::get().images.load("left.jpg");
+	ResourceManager::get().images.load("top.jpg");
+	ResourceManager::get().images.load("bottom.jpg");
+	ResourceManager::get().images.load("front.jpg");
+	ResourceManager::get().images.load("back.jpg");
 }

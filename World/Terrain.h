@@ -2,16 +2,17 @@
 #ifndef TERRAIN_H
 #define TERRAIN_H
 
-#include "../Model.h"
+#include "../Model/Model.h"
 #include "../Maths/glm.h"
 #include "../Entities/Entity.h"
 #include "../Entities/Object.h"
 #include "../Util/Noise/FractalNoiseGenerator.h"
-#include "../TexturedModel.h"
+#include "../Model/TexturedModel.h"
 
 #include <SFML/Graphics/Image.hpp>
 #include <string>
 #include <memory>
+#include <unordered_map>
 
 class Terrain : public Entity, private sf::NonCopyable
 {

@@ -3,8 +3,7 @@
 #define TEXTURED_MODEL
 
 #include "Model.h"
-#include "Mesh.h"
-#include "Texture.h"
+#include "../Util/Mesh.h"
 
 
 #include <SFML/Graphics/Image.hpp>

@@ -154,7 +154,8 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Model.cpp" />
+    <ClCompile Include="Model\Model.cpp" />
+    <ClCompile Include="Model\TexturedModel.cpp" />
     <ClCompile Include="Renderer\ObjectRenderer.cpp" />
     <ClCompile Include="Renderer\QuadRenderer.cpp" />
     <ClCompile Include="Renderer\RenderMaster.cpp" />
@@ -166,14 +167,12 @@
     <ClCompile Include="States\PauseState.cpp" />
     <ClCompile Include="States\StateStack.cpp" />
     <ClCompile Include="States\TitleState.cpp" />
-    <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="TexturedModel.cpp" />
     <ClCompile Include="Util\Noise\FractalNoiseGenerator.cpp" />
     <ClCompile Include="Util\Noise\GradientNoiseGenerator.cpp" />
     <ClCompile Include="Util\Statistics.cpp" />
-    <ClCompile Include="World.cpp" />
     <ClCompile Include="World\Light.cpp" />
     <ClCompile Include="World\Terrain.cpp" />
+    <ClCompile Include="World\World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.h" />
@@ -185,8 +184,8 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Maths\glm.h" />
     <ClInclude Include="Maths\Matrix.h" />
-    <ClInclude Include="Mesh.h" />
-    <ClInclude Include="Model.h" />
+    <ClInclude Include="Model\Model.h" />
+    <ClInclude Include="Model\TexturedModel.h" />
     <ClInclude Include="Renderer\ObjectRenderer.h" />
     <ClInclude Include="Renderer\QuadRenderer.h" />
     <ClInclude Include="Renderer\RenderMaster.h" />
@@ -198,18 +197,15 @@
     <ClInclude Include="States\PauseState.h" />
     <ClInclude Include="States\StateStack.h" />
     <ClInclude Include="States\TitleState.h" />
-    <ClInclude Include="Texture.h" />
-    <ClInclude Include="TexturedModel.h" />
-    <ClInclude Include="Util\FileLoader.h" />
+    <ClInclude Include="Util\Mesh.h" />
     <ClInclude Include="Util\Noise\FractalNoiseGenerator.h" />
     <ClInclude Include="Util\Noise\GradientNoiseGenerator.h" />
-    <ClInclude Include="Util\ObjModel.h" />
     <ClInclude Include="Util\ResourceManager.h" />
     <ClInclude Include="Util\ResourceHolder.h" />
     <ClInclude Include="Util\Statistics.h" />
-    <ClInclude Include="World.h" />
     <ClInclude Include="World\Light.h" />
     <ClInclude Include="World\Terrain.h" />
+    <ClInclude Include="World\World.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\basic_fragment.glsl" />

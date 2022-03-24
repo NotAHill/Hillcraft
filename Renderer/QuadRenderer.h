@@ -2,7 +2,7 @@
 #ifndef QUADRENDERER_H
 #define QUADRENDERER_H
 
-#include "../Model.h"
+#include "../Model/Model.h"
 #include "../Util/Shader.h"
 #include "../Entities/Camera.h"
 

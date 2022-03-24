@@ -1,6 +1,6 @@
 #include "ObjectRenderer.h"
 #include "../Maths/Matrix.h"
-
+#include "../Util/ResourceManager.h"
 
 void ObjectRenderer::add(const std::vector<std::shared_ptr<Object>>& _objects)
 {

@@ -5,7 +5,7 @@
 #include "BaseState.h"
 #include "../Entities/Player.h"
 #include "../World/Light.h"
-#include "../World.h"
+#include "../World/World.h"
 #include "../Entities/Object.h"
 
 class Game;
