@@ -18,7 +18,7 @@ public:
 	void drawQuad(const Vector3& position, const Vector3& rotation);
 	void drawWorld(World& world);
 	void drawSFML(const sf::Drawable& drawable);
-	void drawObject(const Object& object);
+	void drawObject(std::shared_ptr<Object> object);
 	void addLight(Light& light);
 	void finishRender(sf::RenderWindow& window, const Camera& camera);
 

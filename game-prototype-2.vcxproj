@@ -147,6 +147,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Command\BaseCommand.cpp" />
+    <ClCompile Include="Command\MoveCommand.cpp" />
+    <ClCompile Include="Command\ScriptEngine.cpp" />
     <ClCompile Include="Context.cpp" />
     <ClCompile Include="Entities\Camera.cpp" />
     <ClCompile Include="Entities\Object.cpp" />
@@ -175,6 +178,9 @@
     <ClCompile Include="World\World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Command\BaseCommand.h" />
+    <ClInclude Include="Command\MoveCommand.h" />
+    <ClInclude Include="Command\ScriptEngine.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="Context.h" />
     <ClInclude Include="Entities\Camera.h" />

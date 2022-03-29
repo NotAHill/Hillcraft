@@ -7,19 +7,24 @@ void ObjectRenderer::add(const std::vector<std::shared_ptr<Object>>& _objects)
 	// Iterate through each object from input
 	for (auto& object : _objects)
 	{
-		// Check if there is another object with same model in the hash map
-		if (objects.contains(object->getModel()))
-		{
-			// Add the object to the existing batch
-			objects[object->getModel()].push_back(*object);
-		}
-		else
-		{
-			// Otherwise make a new batch
-			std::vector<Object> newBatch;
-			newBatch.push_back(*object);
-			objects.insert({ object->getModel(), newBatch });
-		}
+		add(object);
+	}
+}
+
+void ObjectRenderer::add(std::shared_ptr<Object> _object)
+{
+	// Check if there is another object with same model in the hash map
+	if (objects.contains(_object->getModel()))
+	{
+		// Add the object to the existing batch
+		objects[_object->getModel()].push_back(*_object);
+	}
+	else
+	{
+		// Otherwise make a new batch
+		std::vector<Object> newBatch;
+		newBatch.push_back(*_object);
+		objects.insert({ _object->getModel(), newBatch });
 	}
 }
 

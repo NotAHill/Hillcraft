@@ -2,6 +2,7 @@
 #include "PauseState.h"
 #include "../Game.h"
 #include "../Config.h"
+#include "../Command/MoveCommand.h"
 
 #include <iostream>
 #include <iomanip>
@@ -10,7 +11,9 @@ GameState::GameState(Game& game) :
 	BaseState(game),
 	showWireframe(false),
 	directionLight({0, 0, 0}, { 0.0f,-1.0f,0.0f }, { 0.8f,0.95f,0.95f }, { 0.15f, 0.8f, 0.5f }),
-	secondLight({ 0, 0, 0 }, { 0.1f, -1.0f, -0.0f }, { 0.8f,0.95f,0.95f }, { 0.0f, 0.3f, 0.6f })
+	secondLight({ 0, 0, 0 }, { 0.1f, -1.0f, -0.0f }, { 0.8f,0.95f,0.95f }, { 0.0f, 0.3f, 0.6f }),
+	testModel("toonRocks", "tree"),
+	testObject(std::make_shared<Object>(testModel, glm::vec3{ 10.0f, 0, 0 }, glm::vec3{ 0, 0, 0 }, 2.0f))
 {
 	std::cout << "Currently in GAME state" << std::endl;
 	gamePtr->getCamera().hookEntity(player);
@@ -41,6 +44,8 @@ bool GameState::update(sf::Time deltaTime)
 			"Rotation: (" + to_string(player.rotation) + ")\n" +
 			"Velocity: (" + to_string(player.getVelocity()) + ")");
 
+		script.processCommands(deltaTime.asSeconds());
+
 		//static float elapsedTime = 0.0f;
 		//directionLight.direction = { 0.3f, -cosf(elapsedTime) , 0.5f };
 		//if (directionLight.direction.y >= 0.2f) elapsedTime += 0.5f * deltaTime.asSeconds();
@@ -59,9 +64,11 @@ void GameState::render(RenderMaster& renderer)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	renderer.addLight(directionLight);
+	
 	//renderer.addLight(secondLight);
 	renderer.drawQuad({ 0, 0, 0 }, { 0, 0, 0 });
 	renderer.drawWorld(world);
+	renderer.drawObject(testObject);
 }
 
 bool GameState::fixedUpdate(sf::Time deltaTime)
@@ -83,6 +90,8 @@ bool GameState::handleEvent(sf::Event& event)
 			showWireframe = !showWireframe;
 		if (event.key.code == sf::Keyboard::F)
 			player.toggleFlight();
+		if (event.key.code == sf::Keyboard::J)
+			script.addCommand(std::make_unique<MoveCommand>(*testObject, player.position, 3.0f, false));
 
 	}
 

@@ -7,6 +7,7 @@
 #include "../World/Light.h"
 #include "../World/World.h"
 #include "../Entities/Object.h"
+#include "../Command/ScriptEngine.h"
 
 class Game;
 
@@ -25,8 +26,14 @@ private:
 
 	// Entities
 	std::vector<Object> objects;
+
+	// TEMP
+	TexturedModel testModel;
+	std::shared_ptr<Object> testObject;
+
 	World world;
 	Player player;
+	ScriptEngine script;
 
 	// Lights
 	Light directionLight;

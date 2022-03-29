@@ -25,6 +25,7 @@ class ObjectRenderer
 {
 public:
 	void add(const std::vector<std::shared_ptr<Object>>& _objects);
+	void add(std::shared_ptr<Object> _object);
 	void render(const Camera& camera, std::vector<Light*> lights);
 
 private:

@@ -16,10 +16,10 @@ void RenderMaster::drawSFML(const sf::Drawable& drawable)
 	sfmlRenderer.add(drawable);
 }
 
-void RenderMaster::drawObject(const Object& object)
+void RenderMaster::drawObject(std::shared_ptr<Object> object)
 {
 	// Defunct
-	//objectRenderer.addObject(object);
+	objectRenderer.add(object);
 }
 
 void RenderMaster::addLight(Light& light)
