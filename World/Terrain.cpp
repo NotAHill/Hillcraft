@@ -3,6 +3,7 @@
 #include "../Config.h"
 #include "../Maths/Matrix.h"
 
+
 Terrain::Terrain(const glm::vec2& _offset, const float& _size, const unsigned int& _vertexCount, const float& _maxHeight, FractalNoiseGenerator& _noise, std::unordered_map<std::string, std::shared_ptr<TexturedModel>>& modelMap) :
 	maxHeight(_maxHeight),
 	size(_size),
@@ -34,6 +35,11 @@ Terrain::Terrain(const glm::vec2& _offset, const float& _size, const unsigned in
 		{
 			//if (y >= 0.1f) continue;
 			objects.push_back(std::make_shared<Object>(*modelMap.at("tree"), glm::vec3{ x + position.x, y - 0.4f, z + position.z }, glm::vec3{ 0, rand() % 360, 0 }, 0.3f));
+		}
+		if (i % 2 == 0)
+		{
+			dynamics.push_back(std::make_shared<Dynamic>(*modelMap.at("sphere"), glm::vec3{ x + position.x, y - 0.4f, z + position.z }, glm::vec3{ 0, rand() % 360, 0 }, 1.0f));
+			objects.push_back(std::dynamic_pointer_cast<Object>(dynamics.back()));
 		}
 	}
 
@@ -189,6 +195,14 @@ glm::vec3 Terrain::calculateNormal(const unsigned int& x, const unsigned int& z)
 	// Create normal vector, y-component is double the offset
 	glm::vec3 normal(heightL - heightR, 2.0f, heightD - heightU);
 	return glm::normalize(normal);
+}
+
+void Terrain::updateDynamics(float deltaTime, Dynamic& player)
+{
+	for (auto& object : dynamics)
+	{
+		object->update(deltaTime, player);
+	}
 }
 
 void Terrain::setVisible(const bool& _visible)

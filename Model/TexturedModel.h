@@ -11,7 +11,7 @@
 class TexturedModel : public Model
 {
 public:
-	TexturedModel() {}
+	TexturedModel() : ID(0) {}
 	TexturedModel(const std::string& mesh, const std::string& texture);
 	void addData(const std::vector<float>& vertexPositions, const std::vector<float>& textureCoords, const std::vector<float>& normalDirections, const std::vector<unsigned int>& indices);
 	void addData(const Mesh& mesh);

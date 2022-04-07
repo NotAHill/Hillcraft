@@ -14,7 +14,7 @@ public:
 
 	TexturedModel* getModel() const;
 
-private:
+protected:
 	// make unique ptr instead
 	TexturedModel* model;
 };

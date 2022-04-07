@@ -32,13 +32,16 @@ Context::Context(sf::VideoMode size, sf::String title, bool fullscreen)
 	glViewport(0, 0, window.getSize().x, window.getSize().y);
 	window.setFramerateLimit(60);
 
-	//Config::ASPECT_RATIO = (float)window.getSize().x / (float)window.getSize().y;
-
 	// 2D fonts and textures
 	ResourceManager::get().fonts.load("Fixedsys.ttf");
 	ResourceManager::get().fonts.load("Sansation.ttf");
 	ResourceManager::get().textures.load("vector.jpg", "background");
 	ResourceManager::get().textures.load("heightmap.png");
+
+	// GUI textures
+	ResourceManager::get().textures.load("ButtonNormal.png");
+	ResourceManager::get().textures.load("ButtonPressed.png");
+	ResourceManager::get().textures.load("ButtonSelected.png");
 	
 	// Shaders
 	ResourceManager::get().shaders.loadShader("basic_vertex.glsl", "basic_fragment.glsl", "basic_shader");
@@ -46,10 +49,12 @@ Context::Context(sf::VideoMode size, sf::String title, bool fullscreen)
 	ResourceManager::get().shaders.loadShader("object_vertex.glsl", "object_fragment.glsl", "object_shader");
 	ResourceManager::get().shaders.loadShader("skybox_vertex.glsl", "skybox_fragment.glsl", "skybox_shader");
 
-	// 3D Objects and textures
+	// 3D Objects
 	ResourceManager::get().meshes.load("toonRocks.obj");
 	ResourceManager::get().meshes.load("tree.obj");
-	//ResourceManager::get().meshes.load("test.obj");
+	ResourceManager::get().meshes.load("sphere.obj");
+
+	// 3D Textures
 	ResourceManager::get().images.load("rock.png");
 	ResourceManager::get().images.load("tree.png");
 

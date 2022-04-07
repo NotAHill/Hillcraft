@@ -4,8 +4,7 @@
 
 #include "../Model/Model.h"
 #include "../Maths/glm.h"
-#include "../Entities/Entity.h"
-#include "../Entities/Object.h"
+#include "../Entities/Dynamic.h"
 #include "../Util/Noise/FractalNoiseGenerator.h"
 #include "../Model/TexturedModel.h"
 
@@ -14,6 +13,7 @@
 #include <memory>
 #include <unordered_map>
 
+
 class Terrain : public Entity, private sf::NonCopyable
 {
 public:
@@ -21,8 +21,10 @@ public:
 
 	Model& getModel();
 	float getHeightOfTerrain(const float& x, const float& z);
+	
 	void setVisible(const bool& _visible);
 	const bool& isVisible() const;
+	void updateDynamics(float deltaTime, Dynamic& player);
 	const std::vector<std::shared_ptr<Object>>& getObjects() const;
 
 	glm::vec2 offset;
@@ -32,15 +34,15 @@ private:
 	float getHeight(const unsigned int& u, const unsigned int& v);
 	glm::vec3 getColour(const float& height);
 	glm::vec3 calculateNormal(const unsigned int& x, const unsigned int& z);
-
+	
 
 private:
 	Model terrainModel;
 	FractalNoiseGenerator* noise;
 	std::vector<std::vector<float>> heights;
 	
-	// TEMP
 	std::vector<std::shared_ptr<Object>> objects;
+	std::vector<std::shared_ptr<Dynamic>> dynamics;
 
 	const float size;
 	const unsigned int vertexCount;
