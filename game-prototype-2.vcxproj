@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -152,17 +152,10 @@
     <ClCompile Include="Command\ScriptEngine.cpp" />
     <ClCompile Include="Context.cpp" />
     <ClCompile Include="Entities\Camera.cpp" />
-    <ClCompile Include="Entities\Dynamic.cpp" />
-    <ClCompile Include="Entities\DynamicCreature.cpp" />
-    <ClCompile Include="Entities\Enemy.cpp" />
     <ClCompile Include="Entities\Object.cpp" />
     <ClCompile Include="Entities\Player.cpp" />
-    <ClCompile Include="Entities\Projectile.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="glad.c" />
-    <ClCompile Include="GUI\Button.cpp" />
-    <ClCompile Include="GUI\Component.cpp" />
-    <ClCompile Include="GUI\Container.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Model\Model.cpp" />
     <ClCompile Include="Model\TexturedModel.cpp" />
@@ -174,7 +167,6 @@
     <ClCompile Include="Renderer\TerrainRenderer.cpp" />
     <ClCompile Include="States\BaseState.cpp" />
     <ClCompile Include="States\GameState.cpp" />
-    <ClCompile Include="States\MenuState.cpp" />
     <ClCompile Include="States\PauseState.cpp" />
     <ClCompile Include="States\StateStack.cpp" />
     <ClCompile Include="States\TitleState.cpp" />
@@ -192,17 +184,10 @@
     <ClInclude Include="Config.h" />
     <ClInclude Include="Context.h" />
     <ClInclude Include="Entities\Camera.h" />
-    <ClInclude Include="Entities\Dynamic.h" />
-    <ClInclude Include="Entities\DynamicCreature.h" />
-    <ClInclude Include="Entities\Enemy.h" />
     <ClInclude Include="Entities\Entity.h" />
     <ClInclude Include="Entities\Object.h" />
     <ClInclude Include="Entities\Player.h" />
-    <ClInclude Include="Entities\Projectile.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="GUI\Button.h" />
-    <ClInclude Include="GUI\Component.h" />
-    <ClInclude Include="GUI\Container.h" />
     <ClInclude Include="Maths\glm.h" />
     <ClInclude Include="Maths\Matrix.h" />
     <ClInclude Include="Model\Model.h" />
@@ -215,7 +200,6 @@
     <ClInclude Include="Renderer\TerrainRenderer.h" />
     <ClInclude Include="States\BaseState.h" />
     <ClInclude Include="States\GameState.h" />
-    <ClInclude Include="States\MenuState.h" />
     <ClInclude Include="States\PauseState.h" />
     <ClInclude Include="States\StateStack.h" />
     <ClInclude Include="States\TitleState.h" />
@@ -240,9 +224,6 @@
     <None Include="res\shaders\terrain_vertex.glsl" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\textures\ButtonNormal.png" />
-    <Image Include="res\textures\ButtonPressed.png" />
-    <Image Include="res\textures\ButtonSelected.png" />
     <Image Include="res\textures\rock.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

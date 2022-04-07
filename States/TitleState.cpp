@@ -1,5 +1,5 @@
 #include "TitleState.h"
-#include "MenuState.h"
+#include "GameState.h"
 #include "../Game.h"
 
 #include <iostream>
@@ -60,7 +60,7 @@ bool TitleState::handleEvent(sf::Event& event)
 	// If any key is pressed move to the next screen
 	if (event.type == sf::Event::KeyReleased)
 	{
-		gamePtr->getStack().popState();
+		gamePtr->getStack().popState();	
 		gamePtr->getStack().pushState<GameState>(*gamePtr);
 	}
 

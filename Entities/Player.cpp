@@ -6,29 +6,19 @@
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Mouse.hpp>
 
-Player::Player(TexturedModel& _model, glm::vec3 _position, glm::vec3 _rotation, float _scale) :
-	DynamicCreature(_model, "player", _position, _rotation, _scale),
+Player::Player() :
 	flyMode(false),
-	inAir(true),
-	velocity({0, 0, 0})
+	inAir(true)
 {
-	isFriendly = true;
-	health = 90;
-	maxHealth = 100;
-	attackTimer = 2.0f;
-	equippedWeapon = nullptr;
+	position = { 10.0f, 10.0f, 10.0f };
+	rotation = { 0, 180, 0 };
+	velocity = { 0, 0, 0 };
 }
 
 void Player::handleInput(const sf::RenderWindow& window)
 {
 	keyboardInput();
 	mouseInput(window);
-}
-
-void Player::handleEvent(const sf::Event& event)
-{
-	if (event.type == sf::Event::MouseButtonPressed)
-		onInteract(*this);
 }
 
 void Player::toggleFlight()
@@ -73,20 +63,6 @@ void Player::update(float deltaTime, Terrain& terrain)
 const glm::vec3& Player::getVelocity()
 {
 	return velocity;
-}
-
-void Player::attack()
-{
-	if (equippedWeapon == nullptr)
-		return;
-}
-
-void Player::onInteract(Dynamic& player)
-{
-	glm::vec2 testPlane;
-	testPlane = position + velocity; // in front of player
-
-	bool hit = false;
 }
 
 void Player::keyboardInput()

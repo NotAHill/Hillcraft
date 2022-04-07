@@ -102,18 +102,6 @@
     <ClCompile Include="Command\MoveCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="States\MenuState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GUI\Component.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GUI\Button.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GUI\Container.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -218,18 +206,6 @@
     <ClInclude Include="Command\MoveCommand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="States\MenuState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GUI\Component.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GUI\Button.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GUI\Container.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\basic_fragment.glsl">
@@ -251,15 +227,6 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\textures\rock.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="res\textures\ButtonNormal.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="res\textures\ButtonPressed.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="res\textures\ButtonSelected.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
