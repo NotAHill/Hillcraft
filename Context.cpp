@@ -39,6 +39,7 @@ Context::Context(sf::VideoMode size, sf::String title, bool fullscreen)
 	ResourceManager::get().fonts.load("Sansation.ttf");
 	ResourceManager::get().textures.load("vector.jpg", "background");
 	ResourceManager::get().textures.load("heightmap.png");
+	ResourceManager::get().textures.load("crosshair.png");
 	
 	// Shaders
 	ResourceManager::get().shaders.loadShader("basic_vertex.glsl", "basic_fragment.glsl", "basic_shader");

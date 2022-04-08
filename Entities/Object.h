@@ -4,6 +4,7 @@
 
 #include "Entity.h"
 #include "../Model/TexturedModel.h"
+#include "../Maths/CollisionBox.h"
 
 #include <SFML/Graphics/Texture.hpp>
 
@@ -13,10 +14,11 @@ public:
 	Object(TexturedModel& _model, glm::vec3 _position, glm::vec3 _rotation, float _scale);
 
 	TexturedModel* getModel() const;
-
+	CollisionBox box;
 private:
 	// make unique ptr instead
 	TexturedModel* model;
+	
 };
 
 

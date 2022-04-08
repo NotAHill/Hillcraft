@@ -3,9 +3,11 @@
 #include "../Game.h"
 #include "../Config.h"
 #include "../Command/MoveCommand.h"
+#include "../Maths/RayCaster.h"
 
 #include <iostream>
 #include <iomanip>
+#include <glm/gtx/string_cast.hpp>
 
 GameState::GameState(Game& game) :
 	BaseState(game),
@@ -17,6 +19,11 @@ GameState::GameState(Game& game) :
 {
 	std::cout << "Currently in GAME state" << std::endl;
 	gamePtr->getCamera().hookEntity(player);
+
+	crosshair.setTexture(ResourceManager::get().textures.get("crosshair"));
+	crosshair.setScale(2.0f, 2.0f);
+	crosshair.setOrigin(crosshair.getLocalBounds().width / 2, crosshair.getLocalBounds().height / 2);
+	crosshair.setPosition(gamePtr->getWindow().getSize().x / 2, gamePtr->getWindow().getSize().y / 2);
 }
 
 bool GameState::update(sf::Time deltaTime)
@@ -51,6 +58,41 @@ bool GameState::update(sf::Time deltaTime)
 		//if (directionLight.direction.y >= 0.2f) elapsedTime += 0.5f * deltaTime.asSeconds();
 		//else elapsedTime += 0.1f * deltaTime.asSeconds();
 		//Statistics::get().addText("Light Direction: (" + to_string(directionLight.direction) + ")");
+
+		int count = 0;
+		for (RayCaster ray(player.position, player.rotation); ray.getLength() < 6; ray.step(0.1f))
+		{
+			for (auto& item : world.getLoadedObjects())
+			{
+				if (item->box.isPointInBox(ray.getEnd()))
+				{
+					if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+					{
+						count = 1;
+						goto first;
+					}
+					else
+					{
+						count = 2;
+						goto first;
+					}
+				}
+			}
+		}
+
+	first:
+		switch (count)
+		{
+		case 0:
+			Statistics::get().addText("Not touching anything");
+			break;
+		case 1:
+			Statistics::get().addText("Click");
+			break;
+		case 2:
+			Statistics::get().addText("Hover");
+			break;
+		}
 	}
 
 	return true;
@@ -64,7 +106,7 @@ void GameState::render(RenderMaster& renderer)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	renderer.addLight(directionLight);
-	
+	renderer.drawSFML(crosshair);
 	//renderer.addLight(secondLight);
 	renderer.drawQuad({ 0, 0, 0 }, { 0, 0, 0 });
 	renderer.drawWorld(world);
@@ -94,6 +136,42 @@ bool GameState::handleEvent(sf::Event& event)
 			script.addCommand(std::make_unique<MoveCommand>(*testObject, player.position, 3.0f, false));
 
 	}
+
+//	int count = 0;
+//	for (RayCaster ray(player.position, player.rotation); ray.getLength() < 6; ray.step(0.1f))
+//	{
+//		for (auto& item : world.getLoadedObjects())
+//		{
+//			if (item->box.isPointInBox(ray.getEnd()))
+//			{
+//				if (event.type == sf::Event::MouseButtonPressed)
+//				{
+//					count = 1;
+//					goto first;
+//				}
+//				
+//				else
+//				{
+//					count = 2;
+//					goto first;
+//				}
+//			}
+//		}
+//	}
+//
+//first:
+//	switch (count)
+//	{
+//	case 0:
+//		Statistics::get().addText("Not touching anything");
+//		break;
+//	case 1:
+//		Statistics::get().addText("Click");
+//		break;
+//	case 2:
+//		Statistics::get().addText("Hover");
+//		break;
+//	}
 
 	return true;
 }

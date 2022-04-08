@@ -34,6 +34,7 @@ private:
 	World world;
 	Player player;
 	ScriptEngine script;
+	sf::Sprite crosshair;
 
 	// Lights
 	Light directionLight;
