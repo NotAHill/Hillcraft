@@ -8,7 +8,7 @@
 #include <string>
 
 World::World() :
-	heightGen(Config::SCALE, Config::OCTAVES, Config::PERSISTANCE, Config::LACUNARITY, 1),
+	heightGen(Config::SCALE, Config::OCTAVES, Config::PERSISTANCE, Config::LACUNARITY, (Config::SEED == -1) ? rand() : Config::SEED),
 	//colourGen(20.4f, 4, 0.5f, 2.0f),
 	chunkMap(),
 	chunksPreviousUpdate(),
@@ -16,7 +16,7 @@ World::World() :
 {
 	// Maximum possible chunks seen in any direction
 	visibleChunks = Config::RENDER_DISTANCE; //static_cast<int>(std::floorf(Config::VIEW_DISTANCE / Config::CHUNK_SIZE));
-
+	
 	// Load models before chunks
 	modelMap["rock"] = std::make_shared<TexturedModel>("toonRocks", "rock");
 	modelMap["tree"] = std::make_shared<TexturedModel>("tree", "tree");

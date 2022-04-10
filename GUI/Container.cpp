@@ -44,7 +44,8 @@ void Container::handleEvent(const sf::Event& event, const sf::RenderWindow& wind
 }
 
 void Container::render(RenderMaster& renderer)
-{
+{	
+	//components.erase(std::remove_if(components.begin(), components.end(), [](std::shared_ptr<Component> c) { return !c->enabled; }), components.end());
 	for (auto& component : components)
 		component->render(renderer);
 }

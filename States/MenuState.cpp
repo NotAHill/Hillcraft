@@ -6,6 +6,7 @@
 #include "../Game.h"
 #include "../GUI/Button.h"
 #include "../GUI/Textbox.h"
+#include "../GUI/Label.h"
 
 MenuState::MenuState(Game& game) :
 	BaseState(game)
@@ -52,13 +53,17 @@ MenuState::MenuState(Game& game) :
 			testButton->setText(text);
 		});
 
+	auto label = std::make_shared<Label>();
+	label->setText({ "Hello", "This is a test" });
+	label->setPosition({ window.x / 2.0f + 100.0f, window.y / 2.0f });
+
 	auto textbox = std::make_shared<Textbox>(TextboxSize::WIDE);
 	textbox->setPosition({ window.x / 2.0f, window.y / 2.0f - 200.0f });
-	textbox->setCallback([&](const std::string& text)
+	textbox->setCallback([=](const std::string& text)
 		{
 			try
 			{
-				
+				label->setText({ text });
 			}
 			catch (const std::exception& e)
 			{
@@ -71,6 +76,7 @@ MenuState::MenuState(Game& game) :
 	container.addComponent(settingsButton);
 	container.addComponent(quitButton);
 	container.addComponent(testButton);
+	container.addComponent(label);
 }
 
 bool MenuState::update(sf::Time deltaTime)

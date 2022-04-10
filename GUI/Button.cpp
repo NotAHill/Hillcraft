@@ -2,29 +2,35 @@
 
 #include "../Renderer/RenderMaster.h"
 
-Button::Button(ButtonSize size)
+Button::Button(ButtonSize size, bool _centerOrigin)
 {
 	selected = false;
 	enabled = true;
 	active = false;
+	centerOrigin = _centerOrigin;
 
-	rect.setOutlineThickness(3.0f);
+	rect.setOutlineThickness(-3.0f);
 	rect.setOutlineColor(sf::Color::Black);
 	rect.setFillColor(sf::Color::Blue);
 
 	switch (size)
 	{
+	case ButtonSize::XSMALL:
+		rect.setSize({ 300.0f / 3.0f, 64 });
+		break;
+
 	case ButtonSize::SMALL:
-		rect.setSize({ 128, 64 });
+		rect.setSize({ 300.0f / 2.0f, 64 });
 		break;
 
 	case ButtonSize::WIDE:
-		rect.setSize({ 256, 64 });
+		rect.setSize({ 300, 64 });
 		break;
 	}
 
 	// Center the origin of the rectangle to its center
-	rect.setOrigin(rect.getLocalBounds().width / 2, rect.getLocalBounds().height / 2);
+	if (centerOrigin)
+		rect.setOrigin(rect.getLocalBounds().width / 2, rect.getLocalBounds().height / 2);
 }
 
 void Button::handleEvent(const sf::Event& event, const sf::RenderWindow& window)
@@ -80,6 +86,9 @@ void Button::setPosition(const sf::Vector2f& _position)
 
 	rect.setPosition(position);
 	text.setPosition(position);
+	
+	if (!centerOrigin)
+		text.move(rect.getLocalBounds().width / 2.0f, rect.getLocalBounds().height / 2.0f);
 	text.move(0, -10.0f);
 }
 
@@ -123,6 +132,11 @@ void Button::deactivate()
 sf::Vector2f Button::getPosition() const
 {
 	return position;
+}
+
+sf::Vector2f Button::getSize() const
+{
+	return { rect.getGlobalBounds().width, rect.getGlobalBounds().height };
 }
 
 void Button::updateTextPos()

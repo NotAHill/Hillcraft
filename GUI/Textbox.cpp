@@ -15,11 +15,11 @@ Textbox::Textbox(TextboxSize size)
 	switch (size)
 	{
 	case TextboxSize::SMALL:
-		rect.setSize({ 128, 50 });
+		rect.setSize({ 300 / 2, 50 });
 		break;
 
 	case TextboxSize::WIDE:
-		rect.setSize({ 256, 50 });
+		rect.setSize({ 300, 50 });
 		break;
 	}
 
@@ -44,10 +44,10 @@ void Textbox::handleEvent(const sf::Event& event, const sf::RenderWindow& window
 
 	auto isValidChar = [](unsigned char code)
 	{
-		return (code >= 48 && code <= 57) ||  // Numbers
+		return (code >= 46 && code <= 57) ||  // Numbers
 			   (code >= 65 && code <= 90) ||  // Uppercase
 			   (code >= 97 && code <= 122)||  // Lowercase
-			   (code == 32) || (code == 46);  // Space/Dot
+			   (code == 32) || (code == 92);  // Space/Dot
 	};
 
 	// Keyboard events

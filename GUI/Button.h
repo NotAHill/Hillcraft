@@ -8,6 +8,7 @@
 
 enum class ButtonSize
 {
+	XSMALL,
 	SMALL,
 	WIDE
 };
@@ -15,7 +16,7 @@ enum class ButtonSize
 class Button : public Component
 {
 public:
-	Button(ButtonSize size = ButtonSize::WIDE);
+	Button(ButtonSize size = ButtonSize::WIDE, bool _centerOrigin = true);
 
 	void handleEvent(const sf::Event& event, const sf::RenderWindow& window);
 	void render(RenderMaster& renderer);
@@ -32,12 +33,14 @@ public:
 	void deactivate();
 
 	sf::Vector2f getPosition() const;
+	sf::Vector2f getSize() const;
 
 protected:
 	void updateTextPos();
 
 	std::function<void(void)> callback;
 	bool toggle = false;
+	bool centerOrigin;
 	Text text;
 	Rectangle rect;
 	sf::Vector2f position;

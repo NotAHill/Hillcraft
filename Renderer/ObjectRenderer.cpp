@@ -45,6 +45,8 @@ void ObjectRenderer::render(const Camera& camera, std::vector<Light*> lights)
 	shader.setUniform("view",		convert(camera.getViewMatrix()));
 	shader.setUniform("projection", convert(camera.getProjectionMatrix()));
 	shader.setUniform("skyColour",	convert2({ Config::RED, Config::GREEN, Config::BLUE }));
+	shader.setUniform("density", Config::FOG_DENSITY);
+	shader.setUniform("gradient", Config::FOG_GRADIENT);
 
 	// Iterate through each model in the hash map
 	for (const auto& [model, batch]: objects)

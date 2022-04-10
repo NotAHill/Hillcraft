@@ -15,8 +15,8 @@ struct Config
 	inline static float BLUE = 1.0f;
 
 	// TODO: Uniform variable fog settings
-	inline static const float FOG_DENSITY = 0.0f;
-	inline static const float FOG_GRADIENT = 0.0f;
+	inline static float FOG_DENSITY = 0.015f;
+	inline static float FOG_GRADIENT = 2.0f;
 
 	// Matrix arguments
 	inline static const float ASPECT_RATIO = 2.0f;
@@ -36,9 +36,10 @@ struct Config
 	inline static int RENDER_DISTANCE = 1;
 	inline static const float CHUNK_SIZE = 100.0f;
 	inline static const int VERTEX_COUNT = 42;
-	inline static const float MAX_HEIGHT = 30.0f;
+	inline static float MAX_HEIGHT = 30.0f;
 
 	// Height generation
+	inline static int SEED = -1;
 	inline static float SCALE = 30.0f;
 	inline static float PERSISTANCE = 0.6f;
 	inline static float LACUNARITY = 2.2f;
