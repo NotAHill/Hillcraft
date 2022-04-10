@@ -53,6 +53,7 @@ void TerrainRenderer::render(const Camera& camera, std::vector<Light*> lights)
 		}
 
 		sf::Shader::bind(NULL);
+		world = nullptr;
 	}
 }
 

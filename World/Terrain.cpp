@@ -2,6 +2,8 @@
 #include "../Util/ResourceManager.h"
 #include "../Config.h"
 #include "../Maths/Matrix.h"
+#include "../Entities/Enemy.h"
+#include "../Entities/Friendly.h"
 
 Terrain::Terrain(const glm::vec2& _offset, const float& _size, const unsigned int& _vertexCount, const float& _maxHeight, FractalNoiseGenerator& _noise, std::unordered_map<std::string, std::shared_ptr<TexturedModel>>& modelMap) :
 	maxHeight(_maxHeight),
@@ -17,7 +19,7 @@ Terrain::Terrain(const glm::vec2& _offset, const float& _size, const unsigned in
 	generateTerrain();
 
 	// Generate random objects
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 15; i++)
 	{
 		auto x = ((float) rand() / (float) RAND_MAX) * size;
 		auto z = ((float) rand() / (float) RAND_MAX) * size;
@@ -26,14 +28,22 @@ Terrain::Terrain(const glm::vec2& _offset, const float& _size, const unsigned in
 		// Prevent object from being on water
 		if (y <= -0.1f) continue;
 
-		if (i >= 5)
+		if (i == 14 && rand() % 10 == 0)
+		{
+			friendlies.push_back(std::make_shared<Friendly>(*modelMap.at("shop"), glm::vec3{ x + position.x, y, z + position.z }, glm::vec3{ 0, rand() % 360, 0 }, 1.0f));
+		}
+		else if (i >= 10 && i < 14)
 		{
 			objects.push_back(std::make_shared<Object>(*modelMap.at("rock"), glm::vec3{ x + position.x, y, z + position.z }, glm::vec3{ 0, rand() % 360, 0 }, 1.0f));
 		}
-		else
+		else if (i >= 5 && i < 10)
 		{
 			//if (y >= 0.1f) continue;
 			objects.push_back(std::make_shared<Object>(*modelMap.at("tree"), glm::vec3{ x + position.x, y - 0.4f, z + position.z }, glm::vec3{ 0, rand() % 360, 0 }, 0.3f));
+		}
+		else
+		{
+			enemies.push_back(std::make_shared<Enemy>(*modelMap.at("enemy"), glm::vec3{ x + position.x, y, z + position.z }, glm::vec3{ 0, rand() % 360, 0 }, 1.0f));
 		}
 	}
 
@@ -204,4 +214,14 @@ const bool& Terrain::isVisible() const
 const std::vector<std::shared_ptr<Object>>& Terrain::getObjects() const
 {
 	return objects;
+}
+
+std::vector<std::shared_ptr<Enemy>>& Terrain::getEnemies()
+{
+	return enemies;
+}
+
+std::vector<std::shared_ptr<Friendly>>& Terrain::getFriendlies()
+{
+	return friendlies;
 }

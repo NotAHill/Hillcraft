@@ -50,9 +50,11 @@ Context::Context(sf::VideoMode size, sf::String title, bool fullscreen)
 	// 3D Objects and textures
 	ResourceManager::get().meshes.load("toonRocks.obj");
 	ResourceManager::get().meshes.load("tree.obj");
-	//ResourceManager::get().meshes.load("test.obj");
+	ResourceManager::get().meshes.load("sphere.obj");
+	ResourceManager::get().meshes.load("stall.obj");
 	ResourceManager::get().images.load("rock.png");
 	ResourceManager::get().images.load("tree.png");
+	ResourceManager::get().images.load("shop.png");
 
 	// Load skybox
 	ResourceManager::get().images.load("right.jpg");

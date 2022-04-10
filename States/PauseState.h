@@ -4,6 +4,8 @@
 
 #include "BaseState.h"
 
+#include "../GUI/Container.h"
+
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Text.hpp>
 
@@ -16,17 +18,15 @@ public:
 	PauseState(Game& game);
 
 	bool update(sf::Time deltaTime);
-	void render(RenderMaster& renderer);
+	bool render(RenderMaster& renderer);
 	bool fixedUpdate(sf::Time deltaTime);
 	bool handleEvent(sf::Event& event);
 
 private:
+	Container container;
+
 	sf::RectangleShape backgroundShape;
 	sf::Text text;
-
-	sf::Time timer;
-	sf::Text timerText;
-
 };
 
 

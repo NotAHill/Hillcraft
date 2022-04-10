@@ -8,11 +8,20 @@
 
 Player::Player() :
 	flyMode(false),
-	inAir(true)
+	inAir(true),
+	baseDamage(10)
 {
 	position = { 10.0f, 10.0f, 10.0f };
 	rotation = { 0, 180, 0 };
 	velocity = { 0, 0, 0 };
+
+	maxHealth = 100;
+	currentHealth = maxHealth;
+
+	knockbackTimer = -1.0f;
+	knockbackVelocity = { 0, 0, 0 };
+	isAlive = true;
+	isAttackable = true;
 }
 
 void Player::handleInput(const sf::RenderWindow& window)
@@ -29,6 +38,27 @@ void Player::toggleFlight()
 void Player::update(float deltaTime, Terrain& terrain)
 {
 	Statistics::get().addText("Current chunk: (" + std::to_string((int)terrain.offset.x) + ", " + std::to_string((int)terrain.offset.y) + ")");
+
+	if (currentHealth <= 0)
+	{
+		velocity = glm::vec3(0.0f);
+		isAttackable = false;
+		isAlive = false;
+		return;
+	}
+
+	// If it has received knockback then move back
+	if (knockbackTimer > 0.0f)
+	{
+		velocity = knockbackVelocity * 10.0f;
+		isAttackable = false;
+		knockbackVelocity *= 0.95f;
+		knockbackTimer -= deltaTime;
+		if (knockbackTimer <= 0.0f)
+		{
+			isAttackable = true;
+		}
+	}
 
 	// Do gravity calculation
 	if (!flyMode) velocity.y += Config::GRAVITY;
@@ -58,11 +88,19 @@ void Player::update(float deltaTime, Terrain& terrain)
 		velocity *= 0.95f;
 	}
 	Statistics::get().addText("Flight Mode: " + std::string(flyMode ? "ON" : "OFF"));
+	Statistics::get().addText("Current Health: " + std::to_string(currentHealth));
 }
 
 const glm::vec3& Player::getVelocity()
 {
 	return velocity;
+}
+
+void Player::receiveKnockback(const glm::vec3& knockback, const float& time)
+{
+	knockbackVelocity = knockback;
+	knockbackTimer = time;
+	isAttackable = false;
 }
 
 void Player::keyboardInput()

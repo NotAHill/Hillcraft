@@ -1,6 +1,8 @@
 #include "SkyboxRenderer.h"
 #include "../Config.h"
+
 #include <iostream>
+#include <SFML/System/Clock.hpp>
 
 SkyboxRenderer::SkyboxRenderer()
 {
@@ -83,6 +85,8 @@ void SkyboxRenderer::render(const Camera& camera)
 	auto convert = [](const glm::mat4& matrix) { return sf::Glsl::Mat4(glm::value_ptr(matrix)); };
 	auto convert2 = [](const glm::vec3& v) { return sf::Glsl::Vec3(v.x, v.y, v.z); };
 
+	static sf::Clock clock;
+
 	glDepthFunc(GL_LEQUAL);
 	sf::Shader::bind(&shader);
 
@@ -94,6 +98,8 @@ void SkyboxRenderer::render(const Camera& camera)
 	// Load matrices
 	shader.setUniform("projection", convert(camera.getProjectionMatrix()));
 	auto matrix = camera.getViewMatrix();
+
+	matrix = glm::rotate(matrix, 0.01f * clock.getElapsedTime().asSeconds(), { 0, 1, 0 });
 	matrix[3][0] = matrix[3][1] = matrix[3][2] = 0.0f;
 	shader.setUniform("view", convert(matrix));
 	shader.setUniform("skyColour", convert2({ Config::RED, Config::GREEN, Config::BLUE }));

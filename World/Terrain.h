@@ -2,17 +2,19 @@
 #ifndef TERRAIN_H
 #define TERRAIN_H
 
-#include "../Model/Model.h"
 #include "../Maths/glm.h"
-#include "../Entities/Entity.h"
-#include "../Entities/Object.h"
 #include "../Util/Noise/FractalNoiseGenerator.h"
 #include "../Model/TexturedModel.h"
+#include "../Entities/Entity.h"
 
 #include <SFML/Graphics/Image.hpp>
 #include <string>
 #include <memory>
 #include <unordered_map>
+
+class Object;
+class Enemy;
+class Friendly;
 
 class Terrain : public Entity, private sf::NonCopyable
 {
@@ -24,6 +26,8 @@ public:
 	void setVisible(const bool& _visible);
 	const bool& isVisible() const;
 	const std::vector<std::shared_ptr<Object>>& getObjects() const;
+	std::vector<std::shared_ptr<Enemy>>& getEnemies();
+	std::vector<std::shared_ptr<Friendly>>& getFriendlies();
 
 	glm::vec2 offset;
 
@@ -41,6 +45,8 @@ private:
 	
 	// TEMP
 	std::vector<std::shared_ptr<Object>> objects;
+	std::vector<std::shared_ptr<Enemy>> enemies;
+	std::vector<std::shared_ptr<Friendly>> friendlies;
 
 	const float size;
 	const unsigned int vertexCount;

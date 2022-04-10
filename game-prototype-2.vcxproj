@@ -148,15 +148,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Command\BaseCommand.cpp" />
+    <ClCompile Include="Command\DialogueCommand.cpp" />
     <ClCompile Include="Command\MoveCommand.cpp" />
     <ClCompile Include="Command\ScriptEngine.cpp" />
     <ClCompile Include="Context.cpp" />
     <ClCompile Include="Entities\Camera.cpp" />
     <ClCompile Include="Entities\Enemy.cpp" />
+    <ClCompile Include="Entities\Friendly.cpp" />
     <ClCompile Include="Entities\Object.cpp" />
     <ClCompile Include="Entities\Player.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="glad.c" />
+    <ClCompile Include="GUI\Button.cpp" />
+    <ClCompile Include="GUI\Component.cpp" />
+    <ClCompile Include="GUI\Container.cpp" />
+    <ClCompile Include="GUI\Label.cpp" />
+    <ClCompile Include="GUI\Textbox.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Maths\CollisionBox.cpp" />
     <ClCompile Include="Maths\RayCaster.cpp" />
@@ -170,7 +177,9 @@
     <ClCompile Include="Renderer\TerrainRenderer.cpp" />
     <ClCompile Include="States\BaseState.cpp" />
     <ClCompile Include="States\GameState.cpp" />
+    <ClCompile Include="States\MenuState.cpp" />
     <ClCompile Include="States\PauseState.cpp" />
+    <ClCompile Include="States\SettingsState.cpp" />
     <ClCompile Include="States\StateStack.cpp" />
     <ClCompile Include="States\TitleState.cpp" />
     <ClCompile Include="Util\Noise\FractalNoiseGenerator.cpp" />
@@ -182,6 +191,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command\BaseCommand.h" />
+    <ClInclude Include="Command\DialogueCommand.h" />
     <ClInclude Include="Command\MoveCommand.h" />
     <ClInclude Include="Command\ScriptEngine.h" />
     <ClInclude Include="Config.h" />
@@ -189,9 +199,16 @@
     <ClInclude Include="Entities\Camera.h" />
     <ClInclude Include="Entities\Enemy.h" />
     <ClInclude Include="Entities\Entity.h" />
+    <ClInclude Include="Entities\Friendly.h" />
     <ClInclude Include="Entities\Object.h" />
     <ClInclude Include="Entities\Player.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GUI\Button.h" />
+    <ClInclude Include="GUI\Component.h" />
+    <ClInclude Include="GUI\Container.h" />
+    <ClInclude Include="GUI\dynamic_blur.hpp" />
+    <ClInclude Include="GUI\Label.h" />
+    <ClInclude Include="GUI\Textbox.h" />
     <ClInclude Include="Maths\CollisionBox.h" />
     <ClInclude Include="Maths\glm.h" />
     <ClInclude Include="Maths\Matrix.h" />
@@ -206,7 +223,9 @@
     <ClInclude Include="Renderer\TerrainRenderer.h" />
     <ClInclude Include="States\BaseState.h" />
     <ClInclude Include="States\GameState.h" />
+    <ClInclude Include="States\MenuState.h" />
     <ClInclude Include="States\PauseState.h" />
+    <ClInclude Include="States\SettingsState.h" />
     <ClInclude Include="States\StateStack.h" />
     <ClInclude Include="States\TitleState.h" />
     <ClInclude Include="Util\Mesh.h" />

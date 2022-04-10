@@ -1,5 +1,5 @@
 #include "TitleState.h"
-#include "GameState.h"
+#include "MenuState.h"
 #include "../Game.h"
 
 #include <iostream>
@@ -42,12 +42,15 @@ bool TitleState::update(sf::Time deltaTime)
 	return true;
 }
 
-void TitleState::render(RenderMaster& renderer)
+bool TitleState::render(RenderMaster& renderer)
 {
 	renderer.drawSFML(backgroundSprite);
 
 	if (showText)
 		renderer.drawSFML(text);
+
+	// bottom of stack - irrelevant
+	return true;
 }
 
 bool TitleState::fixedUpdate(sf::Time deltaTime)
@@ -60,8 +63,8 @@ bool TitleState::handleEvent(sf::Event& event)
 	// If any key is pressed move to the next screen
 	if (event.type == sf::Event::KeyReleased)
 	{
-		gamePtr->getStack().popState();	
-		gamePtr->getStack().pushState<GameState>(*gamePtr);
+		gamePtr->getStack().popState();
+		gamePtr->getStack().pushState<MenuState>(*gamePtr);
 	}
 
 	return true;

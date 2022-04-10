@@ -1,5 +1,8 @@
 #include "World.h"
 #include "../Util/Statistics.h"
+#include "../Entities/Player.h"
+#include "../Entities/Enemy.h"
+#include "../Entities/Friendly.h"
 
 #include <iostream>
 #include <string>
@@ -17,12 +20,16 @@ World::World() :
 	// Load models before chunks
 	modelMap["rock"] = std::make_shared<TexturedModel>("toonRocks", "rock");
 	modelMap["tree"] = std::make_shared<TexturedModel>("tree", "tree");
+	modelMap["enemy"] = std::make_shared<TexturedModel>("sphere", "rock");
+	modelMap["shop"] = std::make_shared<TexturedModel>("stall", "shop");
 
 	chunkMap[{0, 0}] = std::make_shared<Terrain>(glm::vec2{ 0,0 }, Config::CHUNK_SIZE, Config::VERTEX_COUNT, Config::MAX_HEIGHT, heightGen, modelMap);
 }
 
-void World::updateChunks(const Entity& entity)
+void World::updateChunks(const float& deltaTime, Player& player)
 {
+	static int killCounter = 0;
+
 	bool oneChunkPerFrame = true;
 
 	// Reset the previous frame's chunks (Maybe unnecessary)
@@ -33,11 +40,14 @@ void World::updateChunks(const Entity& entity)
 	chunksPreviousUpdate.clear();
 	objectsPreviousUpdate.clear();
 	
-	// TODO: Calculate relative position
+	auto getChunkPos = [&](float val)
+	{
+		return static_cast<int>(std::floorf(val / Config::CHUNK_SIZE));
+	};
 
 	// Coordinates of the current chunk the player is on
-	int currentChunkX = static_cast<int>(std::floorf(entity.position.x / Config::CHUNK_SIZE));
-	int currentChunkY = static_cast<int>(std::floorf(entity.position.z / Config::CHUNK_SIZE));
+	int currentChunkX = getChunkPos(player.position.x);
+	int currentChunkY = getChunkPos(player.position.z);
 	
 
 	// Iterate through player's surrounding chunks
@@ -56,9 +66,42 @@ void World::updateChunks(const Entity& entity)
 				oneChunkPerFrame = false;
 			}
 			
-			const auto& viewedChunk = chunkMap[viewedChunkCoord];
+			auto& viewedChunk = chunkMap[viewedChunkCoord];
+			auto& enemies = viewedChunk->getEnemies();
+			for (auto& enemy : enemies)
+			{
+				enemy->update(deltaTime, player);
+				enemy->position.y = viewedChunk->getHeightOfTerrain(enemy->position.x, enemy->position.z) + 2.0f;
+				enemy->box.update(enemy->position);
+				if (!enemy->isAlive) killCounter++;
+				//if ((getChunkPos(enemy->position.x) != currentChunkX || getChunkPos(enemy->position.z) != currentChunkY) && ++counter >= 11)
+				//{
+				//	if (chunkMap.contains(glm::vec2{ getChunkPos(enemy->position.x), getChunkPos(enemy->position.z) }))
+				//		chunkMap[glm::vec2{ getChunkPos(enemy->position.x), getChunkPos(enemy->position.z) }]->getEnemies().push_back(enemy);
+				//	//enemies.erase(it--);
+				//}
+			}
+			enemies.erase(std::remove_if(enemies.begin(), enemies.end(), [&](std::shared_ptr<Enemy> enemy) { return !enemy->isAlive; }), enemies.end());
+			//for (auto it = viewedChunk->getEnemies().begin(); it != viewedChunk->getEnemies().end(); it++)
+			//{
+			//	(*it)->position.y = viewedChunk->getHeightOfTerrain((*it)->position.x, (*it)->position.z) + 2.0f;
+			//	(*it)->update(deltaTime, player);
+
+			//	if (getChunkPos((*it)->position.x) != currentChunkX || getChunkPos((*it)->position.z) != currentChunkY)
+			//	{
+			//		if (chunkMap.contains(glm::vec2{ getChunkPos((*it)->position.x), getChunkPos((*it)->position.z) }))
+			//		{
+			//			chunkMap[glm::vec2{ getChunkPos((*it)->position.x), getChunkPos((*it)->position.z) }]->getEnemies().push_back(*it);
+			//			viewedChunk->getEnemies().erase(it--);
+			//		}
+			//		
+			//	}
+			//}
+
 			chunksPreviousUpdate.push_back(viewedChunk);
 			objectsPreviousUpdate.insert(std::end(objectsPreviousUpdate), std::begin(viewedChunk->getObjects()), std::end(viewedChunk->getObjects()));
+			objectsPreviousUpdate.insert(std::end(objectsPreviousUpdate), std::begin(viewedChunk->getEnemies()), std::end(viewedChunk->getEnemies()));
+			objectsPreviousUpdate.insert(std::end(objectsPreviousUpdate), std::begin(viewedChunk->getFriendlies()), std::end(viewedChunk->getFriendlies()));
 			
 			//chunkMap[viewedChunkCoord]->setVisible(true);
 			//if (chunkMap[viewedChunkCoord]->isVisible())
@@ -68,6 +111,7 @@ void World::updateChunks(const Entity& entity)
 	currentChunk = chunkMap[glm::vec2{currentChunkX, currentChunkY}];
 
 	Statistics::get().addText("Total chunks: " + std::to_string(chunkMap.size()) + "\tLoaded chunks: " + std::to_string(chunksPreviousUpdate.size()));
+	Statistics::get().addText("Kill Count: " + std::to_string(killCounter));
 }
 
 std::shared_ptr<Terrain> World::getCurrentChunk() const

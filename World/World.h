@@ -11,6 +11,8 @@
 #include <memory>	// Unique pointer
 #include <map>
 
+class Player;
+
 template<>
 struct std::hash<glm::vec2>
 {
@@ -26,7 +28,7 @@ class World
 {
 public:
 	World();
-	void updateChunks(const Entity& entity);
+	void updateChunks(const float& deltaTime, Player& player);
 
 	std::shared_ptr<Terrain> getCurrentChunk() const;
 

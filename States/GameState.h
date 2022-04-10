@@ -3,11 +3,11 @@
 #define GAMESTATE_H
 
 #include "BaseState.h"
-#include "../Entities/Player.h"
+
 #include "../World/Light.h"
 #include "../World/World.h"
-#include "../Entities/Object.h"
 #include "../Command/ScriptEngine.h"
+#include "../Entities/Player.h"
 
 class Game;
 
@@ -17,11 +17,14 @@ public:
 	GameState(Game& game);
 
 	bool update(sf::Time deltaTime);
-	void render(RenderMaster& renderer);
+	bool render(RenderMaster& renderer);
 	bool fixedUpdate(sf::Time deltaTime);
 	bool handleEvent(sf::Event& event);
-
+	void addDialogue(std::vector<std::string> lines);
 private:
+	
+	void displayDialogue(std::vector<std::string> lines, float x, float y);
+
 	bool showWireframe;
 
 	// Entities
@@ -39,6 +42,12 @@ private:
 	// Lights
 	Light directionLight;
 	Light secondLight;
+
+	// RPG
+	sf::RectangleShape dialogueBox;
+	sf::Text dialogueText;
+	std::vector<std::string> dialogue;
+	bool showDialogue;
 };
 
 #endif // !GAMESTATE_H

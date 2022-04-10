@@ -12,6 +12,7 @@ class Object : public Entity
 {
 public:
 	Object(TexturedModel& _model, glm::vec3 _position, glm::vec3 _rotation, float _scale);
+	virtual ~Object() {}
 
 	TexturedModel* getModel() const;
 	CollisionBox box;
