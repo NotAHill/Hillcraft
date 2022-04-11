@@ -8,6 +8,8 @@
 #include "../World/World.h"
 #include "../Command/ScriptEngine.h"
 #include "../Entities/Player.h"
+#include "../GUI/Container.h"
+#include "../GUI/Label.h"
 
 class Game;
 
@@ -15,15 +17,17 @@ class GameState : public BaseState
 {
 public:
 	GameState(Game& game);
+	~GameState();
 
 	bool update(sf::Time deltaTime);
 	bool render(RenderMaster& renderer);
 	bool fixedUpdate(sf::Time deltaTime);
 	bool handleEvent(sf::Event& event);
-	void addDialogue(std::vector<std::string> lines);
-private:
+	void addDialogue(std::vector<std::string> lines, float timer);
 	
-	void displayDialogue(std::vector<std::string> lines, float x, float y);
+	ScriptEngine script;
+private:
+	void updateStory(float deltaTime);
 
 	bool showWireframe;
 
@@ -31,23 +35,25 @@ private:
 	std::vector<Object> objects;
 
 	// TEMP
-	TexturedModel testModel;
+	TexturedModel enemyModel;
+	TexturedModel friendModel;
 	std::shared_ptr<Object> testObject;
 
 	World world;
 	Player player;
-	ScriptEngine script;
+	
 	sf::Sprite crosshair;
 
 	// Lights
 	Light directionLight;
 	Light secondLight;
 
-	// RPG
-	sf::RectangleShape dialogueBox;
-	sf::Text dialogueText;
-	std::vector<std::string> dialogue;
-	bool showDialogue;
+	// GUI
+	Container guiContainer;
+	std::shared_ptr<Label> healthBar;
+	std::shared_ptr<Label> killCounter;
+
+	bool firstInteraction = false;
 };
 
 #endif // !GAMESTATE_H

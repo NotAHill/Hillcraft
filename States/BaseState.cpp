@@ -4,3 +4,7 @@ BaseState::BaseState(Game& game) :
 	gamePtr(&game)
 {
 }
+
+BaseState::~BaseState()
+{
+}

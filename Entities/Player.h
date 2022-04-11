@@ -22,16 +22,15 @@ public:
 	int currentHealth;
 	bool isAttackable;
 	bool isAlive;
+	int maxHealth;
+	int killCount;
 
 private:
 	void keyboardInput();
 	void mouseInput(const sf::RenderWindow& window);
 
-	glm::vec3 velocity;
-
 	bool inAir;
 	bool flyMode;
-	int maxHealth;
 	glm::vec3 knockbackVelocity;
 	float knockbackTimer;	
 };

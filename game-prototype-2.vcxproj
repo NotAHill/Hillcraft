@@ -149,8 +149,10 @@
   <ItemGroup>
     <ClCompile Include="Command\BaseCommand.cpp" />
     <ClCompile Include="Command\DialogueCommand.cpp" />
+    <ClCompile Include="Command\FunctionCommand.cpp" />
     <ClCompile Include="Command\MoveCommand.cpp" />
     <ClCompile Include="Command\ScriptEngine.cpp" />
+    <ClCompile Include="Command\SpawnCommand.cpp" />
     <ClCompile Include="Context.cpp" />
     <ClCompile Include="Entities\Camera.cpp" />
     <ClCompile Include="Entities\Enemy.cpp" />
@@ -192,8 +194,10 @@
   <ItemGroup>
     <ClInclude Include="Command\BaseCommand.h" />
     <ClInclude Include="Command\DialogueCommand.h" />
+    <ClInclude Include="Command\FunctionCommand.h" />
     <ClInclude Include="Command\MoveCommand.h" />
     <ClInclude Include="Command\ScriptEngine.h" />
+    <ClInclude Include="Command\SpawnCommand.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="Context.h" />
     <ClInclude Include="Entities\Camera.h" />

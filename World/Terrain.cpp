@@ -41,7 +41,7 @@ Terrain::Terrain(const glm::vec2& _offset, const float& _size, const unsigned in
 			//if (y >= 0.1f) continue;
 			objects.push_back(std::make_shared<Object>(*modelMap.at("tree"), glm::vec3{ x + position.x, y - 0.4f, z + position.z }, glm::vec3{ 0, rand() % 360, 0 }, 0.3f));
 		}
-		else
+		else if (offset.x != 0 && offset.y != 0)
 		{
 			enemies.push_back(std::make_shared<Enemy>(*modelMap.at("enemy"), glm::vec3{ x + position.x, y, z + position.z }, glm::vec3{ 0, rand() % 360, 0 }, 1.0f));
 		}
@@ -211,7 +211,7 @@ const bool& Terrain::isVisible() const
 	return visible;
 }
 
-const std::vector<std::shared_ptr<Object>>& Terrain::getObjects() const
+std::vector<std::shared_ptr<Object>>& Terrain::getObjects()
 {
 	return objects;
 }

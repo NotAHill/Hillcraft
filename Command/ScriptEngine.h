@@ -15,7 +15,8 @@ public:
 	void addCommand(std::unique_ptr<BaseCommand> command);
 	void processCommands(float deltaTime);
 	void finishCommand();
-	
+	const bool& isEmpty() const;
+
 private:
 	std::queue<std::unique_ptr<BaseCommand>> commandQueue;
 };

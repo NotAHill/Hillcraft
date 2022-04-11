@@ -121,46 +121,66 @@ SettingsState::SettingsState(Game& game) :
 
 	auto fog = std::make_shared<Label>(true);
 	fog->setText({ "Fog:" });
-	fog->setPosition(window.x / 2 - 450.0f, 150.0f + (window.y - 150.0f) * 2.0f / 6);
+	fog->setPosition(window.x / 2 - 450.0f, 150.0f + (window.y - 150.0f) * 2 / 6);
 	container.addComponent(fog);
 
-	for (int i = 0; i < 2; ++i)
-	{
-		auto button = std::make_shared<Button>(ButtonSize::SMALL, false);
-		button->setPosition((i - 1) * button->getSize().x + window.x / 3, 150.0f + (window.y - 150.0f) * 2 / 6 - button->getSize().y / 2);
-		switch (i)
+	static auto fogButton = std::make_shared<Button>(ButtonSize::WIDE, true);
+	fogButton->setText(fogButton->active ? "OFF" : "ON");
+	fogButton->setToggle(true);
+	fogButton->setPosition(window.x / 3, 150.0f + (window.y - 150.0f) * 2 / 6);
+	fogButton->setCallback([=]()
 		{
-		case 0:
-			button->setText("Dens:" + str(Config::FOG_DENSITY, 3));
-			button->setCallback([=]()
-				{
-					Config::FOG_DENSITY = fmod(Config::FOG_DENSITY + 0.005f, 1.005f);
-					button->setText("Dens:" + str(Config::FOG_DENSITY, 3));
-				}); break;
-		case 1:
-			button->setText("Grad:" + str(Config::FOG_GRADIENT, 1));
-			button->setCallback([=]()
-				{
-					Config::FOG_GRADIENT = fmod(Config::FOG_GRADIENT + 0.5f, 5.5f);
-					button->setText("Grad:" + str(Config::FOG_GRADIENT, 1));
-				}); break;
-		}
-		container.addComponent(button);
-	}
+			static auto prev = Config::FOG_DENSITY;
+			if (fogButton->active)
+			{
+				Config::FOG_DENSITY = 0.0f;
+				fogButton->setText("OFF");
+			}
+			else
+			{
+				Config::FOG_DENSITY = prev;
+				fogButton->setText("ON");
+			}
+		});
+	container.addComponent(fogButton);
+
+	//for (int i = 0; i < 2; ++i)
+	//{
+	//	auto button = std::make_shared<Button>(ButtonSize::SMALL, false);
+	//	button->setPosition((i - 1) * button->getSize().x + window.x / 3, 150.0f + (window.y - 150.0f) * 2 / 6 - button->getSize().y / 2);
+	//	switch (i)
+	//	{
+	//	case 0:
+	//		button->setText("Rad:" + str(Config::FOG_DENSITY, 3));
+	//		button->setCallback([=]()
+	//			{
+	//				Config::FOG_DENSITY = fmod(Config::FOG_DENSITY + 0.005f, 1.005f);
+	//				button->setText("Rad:" + str(Config::FOG_DENSITY, 3));
+	//			}); break;
+	//	case 1:
+	//		button->setText("Str:" + str(Config::FOG_GRADIENT, 1));
+	//		button->setCallback([=]()
+	//			{
+	//				Config::FOG_GRADIENT = fmod(Config::FOG_GRADIENT + 0.5f, 5.5f);
+	//				button->setText("Str:" + str(Config::FOG_GRADIENT, 1));
+	//			}); break;
+	//	}
+	//	container.addComponent(button);
+	//}
 
 	auto noise = std::make_shared<Label>(true);
+	noise->text.setCharacterSize(24u);
 	noise->setText({ "Noise:",  "(S)cale, (A)mp, (F)req, (O)ct, (H)eight" });
-	noise->text.setCharacterSize(20u);
-	noise->setPosition(window.x / 2 - 300.0f, 150.0f + (window.y - 150.0f) * 3 / 6);
+	noise->setPosition(window.x / 2 - 290.0f, 150.0f + (window.y - 150.0f) * 4 / 6);
 	container.addComponent(noise);
 
 	auto seedLabel = std::make_shared<Label>(true);
 	seedLabel->setText({ "Seed:" });
-	seedLabel->setPosition(window.x / 2 - 450.0f, 150.0f + (window.y - 150.0f) * 4 / 6);
+	seedLabel->setPosition(window.x / 2 - 450.0f, 150.0f + (window.y - 150.0f) * 3 / 6);
 	container.addComponent(seedLabel);
 
-	auto seedbox = std::make_shared<Textbox>(TextboxSize::WIDE);
-	seedbox->setPosition(window.x / 3, 150.0f + (window.y - 150.0f) * 4 / 6);
+	static auto seedbox = std::make_shared<Textbox>(TextboxSize::WIDE);
+	seedbox->setPosition(window.x / 3, 150.0f + (window.y - 150.0f) * 3 / 6);
 	seedbox->setCallback([=](const std::string& text)
 		{
 			try
@@ -191,7 +211,7 @@ SettingsState::SettingsState(Game& game) :
 			button->setText("S:" + str(Config::SCALE, 0));
 			button->setCallback([=]()
 				{
-					Config::SCALE = fmod(Config::SCALE + 5.0f, 50.0f);
+					Config::SCALE = fmod(Config::SCALE + 5.0f, 55.0f);
 					button->setText("S:" + str(Config::SCALE, 0));
 				}); break;
 		case 1:
@@ -205,7 +225,8 @@ SettingsState::SettingsState(Game& game) :
 			button->setText("F:" + str(Config::LACUNARITY, 1));
 			button->setCallback([=]()
 				{
-					Config::LACUNARITY = fmod(Config::LACUNARITY + 0.1f, 2.1f) + 1.0f;
+					Config::LACUNARITY = fmod(Config::LACUNARITY, 3.0f) + 0.1f;
+					if (Config::LACUNARITY < 1.0f) Config::LACUNARITY = 1.0f;
 					button->setText("F:" + str(Config::LACUNARITY, 1));
 				}); break;
 		case 3:
@@ -226,9 +247,46 @@ SettingsState::SettingsState(Game& game) :
 		container.addComponent(button);
 	}
 
+	static auto renderDistance = std::make_shared<Button>(ButtonSize::WIDE, true);
+	renderDistance->setText("Render Distance: " + std::to_string(Config::RENDER_DISTANCE));
+	renderDistance->setPosition(window.x / 2 + 170.0f, 150.0f + (window.y - 150.0f) * 1 / 6);
+	renderDistance->setCallback([=]()
+		{
+			Config::RENDER_DISTANCE = (Config::RENDER_DISTANCE % 4) + 1;
+			renderDistance->setText("Render Distance: " + std::to_string(Config::RENDER_DISTANCE));
+		});
+	container.addComponent(renderDistance);
 
+	auto controls = std::make_shared<Label>(true);
+	controls->setText({ "Controls:" });
+	controls->setPosition(window.x / 2 + 100.0f, 150.0f + (window.y - 150.0f) * 2 / 6);
+	container.addComponent(controls);
 
-	auto backButton = std::make_shared<Button>(ButtonSize::SMALL, false);
+	for (int i = 0; i < 4; ++i)
+	{
+		auto label = std::make_shared<Label>();
+		switch (i)
+		{
+		case 0:
+			label->setText({ "Movement: WASD/Space/Ctrl/F" });
+			break;
+			
+		case 1:
+			label->setText({ "Interact: Left Click" });
+			break;
+		case 2:
+			label->setText({ "Wireframe: P" });
+			break;
+		case 3:
+			label->setText({ "Debug: V" });
+			break;
+		}
+		label->setPosition(window.x / 2 + 20.0f, 120.0f + (window.y - 150.0f) * (i + 3) / 6);
+		if (i == 3) label->setPosition(window.x / 2 + 240.0f, 120.0f + (window.y - 150.0f) * 5 / 6);
+		container.addComponent(label);
+	}
+
+	static auto backButton = std::make_shared<Button>(ButtonSize::SMALL, false);
 	backButton->setText("Back");
 	backButton->setPosition({ window.x - 200.0f, window.y - 100.0f });
 	backButton->setCallback([&]()

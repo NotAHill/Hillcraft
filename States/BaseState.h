@@ -14,6 +14,7 @@ class BaseState : public sf::NonCopyable
 {
 public:
 	BaseState(Game& game);
+	virtual ~BaseState();
 
 	virtual bool update(sf::Time deltaTime) = 0;
 	virtual bool fixedUpdate(sf::Time deltaTime) = 0;

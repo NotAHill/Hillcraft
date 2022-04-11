@@ -7,7 +7,7 @@
 
 class RenderMaster;
 
-class Component// : private sf::NonCopyable
+class Component : private sf::NonCopyable
 {
 public:
 	Component() { };

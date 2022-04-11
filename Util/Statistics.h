@@ -16,6 +16,7 @@ public:
 	void toggle();
 	void addText(sf::String string);
 	void addStaticText(sf::String string);
+	void clearStaticText();
 
 private:
 	Statistics();

@@ -58,7 +58,6 @@ void StateStack::render(RenderMaster& renderer)
 	// Iterate back to front in the state stack
 	//for (auto itr = stack.rbegin(); itr != stack.rend(); ++itr)
 	//	if (!(*itr)->render(renderer)) break;
-
 	//applyPendingChanges();
 
 	for (auto& state : stack)

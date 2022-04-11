@@ -16,6 +16,7 @@ public:
 
 	TexturedModel* getModel() const;
 	CollisionBox box;
+	
 private:
 	// make unique ptr instead
 	TexturedModel* model;

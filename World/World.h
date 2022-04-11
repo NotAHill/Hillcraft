@@ -31,6 +31,7 @@ public:
 	void updateChunks(const float& deltaTime, Player& player);
 
 	std::shared_ptr<Terrain> getCurrentChunk() const;
+	std::shared_ptr<Terrain> getChunkAt(const float& x, const float& y);
 
 	std::vector<std::shared_ptr<Terrain>>& getLoadedChunks();
 	std::vector<std::shared_ptr<Object>>& getLoadedObjects();

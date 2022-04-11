@@ -12,15 +12,22 @@ Container::Container()
 void Container::handleEvent(const sf::Event& event, const sf::RenderWindow& window)
 {
 	// Mouse input
+	bool temp = false;
 	for (std::size_t i = 0; i < components.size(); ++i)
 	{
 		components[i]->handleEvent(event, window);
 		if (components[i]->selected)
 		{
 			selectedComponent = i; // maybe break?
-			return;
+			temp = true;
+		}
+		else if (temp)
+		{
+			components[i]->deselect();
 		}
 	}
+
+	if (temp) return;
 
 	// Keyboard Input
 	if (event.type == sf::Event::KeyReleased)

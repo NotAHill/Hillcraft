@@ -16,6 +16,8 @@ public:
 
 	void addComponent(std::shared_ptr<Component> component);
 
+	std::shared_ptr<Component> operator[] (const std::size_t& i) { return components[i]; }
+
 protected:
 	const bool& hasSelection();
 	

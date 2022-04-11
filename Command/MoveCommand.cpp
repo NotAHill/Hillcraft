@@ -29,12 +29,19 @@ void MoveCommand::update(float deltaTime)
 	entity->position.x = lerp(startPos.x, targetPos.x, t);
 	entity->position.z = lerp(startPos.z, targetPos.z, t);
 
-	// if (flight)
-	entity->position.y = lerp(startPos.y, targetPos.y, t);
+	if (flight)
+		entity->position.y = lerp(startPos.y, targetPos.y, t);
 
 	if (elapsedTime >= duration)
 	{
-		entity->position = targetPos;
+		entity->velocity.y = 0.0f;
+		
+		entity->position.x = targetPos.x;
+		entity->position.z = targetPos.z;
+
+		if (flight)
+			entity->position.y = targetPos.y;
+
 		finished = true;
 	}
 

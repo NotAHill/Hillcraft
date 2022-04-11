@@ -16,10 +16,14 @@ MenuState::MenuState(Game& game) :
 
 	auto window = gamePtr->getWindow().getSize();
 
+	auto title = std::make_shared<Label>(true);
+	title->text.setCharacterSize(50u);
+	title->setText({ "Hill Craft" });
+	title->setPosition({ window.x / 2.0f, window.y / 2.0f - 150.0f });
 
 	auto playButton = std::make_shared<Button>();
 	playButton->setText("Play Game");
-	playButton->setPosition({ window.x / 2.0f, window.y / 2.0f - 100.0f});
+	playButton->setPosition({ window.x / 2.0f, window.y / 2.0f - 50.0f});
 	playButton->setCallback([&]()
 		{
 			gamePtr->getStack().popState();
@@ -28,7 +32,7 @@ MenuState::MenuState(Game& game) :
 
 	auto settingsButton = std::make_shared<Button>();
 	settingsButton->setText("Settings");
-	settingsButton->setPosition({ window.x / 2.0f, window.y / 2.0f });
+	settingsButton->setPosition({ window.x / 2.0f, window.y / 2.0f + 50.0f});
 	settingsButton->setCallback([&]()
 		{
 			gamePtr->getStack().popState();
@@ -37,28 +41,35 @@ MenuState::MenuState(Game& game) :
 
 	auto quitButton = std::make_shared<Button>(ButtonSize::SMALL);
 	quitButton->setText("Quit");
-	quitButton->setPosition({ window.x / 2.0f, window.y / 2.0f + 100.0f });
+	quitButton->setPosition({ window.x / 2.0f, window.y / 2.0f + 150.0f });
 	quitButton->setCallback([&]()
 		{
 			gamePtr->getStack().popState();
 		});
 
-	auto testButton = std::make_shared<Button>();
-	testButton->setText("OFF");
+	static auto testButton = std::make_shared<Button>(ButtonSize::WIDE, true);
+	testButton->setText("Not Clicked");
 	testButton->setToggle(true);
-	testButton->setPosition({ window.x / 2.0f, window.y / 2.0f + 200.0f });
-	testButton->setCallback([=]()
+	testButton->setPosition({ window.x / 2.0f, window.y / 2.0f });
+	
+	testButton->setCallback([&]()
 		{
-			std::string text = (testButton->active) ? "ON" : "OFF";
-			testButton->setText(text);
+			if (testButton->active) testButton->setText("Clicked");
+			else testButton->setText("Not Clicked");
 		});
 
 	auto label = std::make_shared<Label>();
 	label->setText({ "Hello", "This is a test" });
-	label->setPosition({ window.x / 2.0f + 100.0f, window.y / 2.0f });
+	label->setPosition({ window.x / 2.0f + 300.0f, window.y / 2.0f });
+	label->rect.setFillColor(sf::Color::Cyan);
+	//auto label2 = std::make_shared<Label>(true);
+	//label2->setText({ "abc123" });
+	//label2->rect.setFillColor(sf::Color::Cyan);
+	//label2->setPosition({ window.x / 2.0f - 50.0f, window.y / 2.0f + 100.0f });
+	//container.addComponent(label2);
 
 	auto textbox = std::make_shared<Textbox>(TextboxSize::WIDE);
-	textbox->setPosition({ window.x / 2.0f, window.y / 2.0f - 200.0f });
+	textbox->setPosition({ window.x / 2.0f, window.y / 2.0f - 150.0f });
 	textbox->setCallback([=](const std::string& text)
 		{
 			try
@@ -71,12 +82,13 @@ MenuState::MenuState(Game& game) :
 			}
 		});
 
-	container.addComponent(textbox);
+	//container.addComponent(textbox);
+	container.addComponent(title);
 	container.addComponent(playButton);
 	container.addComponent(settingsButton);
+	//container.addComponent(testButton);
 	container.addComponent(quitButton);
-	container.addComponent(testButton);
-	container.addComponent(label);
+	//container.addComponent(label);
 }
 
 bool MenuState::update(sf::Time deltaTime)

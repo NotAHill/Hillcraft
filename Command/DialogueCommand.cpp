@@ -6,12 +6,12 @@ DialogueCommand::DialogueCommand(GameState& state, std::vector<std::string> _lin
 	gameState(&state),
 	lines(_lines)
 {
-	timer = 10.0f;
+	timer = 3.0f;
 }
 
 void DialogueCommand::start()
 {
-	gameState->addDialogue(lines);
+	gameState->addDialogue(lines, timer);
 }
 
 void DialogueCommand::update(float deltaTime)

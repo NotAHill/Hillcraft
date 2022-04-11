@@ -8,7 +8,7 @@ public:
 	RayCaster(const glm::vec3& _position, const glm::vec3& _direction);
 
 	void step(float scale);
-	const glm::vec3& getEnd() const;
+	glm::vec3 getEnd() const;
 	float getLength() const;
 
 private:

@@ -28,8 +28,6 @@ World::World() :
 
 void World::updateChunks(const float& deltaTime, Player& player)
 {
-	static int killCounter = 0;
-
 	bool oneChunkPerFrame = true;
 
 	// Reset the previous frame's chunks (Maybe unnecessary)
@@ -73,7 +71,7 @@ void World::updateChunks(const float& deltaTime, Player& player)
 				enemy->update(deltaTime, player);
 				enemy->position.y = viewedChunk->getHeightOfTerrain(enemy->position.x, enemy->position.z) + 2.0f;
 				enemy->box.update(enemy->position);
-				if (!enemy->isAlive) killCounter++;
+				if (!enemy->isAlive) player.killCount++;
 				//if ((getChunkPos(enemy->position.x) != currentChunkX || getChunkPos(enemy->position.z) != currentChunkY) && ++counter >= 11)
 				//{
 				//	if (chunkMap.contains(glm::vec2{ getChunkPos(enemy->position.x), getChunkPos(enemy->position.z) }))
@@ -111,12 +109,24 @@ void World::updateChunks(const float& deltaTime, Player& player)
 	currentChunk = chunkMap[glm::vec2{currentChunkX, currentChunkY}];
 
 	Statistics::get().addText("Total chunks: " + std::to_string(chunkMap.size()) + "\tLoaded chunks: " + std::to_string(chunksPreviousUpdate.size()));
-	Statistics::get().addText("Kill Count: " + std::to_string(killCounter));
 }
 
 std::shared_ptr<Terrain> World::getCurrentChunk() const
 {
 	return currentChunk;
+}
+
+std::shared_ptr<Terrain> World::getChunkAt(const float& x, const float& y)
+{
+	auto chunkX = static_cast<int>(std::floorf(x / Config::CHUNK_SIZE));
+	auto chunkZ = static_cast<int>(std::floorf(y / Config::CHUNK_SIZE));
+
+	glm::vec2 chunkCoord = { chunkX, chunkZ };
+
+	if (!chunkMap.contains(chunkCoord))
+		chunkMap.insert(std::make_pair(chunkCoord, std::make_shared<Terrain>(chunkCoord, Config::CHUNK_SIZE, Config::VERTEX_COUNT, Config::MAX_HEIGHT, heightGen, modelMap)));
+
+	return chunkMap[chunkCoord];
 }
 
 

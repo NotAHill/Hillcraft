@@ -46,3 +46,8 @@ void ScriptEngine::finishCommand()
 		commandQueue.front()->finished = true;
 	}
 }
+
+const bool& ScriptEngine::isEmpty() const
+{
+	return commandQueue.empty();
+}

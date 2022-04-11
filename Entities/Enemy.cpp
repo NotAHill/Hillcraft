@@ -14,7 +14,7 @@ Enemy::Enemy(TexturedModel& _model, glm::vec3 _position, glm::vec3 _rotation, fl
 
 	currentHealth = 30;
 	maxHealth = 30;
-	baseDamage = 10;
+	baseDamage = 10 + rand() % 5;
 	isAlive = true;
 }
 

@@ -18,7 +18,6 @@ public:
 	int baseDamage;
 
 private:
-	glm::vec3 velocity;
 	glm::vec3 knockbackVelocity;
 	float knockbackTimer;
 	int maxHealth;

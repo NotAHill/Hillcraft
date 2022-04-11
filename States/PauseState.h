@@ -26,7 +26,6 @@ private:
 	Container container;
 
 	sf::RectangleShape backgroundShape;
-	sf::Text text;
 };
 
 

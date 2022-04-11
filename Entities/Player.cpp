@@ -9,7 +9,8 @@
 Player::Player() :
 	flyMode(false),
 	inAir(true),
-	baseDamage(10)
+	baseDamage(10),
+	killCount(0)
 {
 	position = { 10.0f, 10.0f, 10.0f };
 	rotation = { 0, 180, 0 };

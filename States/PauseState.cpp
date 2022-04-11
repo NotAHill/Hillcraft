@@ -5,33 +5,30 @@
 
 #include "../Game.h"
 #include "../GUI/Button.h"
+#include "../GUI/Label.h"
 
 #include <iostream>
 
 PauseState::PauseState(Game& game) :
 	BaseState(game),
-	text(),
 	backgroundShape()
 {
 	std::cout << "Currently in PAUSE state" << std::endl;
 
 	auto window = gamePtr->getWindow().getSize();
 
-	text.setFont(ResourceManager::get().fonts.get("Fixedsys"));
-	text.setString("Game Paused");
-	text.setFillColor(sf::Color::Red);
-	text.setOutlineColor(sf::Color::Black);
-	text.setOutlineThickness(3.0f);
-	text.setCharacterSize(48u);
-	text.setOrigin(text.getLocalBounds().width / 2, text.getLocalBounds().height / 2);
-	text.setPosition({ window.x / 2.0f, window.y / 2.0f - 150.0f });
-
 	backgroundShape.setFillColor({ 0, 0, 0, 150 });
-	backgroundShape.setSize(sf::Vector2f(window));
+	backgroundShape.setSize(sf::Vector2f(gamePtr->getWindow().getSize()));
+
+	auto text = std::make_shared<Label>(true);
+	text->text.setCharacterSize(50u);
+	text->setText({ "Game Paused" });
+	text->setPosition({ window.x / 2.0f, window.y / 2.0f - 150.0f });
+
 
 	auto playButton = std::make_shared<Button>(ButtonSize::SMALL);
 	playButton->setText("Resume");
-	playButton->setPosition({ window.x / 2.0f, window.y / 2.0f - 100.0f });
+	playButton->setPosition({ window.x / 2.0f, window.y / 2.0f - 50.0f });
 	playButton->setCallback([&]()
 		{
 			gamePtr->getStack().popState();
@@ -39,7 +36,7 @@ PauseState::PauseState(Game& game) :
 
 	auto menuButton = std::make_shared<Button>(ButtonSize::SMALL);
 	menuButton->setText("Menu");
-	menuButton->setPosition({ window.x / 2.0f, window.y / 2.0f });
+	menuButton->setPosition({ window.x / 2.0f, window.y / 2.0f + 50.0f });
 	menuButton->setCallback([&]()
 		{
 			gamePtr->getStack().clearStates();
@@ -48,12 +45,13 @@ PauseState::PauseState(Game& game) :
 
 	auto quitButton = std::make_shared<Button>(ButtonSize::SMALL);
 	quitButton->setText("Quit");
-	quitButton->setPosition({ window.x / 2.0f, window.y / 2.0f + 100.0f });
+	quitButton->setPosition({ window.x / 2.0f, window.y / 2.0f + 150.0f });
 	quitButton->setCallback([&]()
 		{
 			gamePtr->getStack().clearStates();
 		});
 
+	container.addComponent(text);
 	container.addComponent(playButton);
 	container.addComponent(menuButton);
 	container.addComponent(quitButton);
@@ -70,7 +68,6 @@ bool PauseState::render(RenderMaster& renderer)
 	// Draw background first
 	renderer.drawSFML(backgroundShape);
 
-	renderer.drawSFML(text);
 	container.render(renderer);
 
 	return true;

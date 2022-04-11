@@ -17,7 +17,7 @@ void RayCaster::step(float scale)
 	end.y -= glm::tan(pitch) * scale;
 }
 
-const glm::vec3& RayCaster::getEnd() const
+glm::vec3 RayCaster::getEnd() const
 {
 	return end;
 }

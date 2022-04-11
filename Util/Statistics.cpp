@@ -6,7 +6,7 @@ Statistics::Statistics() :
 	displayText(),
 	timer(sf::Time::Zero),
 	frameCount(0),
-	showText(true)
+	showText(false)
 {
 	displayText.setFont(ResourceManager::get().fonts.get("Fixedsys"));
 	displayText.setFillColor(sf::Color::White);
@@ -55,4 +55,9 @@ void Statistics::addText(sf::String string)
 void Statistics::addStaticText(sf::String string)
 {
 	staticString += string + "\n";
+}
+
+void Statistics::clearStaticText()
+{
+	staticString.clear();
 }

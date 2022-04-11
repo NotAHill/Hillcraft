@@ -25,7 +25,8 @@ public:
 	float getHeightOfTerrain(const float& x, const float& z);
 	void setVisible(const bool& _visible);
 	const bool& isVisible() const;
-	const std::vector<std::shared_ptr<Object>>& getObjects() const;
+	
+	std::vector<std::shared_ptr<Object>>& getObjects();
 	std::vector<std::shared_ptr<Enemy>>& getEnemies();
 	std::vector<std::shared_ptr<Friendly>>& getFriendlies();
 
